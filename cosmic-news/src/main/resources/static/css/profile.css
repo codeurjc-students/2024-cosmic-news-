@@ -2,22 +2,6 @@ ul {
     margin-bottom: 0;
 }
 
-.subcontainer.offer {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
-    align-items: center;
-    row-gap: 10px;
-}
-
-.subcontainer.offer p,
-.subcontainer.offer .infoIcons {
-    margin: 0;
-    margin-left: 10px;
-    margin-right: 10px;
-    max-width: 70%;
-}
-
 .infoIcons {
     flex:1;
     display: flex;

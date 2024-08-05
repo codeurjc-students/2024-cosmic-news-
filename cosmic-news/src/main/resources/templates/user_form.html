@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Formulario nuevos usuarios</title>
+
+    {{> config}}
+
+    <link type="text/css" rel="stylesheet" href="/css/form.css" />
+    <link type="text/css" rel="stylesheet" href="/css/skills.css" />
+
+    <script src="/js/newUser.js"></script>
+</head>
+
+<body>
+    {{> header}}
+    <div class="background-container">
+        <div class="container">
+            {{#edit}}
+            <h2>Editar {{user.name}}</h2>
+            {{/edit}}
+            {{^edit}}
+            <h2>Nuevo usuario</h2>
+            {{/edit}}
+
+            {{#edit}}
+            <form role="form" action="/user/{{user.mail}}/edit" method="post" enctype="multipart/form-data">
+            {{/edit}}
+            {{^edit}}
+            <form role="form" action="/user/register" method="post" enctype="multipart/form-data">
+            {{/edit}}
+                <input type ="hidden" name="_csrf" value="{{token}}"/>
+                <div class="row">
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label for="name">Nombre</label>
+                        <input type="text" class="form-control" name="name" placeholder="Introduzca su nombre" value="{{#user}}{{user.name}}{{/user}}">
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label for="surname">Apellidos</label>
+                        <input type="text" class="form-control" name="surname" placeholder="Introduzca sus apellidos" value="{{#user}}{{user.surname}}{{/user}}">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Descripción</label>
+                    <textarea type="text" class="form-control" name="description" placeholder="Datos personales de interés">{{#user}}{{user.description}}{{/user}}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="nick">Nickname*</label>
+                    <input type="text" class="form-control" name="nick" id="nick" placeholder="Introduzca su nickname" oninput="checkNick()" value="{{#user}}{{user.nick}}{{/user}}" required>
+                    <div id="nickContent"></div>
+                </div>
+
+                {{^edit}}
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="mail">Correo electrónico*</label>
+                        <input type="text" class="form-control" name="mail" id="mail" oninput="checkMail()" placeholder="example@gmail.com" required>
+                        <div id="mailContent"></div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="pass">Constraseña*</label>
+                        <input type="password" class="form-control" name="pass" id="pass" oninput="checkPassword()" placeholder="Introduzca su contraseña" required>
+                        <div id="passContent"></div>
+                    </div>
+                </div>
+                {{/edit}}
+
+                <div class="form-group">
+                    <label for="photoField">Foto de perfil</label>
+                    <input type="file" class="form-control" name="photoField" id="photoField" accept=".jpeg, .png">
+                </div>
+
+                <!-- Buttons -->
+                <div class="btn-cont">
+                    <button type="submit" class="btn">
+                        <i class="bi bi-download"></i> Guardar
+                    </button>
+                    <a href="/login" class="btn btn-red" role="button">
+                        <i class="bi bi-x-lg"></i> Cancelar
+                    </a>
+                </div>
+            <input type ="hidden" name="_csrf" value="{{token}}"/>
+        </form>
+        </div>
+    </div>
+</body>
+
+</html>
