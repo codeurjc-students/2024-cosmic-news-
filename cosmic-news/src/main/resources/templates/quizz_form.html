@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Formulario nuevo quizz</title>
+
+    {{> config}}
+
+    <link type="text/css" rel="stylesheet" href="/css/form.css" />
+    <link type="text/css" rel="stylesheet" href="/css/quizz.css" />
+
+    <script src="/js/quizz.js"></script>
+</head>
+
+<body>
+    {{> header}}
+    <div class="background-container">
+        <div class="container">
+            {{#edit}}
+            <h2>Editar {{quizz.name}}</h2>
+            {{/edit}}
+            {{^edit}}
+            <h2>Nuevo quizz</h2>
+            {{/edit}}
+
+            {{#edit}}
+            <form role="form" action="/user/{{quizz.id}}/edit" method="post" enctype="multipart/form-data">
+            {{/edit}}
+            {{^edit}}
+            <form role="form" action="/quizz/new" method="post" enctype="multipart/form-data">
+            {{/edit}}
+                <input type="hidden" name="_csrf" value="{{token}}"/>
+
+                <div class="row">
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label for="name">Nombre</label>
+                        <input type="text" class="form-control" name="name" placeholder="Introduzca un nombre para el test">
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label for="difficulty">Dificultad:</label>
+                        <select class="form-control" name="difficulty" id="difficulty">
+                            <option value="Fácil">Fácil</option>
+                            <option value="Normal">Normal</option>
+                            <option value="Difícil">Difícil</option>
+                        </select>
+                    </div>
+                </div>
+        
+                <input type="hidden" class="form-control" name="numQuestions" id="numQuestions" value="0">
+
+                <div id="questions-container">
+                    <!-- Se agregarán preguntas aquí -->
+                </div>
+
+                <div class="btn-cont">
+                    <button type="button" class="btn" id="add-question-btn">
+                        <i class="bi bi-plus-lg"></i> Añadir Pregunta
+                    </button>
+                    <button type="submit" class="btn">
+                        <i class="bi bi-download"></i> Guardar
+                    </button>
+                    <a href="/login" class="btn btn-red" role="button">
+                        <i class="bi bi-x-lg"></i> Cancelar
+                    </a>
+                </div>
+
+            <input type="hidden" name="_csrf" value="{{token}}"/>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

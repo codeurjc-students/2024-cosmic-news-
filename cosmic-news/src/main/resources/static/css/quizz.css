@@ -1,0 +1,22 @@
+.background-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; 
+    background-image: url('/images/background.jpg'); 
+    background-size: cover; 
+    background-position: center; 
+    background-attachment: fixed;
+    background-repeat: repeat-y;
+    height: 10000%; 
+    width: 100%; 
+    margin: 0; 
+    padding: 0; 
+}
+
+.question-container {
+    margin-top: 20px; 
+    padding: 10px; 
+    border: 1px solid #ddd; 
+    border-radius: 5px; 
+    background-color: #f9f9f9; 
+}

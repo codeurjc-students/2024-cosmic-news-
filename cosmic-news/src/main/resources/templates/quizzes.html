@@ -1,0 +1,30 @@
+<html>
+
+<head>
+    <title>Quizzes</title>
+
+    {{> config}}
+    <link type="text/css" rel="stylesheet" href="/css/cards.css" />
+    <link type="text/css" rel="stylesheet" href="/css/maps.css" />
+</head>
+
+<body>
+    {{> header}}
+    <div class="background-container">
+        <main class="container">
+            <div class="top-container">
+                <div class="left-cont">
+                    <a href="/" class="btn" role="button">
+                        <i class="bi bi-arrow-left"></i><tool-tip>Volver</tool-tip>
+                    </a>
+                </div>
+                <h2>Quizzes</h2>
+            </div>
+        </main>
+    </div>
+    <div class="btn-cont bottom-right-button">
+        <a href="/quizz/new" class="btn" role="btn">
+            <i class="bi bi-plus-circle"></i><tool-tip style="top: auto; bottom: 100%;">Añadir quizz</tool-tip>
+        </a>
+    </div>
+</body>

@@ -131,6 +131,9 @@ public class SecurityConfiguration {
 					.requestMatchers("/events").permitAll()
 					.requestMatchers("/event/edit").permitAll()
 
+					.requestMatchers("/quizzes").permitAll()
+					.requestMatchers("/quizz/new").permitAll()
+
                     // OpenAPI documentation
                     .requestMatchers("/v3/**").permitAll()
                     .requestMatchers("/swagger-ui/**").permitAll()
