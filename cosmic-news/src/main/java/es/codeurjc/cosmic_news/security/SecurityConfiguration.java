@@ -126,6 +126,11 @@ public class SecurityConfiguration {
 					.requestMatchers("/maps/offers").permitAll()
 					.requestMatchers("/piechart").permitAll()
 
+					.requestMatchers("/calendar").permitAll()
+					.requestMatchers("/event/new").permitAll()
+					.requestMatchers("/events").permitAll()
+					.requestMatchers("/event/edit").permitAll()
+
                     // OpenAPI documentation
                     .requestMatchers("/v3/**").permitAll()
                     .requestMatchers("/swagger-ui/**").permitAll()

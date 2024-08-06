@@ -24,7 +24,7 @@ html,body{
     padding: 20px;
     width: 80%;
     max-width: none;
-    background-color: var(--second-color);
+    background-color: rgba(255, 255, 255, 0.9);
     border: 1px solid var(--border-color);
     border-radius: 25px;
     text-align: center;

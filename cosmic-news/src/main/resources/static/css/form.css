@@ -17,3 +17,8 @@ form {
 .form-range::-webkit-slider-thumb {
     background-color: var(--main-color);
 }
+
+.icon-preview i {
+    font-size: 100px;
+    color: #333;
+}

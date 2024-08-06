@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Añadir evento</title>
+
+    {{> config}}
+
+    <link type="text/css" rel="stylesheet" href="/css/form.css" />
+    <link type="text/css" rel="stylesheet" href="/css/skills.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+    <script src="/js/newEvent.js"></script>
+</head>
+
+<body>
+    {{> header}}
+    <div class="background-container">
+        <div class="container">
+            <div class="top-container">
+                <div class="left-cont">
+                    <a href="/calendar" class="btn" role="button">
+                        <i class="bi bi-arrow-left"></i><tool-tip>Volver</tool-tip>
+                    </a>
+                </div>
+
+                <h2>Añadir evento</h2>
+            </div>
+            <form role="form" action="/event/new" method="post">
+
+                <div class="row">
+                    <div class="form-group col-md-4 col-sm-12">
+                    <label for="day">Día:</label>
+                    <input type="number" class="form-control" name="day" id="day" min="1" max="31" value="{{#event}}{{event.day}}{{/event}}">
+                    </div>
+
+                    <div class="form-group col-md-4 col-sm-12">
+                    <label for="month">Mes:</label>
+                    <input type="number" class="form-control" name="month" id="month" min="1" max="12" value="{{#event}}{{event.month}}{{/event}}">
+                    </div>
+
+                    <div class="form-group col-md-4 col-sm-12">
+                    <label for="year">Año:</label>
+                    <input type="number" class="form-control" name="year" id="year" value="{{#event}}{{event.year}}{{/event}}">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-4 col-sm-12">
+                        <label for="icon">Icono:</label>
+                        <select class="form-control" name="icon" id="icon">
+                            <option value="bi bi-sun">Sol</option>
+                            <option value="bi bi-moon">Luna</option>
+                            <option value="bi bi-circle-fill">Eclipse</option>
+                            <option value="bi bi-moon-fill">Luna rellena</option>
+                            <option value="bi bi-circle">Círculo</option>
+                            <option value="bi bi-star">Estrella</option>
+                            <option value="bi bi-stars">Estrellas</option>
+                            <option value="bi bi-globe">Globo</option>
+                            <option value="bi bi-moon-stars">Luna y Estrellas</option>
+                            <option value="bi bi-flower1">Flor</option>
+                            <option value="bi bi-tree">Arbol</option>
+                            <option value="bi bi-snow">Nieve</option>
+                            <option value="bi bi-diagram-3">Alineación</option>
+                        </select>
+
+                        <div id="iconPreview" class="icon-preview col-md-6 col-sm-12">
+                            <i class="bi bi-sun"></i>
+                        </div>
+
+                    </div>
+                    <div class="form-group col-md-8 col-sm-12">
+                        <label for="description">Descripción:</label>
+                        <textarea class="form-control" id="description" name="description">{{#event}}{{event.description}}{{/event}}</textarea>
+                    </div>
+                </div>
+
+                <div class="btn-cont">
+                    <button type="submit" class="btn">
+                        <i class="bi bi-download"></i> Guardar
+                    </button>
+                    <a href="/calendar" class="btn btn-red" role="button">
+                        <i class="bi bi-x-lg"></i> Cancelar
+                    </a>
+                </div>
+                <input type ="hidden" name="_csrf" value="{{token}}"/>
+            </form>
+        </div>
+    </div>
+</body>

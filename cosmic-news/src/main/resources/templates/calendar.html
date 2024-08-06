@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Calendario</title>
+
+    {{> config}}
+
+    <link type="text/css" rel="stylesheet" href="/css/form.css" />
+    <link type="text/css" rel="stylesheet" href="/css/calendar.css" />
+    <link type="text/css" rel="stylesheet" href="/css/profile.css" />
+
+    <script src="/js/calendar.js"></script>
+</head>
+
+    {{>header}}
+
+    <div class="background-container">
+        <div class="container">
+            <div class="top-container">
+
+                <h2 class="white-text">Calendario</h2>
+                
+            </div>
+            <div id="calendar"></div>
+        </div>
+    </div>
+
+    <div id="dayModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3 id="modalDate">Información del día</h3>
+            <p id="modalInfo">Aquí puedes añadir información adicional para el día seleccionado.</p>
+            <div class="modal-buttons">
+                
+                <!--{{#iamAdmin}}
+
+                <a href="/event/{{id}}/edit"><button id="editButton" class="btn btn-secondary">Editar</button></a>
+
+                <form role="form" action='/event/delete?id={{id}}' method="post">
+                    <button type="submit" id="deleteButton" class="btn btn-danger">Borrar</button>
+                    <input type="hidden" name="_csrf" value="{{token}}"/>
+                </form>
+
+                {{/iamAdmin}}-->
+                <button id="notifyButton" class="btn btn-info">Notificar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="btn-cont bottom-right-button">
+        <a href="/event/new" class="btn" role="btn">
+            <i class="bi bi-plus-circle"></i><tool-tip style="top: auto; bottom: 100%;">Añadir evento</tool-tip>
+        </a>
+    </div>
+
+</html>
