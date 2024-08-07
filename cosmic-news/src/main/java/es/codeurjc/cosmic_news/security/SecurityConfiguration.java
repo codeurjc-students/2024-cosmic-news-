@@ -133,6 +133,9 @@ public class SecurityConfiguration {
 
 					.requestMatchers("/quizzes").permitAll()
 					.requestMatchers("/quizz/new").permitAll()
+					.requestMatchers("/quizz/delete/**").permitAll()
+					.requestMatchers("/quizz/**").permitAll()
+					.requestMatchers("/quizz/review/**").permitAll()
 
                     // OpenAPI documentation
                     .requestMatchers("/v3/**").permitAll()

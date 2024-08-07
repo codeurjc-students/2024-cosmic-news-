@@ -1,8 +1,14 @@
 package es.codeurjc.cosmic_news.model;
 
+import java.sql.Blob;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,6 +25,12 @@ public class Quizz {
 
     private String name;
     private String difficulty;
+
+    //@Lob
+    private Blob photo;
+    private boolean image;
+
+    private int score;
 
     @OneToMany(mappedBy = "quizz", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Question> questions;
@@ -54,6 +66,22 @@ public class Quizz {
         this.difficulty = difficulty;
     }
 
+    public Blob getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Blob photo) {
+        this.photo = photo;
+    }
+
+    public boolean isImage() {
+        return image;
+    }
+
+    public void setImage(boolean image) {
+        this.image = image;
+    }
+
     public List<Question> getQuestions() {
         return questions;
     }
@@ -61,4 +89,20 @@ public class Quizz {
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
     }
+
+    public void addQuestion(Question question) {
+        if (this.questions == null) {
+            this.questions = new ArrayList<>();
+        }
+        this.questions.add(question);
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
 }

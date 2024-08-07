@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Revisión del Quizz</title>
+    {{> config}}
+    <link type="text/css" rel="stylesheet" href="/css/data.css" />
+    <link type="text/css" rel="stylesheet" href="/css/profile.css" />
+    <link type="text/css" rel="stylesheet" href="/css/review.css" />
+</head>
+<body>
+    {{> header}}
+    <div class="background-container">
+        {{#quizz}}
+            <main class="container">
+                <div class="top-container">
+                    <h2>Revisión del Quizz: {{name}}</h2>
+                </div>
+
+                <div class="questions-container">
+                    {{#questions}}
+                        <div class="question-item" id="question-{{id}}">
+                            <h3>Pregunta {{num}}: {{question}}</h3>
+                            <div class="options-container">
+                                <div class="option {{#correct1}}correct{{/correct1}}{{^correct1}}incorrect{{/correct1}} {{#select1}}selected{{/select1}}">
+                                    <label>{{option1}}</label>
+                                </div>
+                                <div class="option {{#correct2}}correct{{/correct2}}{{^correct2}}incorrect{{/correct2}} {{#select2}}selected{{/select2}}">
+                                    <label>{{option2}}</label>
+                                </div>
+                                <div class="option {{#correct3}}correct{{/correct3}}{{^correct3}}incorrect{{/correct3}} {{#select3}}selected{{/select3}}">
+                                    <label>{{option3}}</label>
+                                </div>
+                                <div class="option {{#correct4}}correct{{/correct4}}{{^correct4}}incorrect{{/correct4}} {{#select4}}selected{{/select4}}">
+                                    <label>{{option4}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    {{/questions}}
+                </div>
+
+                <div class="submit-button">
+                    <a href="/quizzes" class="btn btn-submit">Volver a Quizzes</a>
+                </div>
+            </main>
+        {{/quizz}}
+    </div>
+</body>
+</html>

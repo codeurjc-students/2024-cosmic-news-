@@ -1,0 +1,42 @@
+.quiz-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.quiz-item {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.quiz-item.fácil {
+    background-color: #d4edda; /* Verde claro para fácil */
+}
+
+.quiz-item.normal {
+    background-color: #fff3cd; /* Amarillo claro para normal */
+}
+
+.quiz-item.difícil {
+    background-color: #f8d7da; /* Rojo claro para difícil */
+}
+
+.btn-cont {
+    margin-left: 10px;
+}
+
+.btn-red {
+    color: white;
+    background-color: red;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.btn-red:hover {
+    background-color: darkred;
+}

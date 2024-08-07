@@ -23,18 +23,32 @@ public class Question {
     private String option4;
     private String answer;
 
+    private boolean select1;
+    private boolean select2;
+    private boolean select3;
+    private boolean select4;
+
+    private boolean correct1;
+    private boolean correct2;
+    private boolean correct3;
+    private boolean correct4;
+
+    private int num;
+
     @ManyToOne
     private Quizz quizz;
 
     public Question(){}
 
-    public Question(String question, String option1, String option2, String option3, String option4, String answer){
+    public Question(String question, String option1, String option2, String option3, String option4, String answer, int num, Quizz quizz){
         this.question = question;
         this.option1 = option1;
         this.option2 = option2;
         this.option3 = option3;
         this.option4 = option4;
         this.answer = answer;
+        this.num = num;
+        this.quizz = quizz;
     }
 
     public Long getId() {
@@ -93,11 +107,83 @@ public class Question {
         this.answer = answer;
     }
 
+    public int getNum(){
+        return num;
+    }
+
+    public void setNum(int num){
+        this.num = num;
+    }
+
     public void setQuizz(Quizz quizz){
         this.quizz = quizz;
     }
 
     public Quizz getQuizz(){
         return quizz;
+    }
+
+    public boolean isSelect1() {
+        return select1;
+    }
+
+    public void setSelect1(boolean select1) {
+        this.select1 = select1;
+    }
+
+    public boolean isSelect2() {
+        return select2;
+    }
+
+    public void setSelect2(boolean select2) {
+        this.select2 = select2;
+    }
+
+    public boolean isSelect3() {
+        return select3;
+    }
+
+    public void setSelect3(boolean select3) {
+        this.select3 = select3;
+    }
+
+    public boolean isSelect4() {
+        return select4;
+    }
+
+    public void setSelect4(boolean select4) {
+        this.select4 = select4;
+    }
+
+    public boolean isCorrect1() {
+        return correct1;
+    }
+
+    public void setCorrect1(boolean correct1) {
+        this.correct1 = correct1;
+    }
+
+    public boolean isCorrect2() {
+        return correct2;
+    }
+
+    public void setCorrect2(boolean correct2) {
+        this.correct2 = correct2;
+    }
+
+    public boolean isCorrect3() {
+        return correct3;
+    }
+
+    public void setCorrect3(boolean correct3) {
+        this.correct3 = correct3;
+    }
+
+    public boolean isCorrect4() {
+        return correct4;
+    }
+
+    public void setCorrect4(boolean correct4) {
+        this.correct4 = correct4;
     }
 }

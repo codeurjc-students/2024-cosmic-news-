@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {{> config}}
+    <title>Resultado del Quizz</title>
+    <link type="text/css" rel="stylesheet" href="/css/form.css" />
+    <link type="text/css" rel="stylesheet" href="/css/quiz.css" />
+</head>
+<body>
+    {{> header}}
+    <div class="background-container">
+        <main class="container">
+            <div class="top-container">
+                <div class="left-cont">
+                    <a href="/quizzes" class="btn" role="button">
+                        <i class="bi bi-arrow-left"></i><tool-tip>Volver</tool-tip>
+                    </a>
+                </div>
+                <h2>Resultado del Quizz</h2>
+            </div>
+            <p>Has acertado {{quizz.score}} de {{quizz.questions.size}} preguntas.</p>
+
+            {{#completed}}
+                <p>¡Enhorabuena! Has acertado todas las preguntas.</p>
+            {{/completed}}
+
+            <div class="submit-button">
+                <a href="/quizz/review/{{quizz.id}}" class="btn btn-submit">Revisar test</a>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

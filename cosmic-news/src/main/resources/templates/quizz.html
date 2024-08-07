@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Quizz {{quizz.name}}</title>
+    {{> config}}
+    <link type="text/css" rel="stylesheet" href="/css/quiz.css" /> <!-- Agrega esta línea -->
+    <script src="/js/quiz.js"></script> <!-- Agrega esta línea -->
+</head>
+
+<body>
+    {{> header}}
+    <div class="background-container">
+        {{#quizz}}
+            <main class="container">
+                <div class="top-container">
+                    <div class="left-cont">
+                        <a href="/quizzes" class="btn" role="button">
+                            <i class="bi bi-arrow-left"></i><tool-tip>Volver</tool-tip>
+                        </a>
+                    </div>
+                    <div class="rigth-cont">
+                        <i class="bi bi-square invisible-icon"></i>
+                    </div>
+                    <h2>Quizz {{name}}</h2>
+                </div>
+
+                <!-- Aquí se mostrarán las preguntas -->
+                <form id="quizz-form" action="/quizz/submit/{{quizz.id}}" method="post">
+                <div class="questions-container">
+                    {{#questions}}
+                        <div class="question-item" id="question-{{id}}">
+                            <h3>Pregunta {{num}}: {{question}}</h3>
+                            <div class="options-container">
+                                <div class="option">
+                                    <input type="radio" id="option1-{{id}}" name="question-{{id}}" value="{{option1}}" />
+                                    <label for="option1-{{id}}">{{option1}}</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" id="option2-{{id}}" name="question-{{id}}" value="{{option2}}" />
+                                    <label for="option2-{{id}}">{{option2}}</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" id="option3-{{id}}" name="question-{{id}}" value="{{option3}}" />
+                                    <label for="option3-{{id}}">{{option3}}</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" id="option4-{{id}}" name="question-{{id}}" value="{{option4}}" />
+                                    <label for="option4-{{id}}">{{option4}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    {{/questions}}
+                </div>
+
+                    <!-- Navegación entre preguntas -->
+                    <div class="navigation-buttons">
+                        {{#questions}}
+                            <a href="#question-{{id}}" class="btn">{{num}}</a>
+                        {{/questions}}
+                    </div>
+
+                    <div class="submit-button">
+                        <button type="submit" class="btn btn-submit">Terminar quizz</button>
+                    </div>
+                    <input type="hidden" name="_csrf" value="{{token}}"/>
+                </form>
+            </main>
+        {{/quizz}}
+    </div>
+</body>
+
+</html>
