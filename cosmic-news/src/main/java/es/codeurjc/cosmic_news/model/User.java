@@ -1,6 +1,7 @@
 package es.codeurjc.cosmic_news.model;
 
 import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -36,6 +37,10 @@ public class User {
     private boolean image;
 
     @ElementCollection(fetch = FetchType.EAGER)
+    @Lob
+    private List<Badge> badges;
+
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles;
 
     public User(){}
@@ -59,7 +64,7 @@ public class User {
         return roles.contains(role);
     }
 
-     public Long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -129,6 +134,33 @@ public class User {
 
     public void setImage(boolean image) {
         this.image = image;
+    }
+
+    public List<Badge> getBadges() {
+        return badges;
+    }
+
+    public void setBadges(List<Badge> badges) {
+        this.badges = badges;
+    }
+
+    public void addBadge(Badge badge) {
+        if (this.badges == null) {
+            this.badges = new ArrayList<>();
+        }
+        this.badges.add(badge);
+    }
+
+    public boolean hasBadge(String badgeName) {
+        if (this.badges == null) {
+            return false;
+        }
+        for (Badge badge : this.badges) {
+            if (badge.getName().equals(badgeName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public List<String> getRoles() {

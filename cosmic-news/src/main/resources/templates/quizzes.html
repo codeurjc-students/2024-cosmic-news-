@@ -1,13 +1,9 @@
 <html>
-
 <head>
     <title>Quizzes</title>
-
     {{> config}}
-    <link type="text/css" rel="stylesheet" href="/css/cards.css" />
     <link type="text/css" rel="stylesheet" href="/css/quizzes.css" />
 </head>
-
 <body>
     {{> header}}
     <div class="background-container">
@@ -23,8 +19,10 @@
             <ul class="quiz-list">
                 {{#quizzes}}
                 <li class="quiz-item {{difficulty}}">
-                    <a href="/quizz/{{id}}"><span>Quizz {{name}}, Dificultad: {{difficulty}}</span></a>
-                    <div class="btn-cont">
+                    <a href="/quizz/{{id}}">
+                        <span>Quizz {{name}}, Dificultad: {{difficulty}}</span>
+                    </a>
+                    <div class="btn-cont bottom-right-butt">
                         <form role="form" action='/quizz/delete/{{id}}' method="post">
                             <button type="submit" class="btn btn-red">
                                 <i class="bi bi-trash-fill"></i><tool-tip>Borrar</tool-tip>
@@ -44,3 +42,4 @@
         </a>
     </div>
 </body>
+</html>

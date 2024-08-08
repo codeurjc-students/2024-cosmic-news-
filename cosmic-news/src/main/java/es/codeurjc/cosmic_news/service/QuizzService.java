@@ -13,10 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import es.codeurjc.cosmic_news.model.Badge;
 import es.codeurjc.cosmic_news.model.Question;
 import es.codeurjc.cosmic_news.model.Quizz;
+import es.codeurjc.cosmic_news.model.User;
 import es.codeurjc.cosmic_news.repository.QuestionRepository;
 import es.codeurjc.cosmic_news.repository.QuizzRepository;
+import es.codeurjc.cosmic_news.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Service
@@ -26,7 +29,7 @@ public class QuizzService {
     private QuizzRepository quizzRepository;
 
     @Autowired
-    private QuestionRepository questionRepository;
+    private UserRepository userRepository;
     
     public List<Quizz> getAllQuizzes(){
         return quizzRepository.findAll();
@@ -122,11 +125,8 @@ public class QuizzService {
             List<Question> questions = quizz.getQuestions();
             int correctAnswers = 0;
     
-            Map<Long, String> userAnswers = new HashMap<>();
-    
             for (Question question : questions) {
                 String selectedOption = request.getParameter("question-" + question.getId());
-                userAnswers.put(question.getId(), selectedOption);
                 if (selectedOption != null){
                     if (selectedOption.equals(question.getOption1())){
                         question.setSelect1(true);
@@ -164,6 +164,22 @@ public class QuizzService {
             return quizz;
         }
     }
+
+    public void giveBadge(Quizz quizz, String mail){
+        Optional<User> userOp = userRepository.findByMail(mail);
+        if (userOp.isPresent()){
+            if (quizz.isImage()){
+                User user = userOp.get();
+                if (!user.hasBadge(quizz.getName())){
+                    int length = user.getBadges().size();
+                    user.addBadge(new Badge(quizz.getPhoto(),quizz.getName(), length));
+                    userRepository.save(user);
+                }
+            }
+            
+        }
+    }
+
     public Quizz findQuizzById(Long id){
         Optional<Quizz> quizz = quizzRepository.findById(id);
         if (quizz.isPresent()){

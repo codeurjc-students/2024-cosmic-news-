@@ -62,14 +62,17 @@ body {
 }
 
 p {
-    text-align: left;
+    text-align: center;
     margin-right: 20px;
     margin-left: 20px;
 }
 
 .invisible-icon {
     opacity: 0;
-    /* Opción adicional si deseas que el icono ocupe espacio pero no sea visible */
     width: 1em;
     height: 1em;
+}
+
+.space{
+    margin-top: 10px;
 }

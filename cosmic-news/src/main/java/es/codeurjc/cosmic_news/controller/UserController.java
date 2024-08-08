@@ -133,6 +133,21 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
+ 
+    @GetMapping("/badge/{id}/{position}/image")
+    public ResponseEntity<Object> downloadBadgeImage(@PathVariable long id, @PathVariable int position) throws SQLException {
+        User user = userService.findUserById(id);
+        if (user != null && user.getBadges().get(position).getImage() != null) {
+
+            Resource file = new InputStreamResource(user.getBadges().get(position).getImage().getBinaryStream());
+
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+                    .contentLength(user.getBadges().get(position).getImage().length()).body(file);
+
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @PostMapping("/profile/delete")
     public String deleteAccount(Model model, HttpServletRequest request, @RequestParam("mail") String mail) {

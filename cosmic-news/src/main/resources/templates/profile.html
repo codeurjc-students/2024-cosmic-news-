@@ -70,6 +70,21 @@
                     </div>
                 </div>
 
+                <div class="subcontainer">
+                    <h3>Insignias conseguidas</h3>
+                    <ul>
+                        {{#badges}}
+                        <li class="badge-item">
+                            <img id="img-badge" src="/badge/{{id}}/{{position}}/image" alt="{{name}}">
+                            <p><span>{{name}}</span></p>
+                        </li>
+                        {{/badges}}
+                        {{^badges}}
+                        <li>Todavía no tienes insignias. ¡Completa quizzes para conseguirlas!</li>
+                        {{/badges}}
+                    </ul>
+                </div>
+
             </main>
         {{/user}}
     </div>

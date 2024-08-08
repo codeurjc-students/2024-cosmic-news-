@@ -1,11 +1,16 @@
 package es.codeurjc.cosmic_news.controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.util.List;
 
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -89,6 +94,12 @@ public class QuizzesController {
             model.addAttribute("back", "javascript:history.back()");
             return "message";
         } else {
+            if (request.getUserPrincipal() != null){
+                if (quizz.getScore() == quizz.getQuestions().size()){
+                    String myMail = request.getUserPrincipal().getName();
+                    quizzService.giveBadge(quizz,myMail);
+                }
+            } //Poner al final al acabar las pruebas
             model.addAttribute("completed", quizz.getScore() == quizz.getQuestions().size());
             model.addAttribute("quizz", quizz);
             return "result";
@@ -107,6 +118,21 @@ public class QuizzesController {
             model.addAttribute("quizz", quizz);
             //quizzService.unselect(quizz);
             return "review";
+        }
+    }
+
+    @GetMapping("/quizz/{id}/image")
+    public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
+        Quizz quizz = quizzService.findQuizzById(id);
+        if (quizz != null && quizz.getPhoto() != null) {
+
+            Resource file = new InputStreamResource(quizz.getPhoto().getBinaryStream());
+
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+                    .contentLength(quizz.getPhoto().length()).body(file);
+
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
     

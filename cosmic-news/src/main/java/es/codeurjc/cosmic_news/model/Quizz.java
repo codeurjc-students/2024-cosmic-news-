@@ -1,11 +1,15 @@
 package es.codeurjc.cosmic_news.model;
 
+import java.io.IOException;
 import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import org.hibernate.engine.jdbc.BlobProxy;
+import org.springframework.core.io.ClassPathResource;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -103,6 +107,18 @@ public class Quizz {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public Blob photoToBlob(String photoStr) {
+        ClassPathResource image = new ClassPathResource(photoStr);
+        try {
+            Blob photoBlob = BlobProxy.generateProxy(image.getInputStream(), image.contentLength());
+            return photoBlob;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
 }

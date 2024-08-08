@@ -4,13 +4,17 @@
 }
 
 .quiz-item {
+    display: flex;
+    flex-direction: column;
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 10px;
     margin-bottom: 10px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    margin: 10px;
+    background-color: #f9f9f9;
 }
 
 .quiz-item.fácil {
@@ -25,8 +29,8 @@
     background-color: #f8d7da; /* Rojo claro para difícil */
 }
 
-.btn-cont {
-    margin-left: 10px;
+.btn-cont5 {
+    margin-left: 20px;
 }
 
 .btn-red {
@@ -39,4 +43,20 @@
 
 .btn-red:hover {
     background-color: darkred;
+}
+
+.quiz-item span {
+    font-size: 1.2em;
+}
+
+.quiz-item a {
+    text-decoration: none; 
+    color: inherit; 
+    display: block; 
+    width: 100%; 
+    height: 100%; 
+}
+
+.btn-cont .btn {
+    min-width: 50px;
 }

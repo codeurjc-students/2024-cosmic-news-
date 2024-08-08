@@ -53,3 +53,26 @@
 .btn-submit:hover {
     background-color: #0056b3;
 }
+
+.question-item {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.background-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; 
+    background-image: url('/images/background.jpg'); 
+    background-size: cover; 
+    background-position: center; 
+    background-attachment: fixed;
+    background-repeat: repeat-y;
+    height: 10000%; 
+    width: 100%; 
+    margin: 0; 
+    padding: 0; 
+}

@@ -22,6 +22,13 @@
 
             {{#completed}}
                 <p>¡Enhorabuena! Has acertado todas las preguntas.</p>
+
+                {{#quizz.image}}
+                <p>¡Has conseguido la siguiente insignia!</p>
+                <img id="img-user" src="/quizz/{{id}}/image">
+                <p class="space">Podrás verla siempre que quieras en tu perfil.</p>
+                {{/quizz.image}}
+
             {{/completed}}
 
             <div class="submit-button">
