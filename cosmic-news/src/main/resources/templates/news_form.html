@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Formulario nuevas noticias</title>
+
+    {{> config}}
+
+    <link type="text/css" rel="stylesheet" href="/css/form.css" />
+    <link type="text/css" rel="stylesheet" href="/css/skills.css" />
+
+</head>
+
+<body>
+    {{> header}}
+    <div class="background-container">
+        <div class="container">
+            {{#edit}}
+            <h2>Editar noticia</h2>
+            {{/edit}}
+            {{^edit}}
+            <h2>Nueva noticia</h2>
+            {{/edit}}
+
+            {{#edit}}
+            <form role="form" action="/news/{{news.id}}/edit" method="post" enctype="multipart/form-data">
+            {{/edit}}
+            {{^edit}}
+            <form role="form" action="/news/new" method="post" enctype="multipart/form-data">
+            {{/edit}}
+                <input type ="hidden" name="_csrf" value="{{token}}"/>
+                <div class="form-group">
+                    <label for="title">Título</label>
+                    <input type="text" class="form-control" name="title" placeholder="Introduzca el título de la noticia" value="{{#news}}{{news.title}}{{/news}}">
+                </div>
+
+                <div class="form-group">
+                    <label for="subtitle">Subtítulo</label>
+                    <input type="text" class="form-control" name="subtitle" placeholder="Introduzca el subtítulo de la noticia" value="{{#news}}{{news.subtitle}}{{/news}}">
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label for="topic">Tema</label>
+                        <input type="text" class="form-control" name="topic" placeholder="Tema de la noticia" value="{{#news}}{{news.topic}}{{/news}}">
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label for="author">Autor</label>
+                        <input type="text" class="form-control" name="author" placeholder="Nombre del autor" value="{{#news}}{{news.author}}{{/news}}">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label for="readingTime">Tiempo de lectura</label>
+                        <input type="number" class="form-control" name="readingTime" placeholder="Tiempo de lectura" value="{{#news}}{{news.readingTime}}{{/news}}">
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label for="photoField">Foto de la noticia</label>
+                        <input type="file" class="form-control" name="photoField" id="photoField" accept=".jpeg, .png">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="bodyText">Cuerpo de la noticia</label>
+                    <textarea type="text" class="form-control" name="bodyText" placeholder="Cuerpo de la noticia">{{#news}}{{news.bodyText}}{{/news}}</textarea>
+                </div>
+
+                <!-- Buttons -->
+                <div class="btn-cont">
+                    <button type="submit" class="btn">
+                        <i class="bi bi-download"></i> Guardar
+                    </button>
+                    <a href="/news" class="btn btn-red" role="button">
+                        <i class="bi bi-x-lg"></i> Cancelar
+                    </a>
+                </div>
+            <input type ="hidden" name="_csrf" value="{{token}}"/>
+        </form>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{news.title}}</title>
+
+    {{> config}}
+
+    <link type="text/css" rel="stylesheet" href="/css/data.css" />
+    <link type="text/css" rel="stylesheet" href="/css/profile.css" />
+</head>
+
+<body>
+    {{> header}}
+    <div class="background-container">
+        {{#news}}
+            <main class="container">
+                <div class="top-container">
+                    <div class="left-cont">
+                        <a href="/" class="btn" role="button">
+                            <i class="bi bi-arrow-left"></i><tool-tip>Volver</tool-tip>
+                        </a>
+                    </div>
+
+                    <h2>{{title}} {{subtitle}}</h2>
+
+                    <div class="right-cont">
+                    <a href="/news/{{id}}/edit" class="btn" role="button">
+                        <i class="bi bi-pencil-fill"></i><tool-tip>Editar noticia</tool-tip>
+                    </a>
+
+                    <a href="/news/{{id}}/delete" class="btn" role="button">
+                            <i class="bi bi-trash-fill"></i><tool-tip>Borrar noticia</tool-tip>
+                    </a>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        {{#photo}}
+                        <img id="img-user" src="/news/{{id}}/image">
+                        {{/photo}}
+                        {{^photo}}
+                        <img id="img-user" src="/images/noPhotoUser.jpg">
+                        {{/photo}}
+                    </div>
+
+                    <div class="col-md-8">
+                        <p><strong>Autor</strong> {{author}}</p>
+                        <p><strong>Tema</strong> {{topic}}</p>
+                        <p><strong>Tiempo de lectura</strong> {{readingTime}}</p>
+                        <p><strong>Cuerpo noticia:</strong> {{bodyText}}</p>
+                    </div>
+                </div>
+            </main>
+        {{/news}}
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{picture.title}}</title>
+
+    {{> config}}
+
+    <link type="text/css" rel="stylesheet" href="/css/data.css" />
+    <link type="text/css" rel="stylesheet" href="/css/profile.css" />
+</head>
+
+<body>
+    {{> header}}
+    <div class="background-container">
+        {{#picture}}
+            <main class="container">
+                <div class="top-container">
+                    <div class="left-cont">
+                        <a href="/" class="btn" role="button">
+                            <i class="bi bi-arrow-left"></i><tool-tip>Volver</tool-tip>
+                        </a>
+                    </div>
+
+                    <h2>{{title}}</h2>
+
+                    <div class="right-cont">
+                    <a href="/picture/{{id}}/edit" class="btn" role="button">
+                        <i class="bi bi-pencil-fill"></i><tool-tip>Editar foto</tool-tip>
+                    </a>
+
+                    <a href="/picture/{{id}}/delete" class="btn" role="button">
+                            <i class="bi bi-trash-fill"></i><tool-tip>Borrar foto</tool-tip>
+                    </a>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        {{#photo}}
+                        <img id="img-user" src="/picture/{{id}}/image">
+                        {{/photo}}
+                        {{^photo}}
+                        <img id="img-user" src="/images/noPhotoUser.jpg">
+                        {{/photo}}
+                    </div>
+
+                    <div class="col-md-8">
+                        <p><strong>Autor</strong> {{author}}</p>
+                        <p><strong>Lugar</strong> {{location}}</p>
+                        <p><strong>Fecha</strong> {{dateTaken}}</p>
+                        <p><strong>Descripcion:</strong> {{description}}</p>
+                    </div>
+                </div>
+            </main>
+        {{/picture}}
+    </div>
+</body>
+
+</html>

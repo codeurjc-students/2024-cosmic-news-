@@ -137,6 +137,15 @@ public class SecurityConfiguration {
 					.requestMatchers("/quizz/**").permitAll()
 					.requestMatchers("/quizz/review/**").permitAll()
 
+					.requestMatchers("/news").permitAll()
+					.requestMatchers("/news/new").permitAll()
+					.requestMatchers("/news/**").permitAll()
+
+					.requestMatchers("/pictures").permitAll()
+					.requestMatchers("/picture/new").permitAll()
+					.requestMatchers("/picture/**").permitAll()
+
+
                     // OpenAPI documentation
                     .requestMatchers("/v3/**").permitAll()
                     .requestMatchers("/swagger-ui/**").permitAll()

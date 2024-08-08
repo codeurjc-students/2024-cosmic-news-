@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Formulario nuevas fotos</title>
+
+    {{> config}}
+
+    <link type="text/css" rel="stylesheet" href="/css/form.css" />
+    <link type="text/css" rel="stylesheet" href="/css/skills.css" />
+
+</head>
+
+<body>
+    {{> header}}
+    <div class="background-container">
+        <div class="container">
+            {{#edit}}
+            <h2>Editar foto</h2>
+            {{/edit}}
+            {{^edit}}
+            <h2>Nueva foto</h2>
+            {{/edit}}
+
+            {{#edit}}
+            <form role="form" action="/picture/{{picture.id}}/edit" method="post" enctype="multipart/form-data">
+            {{/edit}}
+            {{^edit}}
+            <form role="form" action="/picture/new" method="post" enctype="multipart/form-data">
+            {{/edit}}
+                <input type ="hidden" name="_csrf" value="{{token}}"/>
+                <div class="form-group">
+                    <label for="title">Título</label>
+                    <input type="text" class="form-control" name="title" placeholder="Introduzca el título de la foto" value="{{#picture}}{{picture.title}}{{/picture}}">
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label for="author">Autor</label>
+                        <input type="text" class="form-control" name="author" placeholder="Nombre del autor" value="{{#picture}}{{picture.author}}{{/picture}}">
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label for="location">Lugar</label>
+                        <input type="text" class="form-control" name="location" placeholder="Lugar de la foto" value="{{#picture}}{{picture.location}}{{/picture}}">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label for="dateTaken">Fecha de captura</label>
+                        <input type="date" class="form-control" name="dateTaken" placeholder="Fecha" value="{{#picture}}{{picture.dateTaken}}{{/picture}}">
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label for="photoField">Foto</label>
+                        <input type="file" class="form-control" name="photoField" id="photoField" accept=".jpeg, .png">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Descripción</label>
+                    <textarea type="text" class="form-control" name="description" placeholder="Descripción de la foto">{{#picture}}{{picture.description}}{{/picture}}</textarea>
+                </div>
+
+                <!-- Buttons -->
+                <div class="btn-cont">
+                    <button type="submit" class="btn">
+                        <i class="bi bi-download"></i> Guardar
+                    </button>
+                    <a href="/pictures" class="btn btn-red" role="button">
+                        <i class="bi bi-x-lg"></i> Cancelar
+                    </a>
+                </div>
+            <input type ="hidden" name="_csrf" value="{{token}}"/>
+        </form>
+        </div>
+    </div>
+</body>
+
+</html>
