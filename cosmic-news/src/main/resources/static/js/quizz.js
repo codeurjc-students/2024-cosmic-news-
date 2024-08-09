@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', (event) => {
+    const isEdit = document.body.getAttribute('isEdit') === 'true';
     let numQuestions = 0;
 
     function createQuestionHTML(index) {
@@ -56,6 +57,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
         updateQuestionCounter();
     });
 
-    // Añadir la primera pregunta de forma predeterminada
-    document.getElementById('add-question-btn').click();
+    updateQuestionCounter();
+
+    if(!isEdit){
+        document.getElementById('add-question-btn').click();
+    }
 });

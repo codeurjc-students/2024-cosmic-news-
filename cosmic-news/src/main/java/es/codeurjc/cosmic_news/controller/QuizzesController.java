@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.cosmic_news.model.Badge;
+import es.codeurjc.cosmic_news.model.Picture;
 import es.codeurjc.cosmic_news.model.Question;
 import es.codeurjc.cosmic_news.model.Quizz;
 import es.codeurjc.cosmic_news.model.User;
@@ -54,6 +55,7 @@ public class QuizzesController {
     public String getQuizzForm(Model model) {
 
         model.addAttribute("edit", false);
+        model.addAttribute("questionsSize", 0);
 
         return "quizz_form";
     }
@@ -92,6 +94,37 @@ public class QuizzesController {
             model.addAttribute("questions", questions);
             return "quizz";
         }
+    }
+
+    @GetMapping("/quizz/{id}/edit")
+    public String showQuizzFormEdit(@PathVariable Long id, Model model, HttpServletRequest request) {
+        Quizz quizz = quizzService.findQuizzById(id);
+        if (quizz != null){
+            model.addAttribute("quizz", quizz);
+            model.addAttribute("questionsSize", quizz.getQuestions().size());
+            model.addAttribute("edit", true);
+            return "quizz_form";
+        }else{
+            model.addAttribute("title", "Error");
+            model.addAttribute("message", "Quizz no encontrado");
+            model.addAttribute("back", "/quizzes");
+            return "message";
+        }
+    }
+
+    @PostMapping("/quizz/{id}/edit")
+    public String editQuizz(@PathVariable Long id, HttpServletRequest request, Model model,MultipartFile photoField) throws IOException {
+        Quizz quizz = quizzService.findQuizzById(id);
+        if(quizz != null){
+            quizzService.updateQuizz(request, photoField, quizz);
+            return "redirect:/quizzes";
+        }else{
+            model.addAttribute("title", "Error");
+            model.addAttribute("message", "Quizz no encontrado");
+            model.addAttribute("back", "javascript:history.back()");
+            return "message";
+        }
+
     }
 
     @PostMapping("/quizz/submit/{id}")

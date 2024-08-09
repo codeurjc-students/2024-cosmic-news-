@@ -12,7 +12,7 @@
     <script src="/js/quizz.js"></script>
 </head>
 
-<body>
+<body isEdit="{{#edit}}true{{/edit}}{{^edit}}false{{/edit}}">
     {{> header}}
     <div class="background-container">
         <div class="container">
@@ -24,7 +24,7 @@
             {{/edit}}
 
             {{#edit}}
-            <form role="form" action="/user/{{quizz.id}}/edit" method="post" enctype="multipart/form-data">
+            <form role="form" action="/quizz/{{quizz.id}}/edit" method="post" enctype="multipart/form-data">
             {{/edit}}
             {{^edit}}
             <form role="form" action="/quizz/new" method="post" enctype="multipart/form-data">
@@ -34,11 +34,14 @@
                 <div class="row">
                     <div class="form-group col-md-6 col-sm-12">
                         <label for="name">Nombre</label>
-                        <input type="text" class="form-control" name="name" placeholder="Introduzca un nombre para el test">
+                        <input type="text" class="form-control" name="name" placeholder="Introduzca un nombre para el test" value="{{#quizz}}{{quizz.name}}{{/quizz}}">
                     </div>
                     <div class="form-group col-md-6 col-sm-12">
                         <label for="difficulty">Dificultad:</label>
                         <select class="form-control" name="difficulty" id="difficulty">
+                            {{#edit}}
+                            <option value="{{quizz.difficulty}}" selected hidden>{{quizz.difficulty}}</option>
+                            {{/edit}}
                             <option value="Fácil">Fácil</option>
                             <option value="Normal">Normal</option>
                             <option value="Difícil">Difícil</option>
@@ -51,9 +54,49 @@
                     <input type="file" class="form-control" name="photoField" id="photoField" accept=".jpeg, .png">
                 </div>
         
-                <input type="hidden" class="form-control" name="numQuestions" id="numQuestions" value="0">
+                <input type="hidden" class="form-control" name="numQuestions" id="numQuestions" value="{{questionsSize}}">
 
                 <div id="questions-container">
+                    {{#quizz.questions}}
+                    <div class="question-container">
+                        <h3>Pregunta {{id}}</h3>
+                        <div class="form-group">
+                            <label for="question{{id}}">Pregunta: </label>
+                            <input type="text" class="form-control" name="questions[{{id}}][question]" value="{{question}}">
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6 col-sm-12">
+                                <label for="option1_{{id}}">Opción 1: </label>
+                                <input type="text" class="form-control" name="questions[{{id}}][option1]" value="{{option1}}">
+                            </div>
+                            <div class="form-group col-md-6 col-sm-12">
+                                <label for="option2_{{id}}">Opción 2: </label>
+                                <input type="text" class="form-control" name="questions[{{id}}][option2]" value="{{option2}}">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6 col-sm-12">
+                                <label for="option3_{{id}}">Opción 3: </label>
+                                <input type="text" class="form-control" name="questions[{{id}}][option3]" value="{{option3}}">
+                            </div>
+                            <div class="form-group col-md-6 col-sm-12">
+                                <label for="option4_{{id}}">Opción 4: </label>
+                                <input type="text" class="form-control" name="questions[{{id}}][option4]" value="{{option4}}">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-12 col-sm-12">
+                                <label for="answer_{{id}}">Opción correcta: </label>
+                                <select class="form-control" name="questions[{{id}}][answer]" id="answer_{{id}}">
+                                    <option value="option1" {{#correct1}}selected{{/correct1}}>Opción 1</option>
+                                    <option value="option2" {{#correct2}}selected{{/correct2}}>Opción 2</option>
+                                    <option value="option3" {{#correct3}}selected{{/correct3}}>Opción 3</option>
+                                    <option value="option4" {{#correct4}}selected{{/correct4}}>Opción 4</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    {{/quizz.questions}}
                     <!-- Se agregarán preguntas aquí -->
                 </div>
 

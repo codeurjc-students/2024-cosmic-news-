@@ -27,6 +27,9 @@
                         <span>Quizz {{name}}, Dificultad: {{difficulty}}</span>
                     </a>
                     <div class="btn-cont">
+                        <a href="/quizz/{{id}}/edit" class="btn" role="button">
+                            <i class="bi bi-pencil-fill"></i><tool-tip>Editar Quizz</tool-tip>
+                        </a>
                         <form role="form" action='/quizz/delete/{{id}}' method="post">
                             <button type="submit" class="btn btn-red">
                                 <i class="bi bi-trash-fill"></i><tool-tip>Borrar</tool-tip>
