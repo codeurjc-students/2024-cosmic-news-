@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', (event) => {
     const isEdit = document.body.getAttribute('isEdit') === 'true';
-    let numQuestions = 0;
+    const numQuestionsInput = document.getElementById('numQuestions');
+    let numQuestions = parseInt(numQuestionsInput.value,10);
 
     function createQuestionHTML(index) {
         return `
@@ -56,8 +57,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         numQuestions++;
         updateQuestionCounter();
     });
-
-    updateQuestionCounter();
 
     if(!isEdit){
         document.getElementById('add-question-btn').click();
