@@ -94,13 +94,6 @@
     right: 2%;
 }
 
-.bottom-right-butt {
-    position: fixed;
-    right: 12%;
-    margin-top: 30px;
-    display:flex;
-}
-
 .bottom-right-button > .btn {
     min-width: 50px;
     border-radius: 10px;

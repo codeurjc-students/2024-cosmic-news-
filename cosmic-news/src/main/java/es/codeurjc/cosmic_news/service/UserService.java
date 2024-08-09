@@ -1,11 +1,13 @@
 package es.codeurjc.cosmic_news.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import es.codeurjc.cosmic_news.model.Quizz;
 import es.codeurjc.cosmic_news.model.User;
 import es.codeurjc.cosmic_news.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,6 +19,10 @@ public class UserService {
 
    @Autowired
     private PasswordEncoder passwordEncoder;
+
+    public List<User> getAllUsers(){
+        return userRepository.findAll();
+    }
 
     public User saveUser(User user){
         if (userRepository.findByMail(user.getName()).isPresent()){

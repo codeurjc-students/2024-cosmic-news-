@@ -3,6 +3,10 @@
     <title>Quizzes</title>
     {{> config}}
     <link type="text/css" rel="stylesheet" href="/css/quizzes.css" />
+    <link type="text/css" rel="stylesheet" href="/css/data.css" />
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="/js/chart.js"></script>
 </head>
 <body>
     {{> header}}
@@ -22,7 +26,7 @@
                     <a href="/quizz/{{id}}">
                         <span>Quizz {{name}}, Dificultad: {{difficulty}}</span>
                     </a>
-                    <div class="btn-cont bottom-right-butt">
+                    <div class="btn-cont">
                         <form role="form" action='/quizz/delete/{{id}}' method="post">
                             <button type="submit" class="btn btn-red">
                                 <i class="bi bi-trash-fill"></i><tool-tip>Borrar</tool-tip>
@@ -34,8 +38,23 @@
                 </li>
                 {{/quizzes}}
             </ul>
+            <div class="container">
+                <div class="top-container">
+                    <div class="left-cont">
+                    </div>
+                    <h2>Estadísticas de los quizzes</h2>
+                </div>
+        
+                <div id="piechart"></div>
+                {{#quizzesChart}}
+                    {{#entrySet}}
+                    <input type="hidden" class="attitude" data-name="{{key}}" value="{{value}}" />
+                    {{/entrySet}}
+                {{/quizzesChart}}
+            </div>
         </main>
     </div>
+
     <div class="btn-cont bottom-right-button">
         <a href="/quizz/new" class="btn" role="btn">
             <i class="bi bi-plus-circle"></i><tool-tip style="top: auto; bottom: 100%;">Añadir quizz</tool-tip>

@@ -5,7 +5,7 @@
 
 .quiz-item {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 10px;
@@ -58,5 +58,5 @@
 }
 
 .btn-cont .btn {
-    min-width: 50px;
+    min-width: 70px;
 }

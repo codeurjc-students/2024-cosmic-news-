@@ -3,6 +3,7 @@ package es.codeurjc.cosmic_news.controller;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.util.HashMap;
 import java.util.List;
 
 import org.hibernate.engine.jdbc.BlobProxy;
@@ -18,10 +19,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import es.codeurjc.cosmic_news.model.Badge;
 import es.codeurjc.cosmic_news.model.Question;
 import es.codeurjc.cosmic_news.model.Quizz;
 import es.codeurjc.cosmic_news.model.User;
 import es.codeurjc.cosmic_news.service.QuizzService;
+import es.codeurjc.cosmic_news.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,8 +38,14 @@ public class QuizzesController {
     @Autowired
     QuizzService quizzService;
 
+    @Autowired
+    UserService userService;
+
     @GetMapping("/quizzes")
     public String getQuizzes(Model model) {
+        HashMap<String, Integer> map = fillAttitudes();
+
+        model.addAttribute("quizzesChart", map);
         model.addAttribute("quizzes", quizzService.getAllQuizzes());
         return "quizzes";
     }
@@ -99,7 +108,7 @@ public class QuizzesController {
                     String myMail = request.getUserPrincipal().getName();
                     quizzService.giveBadge(quizz,myMail);
                 }
-            } //Poner al final al acabar las pruebas
+            }
             model.addAttribute("completed", quizz.getScore() == quizz.getQuestions().size());
             model.addAttribute("quizz", quizz);
             return "result";
@@ -135,6 +144,22 @@ public class QuizzesController {
             return ResponseEntity.notFound().build();
         }
     }
-    
+
+    public HashMap<String, Integer> fillAttitudes() {
+        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        List<Quizz> quizzList = quizzService.getAllQuizzes();
+        for (Quizz quizz : quizzList) {
+            map.put(quizz.getName(), 0);
+        }
+        List<User> userList = userService.getAllUsers();
+        for (User user : userList) {
+            if (!user.getBadges().isEmpty()){
+                for (Badge badge : user.getBadges()) {
+                    map.put(badge.getName(), map.get(badge.getName()) + 1);
+                }
+            }
+        }
+        return map;
+    }
     
 }
