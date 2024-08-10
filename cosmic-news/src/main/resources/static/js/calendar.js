@@ -85,11 +85,9 @@ document.addEventListener('DOMContentLoaded', () => {
         selectedEvent = events.find(e => new Date(e.date).getDate() === parseInt(day) && new Date(e.date).getMonth() === month && new Date(e.date).getFullYear() === year);
         const info = selectedEvent ? selectedEvent.description : 'No hay información adicional para este día.';
 
-        document.getElementById('eventDescription').value = selectedEvent ? selectedEvent.description : '';
-        document.getElementById('eventDate').value = formattedDate;
-        document.getElementById('eventIcon').value = selectedEvent ? selectedEvent.icon : '';
         document.getElementById('eventId').value = selectedEvent ? selectedEvent.id : '';
         document.getElementById('eventId2').value = selectedEvent ? selectedEvent.id : '';
+        document.getElementById('eventId3').value = selectedEvent ? selectedEvent.id : '';
 
         modalDate.textContent = `Información para el ${day} de ${new Date(year, month).toLocaleString('default', { month: 'long' })} de ${year}`;
         modalInfo.textContent = info;

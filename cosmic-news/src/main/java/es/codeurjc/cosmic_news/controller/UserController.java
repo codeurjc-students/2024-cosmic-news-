@@ -3,7 +3,9 @@ package es.codeurjc.cosmic_news.controller;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.time.LocalDate;
 import java.util.Map;
+import java.util.Optional;
 
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +22,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import es.codeurjc.cosmic_news.model.Event;
 import es.codeurjc.cosmic_news.model.User;
+import es.codeurjc.cosmic_news.service.EventService;
 import es.codeurjc.cosmic_news.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 @Controller
@@ -30,9 +36,29 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    EventService eventService;
     
     @GetMapping("/")
-    public String getIndex(Model model) {
+    public String getIndex(Model model, HttpServletRequest request) {
+        model.addAttribute("notification", false);
+        System.out.println("********user"+request.getUserPrincipal());
+        if (request.getUserPrincipal() != null) {
+            User user = userService.findUserByMail(request.getUserPrincipal().getName());
+            System.out.println("********EVENTOS1"+user.getEvents());
+            if (user != null && !user.getEvents().isEmpty()){
+                System.out.println("********EVENTOS"+user.getEvents());
+                Optional<Event> eventOp = userService.findEventByDate(user, LocalDate.now());
+                System.out.println("********EVENTOS70040"+eventOp);
+                if (eventOp.isPresent()){
+                    System.out.println("********EVENTOS7000"+eventOp);
+                    model.addAttribute("notification", true);
+                    model.addAttribute("event", eventOp.get());
+                }
+            }
+
+        }
         return "index";
     }
 
@@ -206,6 +232,40 @@ public class UserController {
         }
 
     }
+
+    @PostMapping("/notify")
+    public String notifyEvent(Model model, @RequestParam("eventId3") Long id, HttpServletRequest request) {
+        if (request.getUserPrincipal() != null) {
+            User user = userService.findUserByMail(request.getUserPrincipal().getName());
+            if (user != null){
+                Event event = eventService.findEventById(id);
+                if (event != null){
+                    userService.addEvent(user,event);
+                    model.addAttribute("title", "Hecho");
+                    model.addAttribute("message", "¡Recibirás una notificación cuando se produzca el evento!");
+                    model.addAttribute("back", "javascript:history.back()");
+                    return "message";
+                }else{
+                    model.addAttribute("title", "Error");
+                    model.addAttribute("message", "Evento no encontrado");
+                    model.addAttribute("back", "javascript:history.back()");
+                    return "message";
+                }
+            }else{
+                model.addAttribute("title", "Error");
+                model.addAttribute("message", "Usuario no encontrado");
+                model.addAttribute("back", "javascript:history.back()");
+                return "message";
+            }
+        }else{
+            model.addAttribute("title", "Error");
+            model.addAttribute("message", "Inicia sesión para poder recibir notificaciones de los próximos eventos astronómicos");
+            model.addAttribute("back", "javascript:history.back()");
+            return "message";
+        }
+        
+    }
+    
 
     @GetMapping("/availableMail")
     public ResponseEntity<?> checkMailAvailability(@RequestParam String mail) {

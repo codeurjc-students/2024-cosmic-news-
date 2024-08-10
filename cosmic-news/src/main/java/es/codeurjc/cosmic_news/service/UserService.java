@@ -1,5 +1,6 @@
 package es.codeurjc.cosmic_news.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import es.codeurjc.cosmic_news.model.Event;
 import es.codeurjc.cosmic_news.model.Quizz;
 import es.codeurjc.cosmic_news.model.User;
 import es.codeurjc.cosmic_news.repository.UserRepository;
@@ -52,6 +54,11 @@ public class UserService {
         user.setSurname(request.getParameter("surname"));
         user.setDescription(request.getParameter("description"));
         user.setNick(request.getParameter("nick"));
+        userRepository.save(user);
+    }
+
+    public void addEvent(User user, Event event){
+        user.addEvent(event);
         userRepository.save(user);
     }
 
@@ -103,6 +110,12 @@ public class UserService {
             message = "Nickname ya en uso por otro usuario. ";
         }
         return message;
+    }
+
+     public Optional<Event> findEventByDate(User user, LocalDate date) {
+        return user.getEvents().stream()
+                .filter(event -> event.getDate().equals(date))
+                .findFirst();
     }
 
 }

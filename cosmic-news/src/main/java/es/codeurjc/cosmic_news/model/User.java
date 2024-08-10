@@ -2,7 +2,9 @@ package es.codeurjc.cosmic_news.model;
 
 import java.sql.Blob;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -13,7 +15,10 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -39,6 +44,14 @@ public class User {
     @ElementCollection(fetch = FetchType.EAGER)
     @Lob
     private List<Badge> badges;
+
+    @ManyToMany
+    @JoinTable(
+        name = "user_event",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "event_id")
+    )
+    private Set<Event> events = new HashSet<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles;
@@ -161,6 +174,25 @@ public class User {
             }
         }
         return false;
+    }
+
+
+    public Set<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(Set<Event> events) {
+        this.events = events;
+    }
+
+    public void addEvent(Event event) {
+        events.add(event);
+        event.getUsers().add(this); 
+    }
+
+    public void removeEvent(Event event) {
+        events.remove(event);
+        event.getUsers().remove(this);
     }
 
     public List<String> getRoles() {

@@ -131,6 +131,7 @@ public class SecurityConfiguration {
 					.requestMatchers("/events").permitAll()
 					.requestMatchers("/event/edit").permitAll()
 					.requestMatchers("/event/**").permitAll()
+					.requestMatchers("/notify").permitAll()
 
 					.requestMatchers("/quizzes").permitAll()
 					.requestMatchers("/quizz/new").permitAll()

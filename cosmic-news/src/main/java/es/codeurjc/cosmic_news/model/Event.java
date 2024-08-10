@@ -1,11 +1,14 @@
 package es.codeurjc.cosmic_news.model;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,6 +21,9 @@ public class Event {
     private LocalDate date;
     private String icon;
     private String description;
+
+    @ManyToMany(mappedBy = "events")
+    private Set<User> users = new HashSet<>();
 
     public Event(){}
 
@@ -57,6 +63,14 @@ public class Event {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 
 }

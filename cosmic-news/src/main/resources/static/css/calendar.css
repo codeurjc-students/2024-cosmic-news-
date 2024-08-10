@@ -118,8 +118,14 @@
 
 /* Estilo para los botones en el modal */
 .modal-buttons {
+    display: flex;
+    justify-content: flex-end;
     margin-top: 20px;
-    text-align: right;
+}
+
+.modal-buttons form,
+.modal-buttons button {
+    margin-left: 10px;
 }
 
 .modal-buttons .btn {

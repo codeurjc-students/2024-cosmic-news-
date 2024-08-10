@@ -6,9 +6,7 @@
 
     {{> config}}
 
-    <link type="text/css" rel="stylesheet" href="/css/form.css" />
     <link type="text/css" rel="stylesheet" href="/css/calendar.css" />
-    <link type="text/css" rel="stylesheet" href="/css/profile.css" />
 
     <script src="/js/calendar.js"></script>
 </head>
@@ -30,20 +28,11 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h3 id="modalDate">Información del día</h3>
-            <p id="modalInfo">
-                Aquí puedes añadir información adicional para el día seleccionado. </p>
-            <label for="eventDescription">Descripción:</label>
-            <input type="text" id="eventDescription" name="description" />
-
-            <label for="eventDate">Fecha:</label>
-            <input type="text" id="eventDate" name="date" readonly />
-
-            <label for="eventIcon">Icono:</label>
-            <input type="text" id="eventIcon" name="icon" />
+            <p id="modalInfo"> </p>
+    
             
             <div class="modal-buttons">
                 
-
                 <form role="form" action='/event/edit' method="post">
                     <input type="hidden" id="eventId" name="eventId" />
                     <button type="submit" id="editButton" class="btn btn-secondary">Editar</button>
@@ -56,7 +45,11 @@
                     <input type="hidden" name="_csrf" value="{{token}}"/>
                 </form>
 
-                <button id="notifyButton" class="btn btn-info">Notificar</button>
+                <form role="form" action='/notify' method="post">
+                    <input type="hidden" id="eventId3" name="eventId3" />
+                    <button type="submit" id="notifyButton" class="btn btn-info">Notificar</button>
+                    <input type="hidden" name="_csrf" value="{{token}}"/>
+                </form>
             </div>
         </div>
     </div>
