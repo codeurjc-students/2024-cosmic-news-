@@ -3,6 +3,7 @@ package es.codeurjc.cosmic_news.model;
 import java.sql.Blob;
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,6 +21,8 @@ public class News {
     private String subtitle;
     private String author;
     private String topic;
+
+    @Column(name = "bodyText", columnDefinition = "TEXT")
     private String bodyText;
     private int readingTime;
 

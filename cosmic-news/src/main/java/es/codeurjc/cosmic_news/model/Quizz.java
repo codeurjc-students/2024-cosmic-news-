@@ -115,16 +115,4 @@ public class Quizz {
         this.score = score;
     }
 
-    public Blob photoToBlob(String photoStr) {
-        ClassPathResource image = new ClassPathResource(photoStr);
-        try {
-            Blob photoBlob = BlobProxy.generateProxy(image.getInputStream(), image.contentLength());
-            return photoBlob;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-
-    }
-
 }
