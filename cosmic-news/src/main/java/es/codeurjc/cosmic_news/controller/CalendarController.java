@@ -1,7 +1,9 @@
 package es.codeurjc.cosmic_news.controller;
 
+import java.io.IOException;
 import java.util.List;
 
+import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,12 +12,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import es.codeurjc.cosmic_news.model.Event;
+import es.codeurjc.cosmic_news.model.Picture;
 import es.codeurjc.cosmic_news.model.User;
 import es.codeurjc.cosmic_news.service.EventService;
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 
 
@@ -34,7 +38,8 @@ public class CalendarController {
     }
     
     @GetMapping("/event/new")
-    public String newEvent() {
+    public String newEvent(Model model) {
+        model.addAttribute("edit", false);
         return "event_form";
     }
 
@@ -53,11 +58,12 @@ public class CalendarController {
         
     }
 
-    @GetMapping("/event/edit/{id}")
-    public String showFormEdit(@PathVariable Long id, Model model, HttpServletRequest request) {
+    @PostMapping("/event/edit")
+    public String showFormEdit(@RequestParam("eventId") Long id, Model model, HttpServletRequest request) {
         Event event = eventService.findEventById(id);
         if (event != null){
         model.addAttribute("event", event);
+        model.addAttribute("edit", true);
         return "event_form";
         }else{
             model.addAttribute("title", "Error");
@@ -66,7 +72,35 @@ public class CalendarController {
             return "message";
         }
     }
-    
+
+    @PostMapping("/event/{id}/edit")
+    public String editEvent(@PathVariable Long id, HttpServletRequest request, Model model) {
+        Event event = eventService.findEventById(id);
+        if (event != null){
+            eventService.updateEvent(event,request);
+            return "redirect:/calendar";
+        }else{
+            model.addAttribute("title", "Error");
+            model.addAttribute("message", "Evento no encontrado");
+            model.addAttribute("back", "javascript:history.back()");
+            return "message";
+        }
+    }
+
+    @PostMapping("/event/delete")
+    public String deleteEvent(Model model, @RequestParam("eventId2") Long id) {
+
+        boolean deleted = eventService.deleteEvent(id);
+
+        if(deleted){
+            return "redirect:/calendar";
+        }else{
+            model.addAttribute("title", "Error");
+            model.addAttribute("message", "Error al eliminar el evento");
+            model.addAttribute("back", "/");
+            return "message";
+        }
+    }
 
     @GetMapping("/events")
     @ResponseBody

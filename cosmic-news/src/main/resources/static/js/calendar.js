@@ -1,18 +1,14 @@
-let selectedEvent = null; // Definir a nivel global
-
 document.addEventListener('DOMContentLoaded', () => {
     const calendarElement = document.getElementById('calendar');
     const modal = document.getElementById('dayModal');
     const modalDate = document.getElementById('modalDate');
     const modalInfo = document.getElementById('modalInfo');
     const closeModal = document.querySelector('.close');
-
-    // Botones de acción en el modal
     const editButton = document.getElementById('editButton');
     const deleteButton = document.getElementById('deleteButton');
     const notifyButton = document.getElementById('notifyButton');
 
-    let events = [];
+    let selectedEvent = null; // Para almacenar el evento seleccionado
 
     function fetchEvents() {
         fetch('/events') // Endpoint para obtener eventos
@@ -56,10 +52,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         for (let i = 1; i <= daysInMonth; i++) {
             const dateStr = `${year}-${(month + 1).toString().padStart(2, '0')}-${i.toString().padStart(2, '0')}`;
-            const event = events.find(e => e.day === i && e.month === (month + 1) && e.year === year);
+            const event = events.find(e => new Date(e.date).getDate() === i && new Date(e.date).getMonth() === month && new Date(e.date).getFullYear() === year);
             const iconHtml = event ? `<i class="${event.icon} event-icon"></i>` : '';
 
-            days += `<div class="day" data-day="${i}" data-date="${dateStr}" data-event-id="${event ? event.id : ''}">${i}${iconHtml}</div>`;
+            days += `<div class="day" data-day="${i}" data-date="${dateStr}">${i}${iconHtml}</div>`;
         }
         days += '</div>';
 
@@ -78,16 +74,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (day.dataset.day) {
                     calendarElement.querySelectorAll('.day').forEach(d => d.classList.remove('selected'));
                     day.classList.add('selected');
-                    showDayInfo(day.dataset.day, month, year, day.dataset.eventId);
+                    showDayInfo(day.dataset.day, month, year);
                 }
             });
         });
     }
 
-    function showDayInfo(day, month, year, eventId) {
+    function showDayInfo(day, month, year) {
         const formattedDate = `${year}-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-        selectedEvent = events.find(e => e.id === eventId); // Asignar el evento seleccionado
+        selectedEvent = events.find(e => new Date(e.date).getDate() === parseInt(day) && new Date(e.date).getMonth() === month && new Date(e.date).getFullYear() === year);
         const info = selectedEvent ? selectedEvent.description : 'No hay información adicional para este día.';
+
+        document.getElementById('eventDescription').value = selectedEvent ? selectedEvent.description : '';
+        document.getElementById('eventDate').value = formattedDate;
+        document.getElementById('eventIcon').value = selectedEvent ? selectedEvent.icon : '';
+        document.getElementById('eventId').value = selectedEvent ? selectedEvent.id : '';
+        document.getElementById('eventId2').value = selectedEvent ? selectedEvent.id : '';
+
         modalDate.textContent = `Información para el ${day} de ${new Date(year, month).toLocaleString('default', { month: 'long' })} de ${year}`;
         modalInfo.textContent = info;
         modal.style.display = 'block';

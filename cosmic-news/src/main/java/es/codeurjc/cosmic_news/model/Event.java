@@ -1,5 +1,7 @@
 package es.codeurjc.cosmic_news.model;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,44 +15,32 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    private int day;
-    private int month;
-    private int year;
+    private LocalDate date;
     private String icon;
     private String description;
 
     public Event(){}
 
-    public Event(int day, int month, int year, String icon, String description){
-        this.day = day;
-        this.month = month;
-        this.year = year;
+    public Event(LocalDate date, String icon, String description){
+        this.date=date;
         this.icon = icon;
         this.description = description;
     }
 
-    public int getDay() {
-        return day;
+    public Long getId() {
+        return id;
     }
 
-    public void setDay(int day) {
-        this.day = day;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public int getMonth() {
-        return month;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setMonth(int month) {
-        this.month = month;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public String getIcon() {

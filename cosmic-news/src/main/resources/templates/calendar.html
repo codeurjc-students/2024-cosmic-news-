@@ -30,19 +30,32 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h3 id="modalDate">Información del día</h3>
-            <p id="modalInfo">Aquí puedes añadir información adicional para el día seleccionado.</p>
+            <p id="modalInfo">
+                Aquí puedes añadir información adicional para el día seleccionado. </p>
+            <label for="eventDescription">Descripción:</label>
+            <input type="text" id="eventDescription" name="description" />
+
+            <label for="eventDate">Fecha:</label>
+            <input type="text" id="eventDate" name="date" readonly />
+
+            <label for="eventIcon">Icono:</label>
+            <input type="text" id="eventIcon" name="icon" />
+            
             <div class="modal-buttons">
                 
-                <!--{{#iamAdmin}}
 
-                <a href="/event/{{id}}/edit"><button id="editButton" class="btn btn-secondary">Editar</button></a>
+                <form role="form" action='/event/edit' method="post">
+                    <input type="hidden" id="eventId" name="eventId" />
+                    <button type="submit" id="editButton" class="btn btn-secondary">Editar</button>
+                    <input type="hidden" name="_csrf" value="{{token}}"/>
+                </form>
 
-                <form role="form" action='/event/delete?id={{id}}' method="post">
+                <form role="form" action='/event/delete' method="post">
+                    <input type="hidden" id="eventId2" name="eventId2" />
                     <button type="submit" id="deleteButton" class="btn btn-danger">Borrar</button>
                     <input type="hidden" name="_csrf" value="{{token}}"/>
                 </form>
 
-                {{/iamAdmin}}-->
                 <button id="notifyButton" class="btn btn-info">Notificar</button>
             </div>
         </div>

@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 
 <head>
+    {{#edit}}
+    <title>Editar evento</title>
+    {{/edit}}
+    {{^edit}}
     <title>Añadir evento</title>
+    {{/edit}}
 
     {{> config}}
 
@@ -22,31 +27,35 @@
                     </a>
                 </div>
 
+                {{#edit}}
+                <h2>Editar evento</h2>
+                {{/edit}}
+                {{^edit}}
                 <h2>Añadir evento</h2>
+                {{/edit}}
+
             </div>
+
+            {{#edit}}
+            <form role="form" action="/event/{{event.id}}/edit" method="post">
+            {{/edit}}
+            {{^edit}}
             <form role="form" action="/event/new" method="post">
+            {{/edit}}
 
-                <div class="row">
-                    <div class="form-group col-md-4 col-sm-12">
-                    <label for="day">Día:</label>
-                    <input type="number" class="form-control" name="day" id="day" min="1" max="31" value="{{#event}}{{event.day}}{{/event}}">
-                    </div>
-
-                    <div class="form-group col-md-4 col-sm-12">
-                    <label for="month">Mes:</label>
-                    <input type="number" class="form-control" name="month" id="month" min="1" max="12" value="{{#event}}{{event.month}}{{/event}}">
-                    </div>
-
-                    <div class="form-group col-md-4 col-sm-12">
-                    <label for="year">Año:</label>
-                    <input type="number" class="form-control" name="year" id="year" value="{{#event}}{{event.year}}{{/event}}">
-                    </div>
+                <div class="form-group">
+                    <label for="date">Fecha</label>
+                    <input type="date" class="form-control" name="date" placeholder="Fecha" value="{{#event}}{{event.date}}{{/event}}">
                 </div>
+
 
                 <div class="row">
                     <div class="form-group col-md-4 col-sm-12">
                         <label for="icon">Icono:</label>
                         <select class="form-control" name="icon" id="icon">
+                            {{#edit}}
+                            <option value="{{event.icon}}" selected hidden>{{event.icon}}</option>
+                            {{/edit}}
                             <option value="bi bi-sun">Sol</option>
                             <option value="bi bi-moon">Luna</option>
                             <option value="bi bi-circle-fill">Eclipse</option>
@@ -63,7 +72,12 @@
                         </select>
 
                         <div id="iconPreview" class="icon-preview col-md-6 col-sm-12">
+                            {{^edit}}
                             <i class="bi bi-sun"></i>
+                            {{/edit}}
+                            {{#edit}}
+                            <i class="{{event.icon}}"></i>
+                            {{/edit}}
                         </div>
 
                     </div>
