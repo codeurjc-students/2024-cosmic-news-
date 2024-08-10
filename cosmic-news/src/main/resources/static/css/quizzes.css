@@ -60,3 +60,12 @@
 .btn-cont .btn {
     min-width: 70px;
 }
+
+#piechart {
+    text-align: center;
+    width: auto;
+    height: auto;
+    margin: auto;
+    max-width: 80%;
+    margin-left: 20%;
+}

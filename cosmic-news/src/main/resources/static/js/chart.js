@@ -14,6 +14,8 @@ function drawChart() {
 
     var options = {
         title: 'Quizzes completados',
+        width: '100%',
+        height: '100%',
     };
 
     var chart = new google.visualization.PieChart(document.getElementById('piechart'));

@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     function createQuestionHTML(index) {
         return `
             <div class="question-container">
-                <h3>Pregunta ${index +1}</h3>
+                <h3>Pregunta ${index}</h3>
                 <div class="form-group">
                     <label for="question${index}">Pregunta: </label>
                     <input type="text" class="form-control" name="questions[${index}][question]" placeholder="Introduzca una pregunta">
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     document.getElementById('add-question-btn').addEventListener('click', () => {
         const questionsContainer = document.getElementById('questions-container');
-        questionsContainer.insertAdjacentHTML('beforeend', createQuestionHTML(numQuestions));
+        questionsContainer.insertAdjacentHTML('beforeend', createQuestionHTML(numQuestions+1));
         numQuestions++;
         updateQuestionCounter();
     });

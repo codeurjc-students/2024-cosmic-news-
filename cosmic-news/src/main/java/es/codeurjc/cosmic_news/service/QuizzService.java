@@ -53,7 +53,7 @@ public class QuizzService {
             if (numQuestionsStr != null && !numQuestionsStr.isEmpty()) {
                 int numQuestions = Integer.parseInt(numQuestionsStr);
                 List<Question> questions = new ArrayList<>();
-                for (int i = 0; i < numQuestions; i++){
+                for (int i = 1; i <= numQuestions; i++){
                     String question = request.getParameter("questions[" + i + "][question]");
                     String option1 = request.getParameter("questions[" + i + "][option1]");
                     String option2 = request.getParameter("questions[" + i + "][option2]");
@@ -61,7 +61,7 @@ public class QuizzService {
                     String option4 = request.getParameter("questions[" + i + "][option4]");
                     String answer = request.getParameter("questions[" + i + "][answer]");
 
-                    Question q = new Question(question, option1, option2, option3, option4, answer, i+1, quizz);
+                    Question q = new Question(question, option1, option2, option3, option4, answer, i, quizz);
 
                     switch (answer){
                         case "option1":
@@ -127,18 +127,21 @@ public class QuizzService {
         }
 
         String numQuestionsStr = request.getParameter("numQuestions");
+        System.out.println("NUM QUESTIONS***"+ request.getParameter("numQuestions"));
         if (numQuestionsStr != null && !numQuestionsStr.isEmpty()) {
             int numQuestions = Integer.parseInt(numQuestionsStr);
             List<Question> questions = new ArrayList<>();
-            for (int i = 0; i < numQuestions; i++){
+            for (int i = 1; i <= numQuestions; i++){
                 String question = request.getParameter("questions[" + i + "][question]");
                 String option1 = request.getParameter("questions[" + i + "][option1]");
                 String option2 = request.getParameter("questions[" + i + "][option2]");
                 String option3 = request.getParameter("questions[" + i + "][option3]");
                 String option4 = request.getParameter("questions[" + i + "][option4]");
+                System.out.println("OPTION4***"+ request.getParameter("questions[" + i + "][option4]"));
+                System.out.println("ANSWEEEER***"+ request.getParameter("questions[" + i + "][answer]"));
                 String answer = request.getParameter("questions[" + i + "][answer]");
 
-                Question q = new Question(question, option1, option2, option3, option4, answer, i+1, quizz);
+                Question q = new Question(question, option1, option2, option3, option4, answer, i, quizz);
 
                 switch (answer){
                     case "option1":
@@ -170,7 +173,6 @@ public class QuizzService {
                     q.setCorrect3(false);                   
                     break;
                 }
-
                 q.setAnswer(answer);
                 questions.add(q);
             }

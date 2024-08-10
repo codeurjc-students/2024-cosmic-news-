@@ -59,35 +59,35 @@
                 <div id="questions-container">
                     {{#quizz.questions}}
                     <div class="question-container">
-                        <h3>Pregunta {{id}}</h3>
+                        <h3>Pregunta {{num}}</h3>
                         <div class="form-group">
-                            <label for="question{{id}}">Pregunta: </label>
-                            <input type="text" class="form-control" name="questions[{{id}}][question]" value="{{question}}">
+                            <label for="question{{num}}">Pregunta: </label>
+                            <input type="text" class="form-control" name="questions[{{num}}][question]" value="{{question}}">
                         </div>
                         <div class="row">
                             <div class="form-group col-md-6 col-sm-12">
-                                <label for="option1_{{id}}">Opción 1: </label>
-                                <input type="text" class="form-control" name="questions[{{id}}][option1]" value="{{option1}}">
+                                <label for="option1_{{num}}">Opción 1: </label>
+                                <input type="text" class="form-control" name="questions[{{num}}][option1]" value="{{option1}}">
                             </div>
                             <div class="form-group col-md-6 col-sm-12">
-                                <label for="option2_{{id}}">Opción 2: </label>
-                                <input type="text" class="form-control" name="questions[{{id}}][option2]" value="{{option2}}">
+                                <label for="option2_{{num}}">Opción 2: </label>
+                                <input type="text" class="form-control" name="questions[{{num}}][option2]" value="{{option2}}">
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-md-6 col-sm-12">
-                                <label for="option3_{{id}}">Opción 3: </label>
-                                <input type="text" class="form-control" name="questions[{{id}}][option3]" value="{{option3}}">
+                                <label for="option3_{{num}}">Opción 3: </label>
+                                <input type="text" class="form-control" name="questions[{{num}}][option3]" value="{{option3}}">
                             </div>
                             <div class="form-group col-md-6 col-sm-12">
-                                <label for="option4_{{id}}">Opción 4: </label>
-                                <input type="text" class="form-control" name="questions[{{id}}][option4]" value="{{option4}}">
+                                <label for="option4_{{num}}">Opción 4: </label>
+                                <input type="text" class="form-control" name="questions[{{num}}][option4]" value="{{option4}}">
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-md-12 col-sm-12">
-                                <label for="answer_{{id}}">Opción correcta: </label>
-                                <select class="form-control" name="questions[{{id}}][answer]" id="answer_{{id}}">
+                                <label for="answer_{{num}}">Opción correcta: </label>
+                                <select class="form-control" name="questions[{{num}}][answer]" id="answer_{{num}}">
                                     <option value="option1" {{#correct1}}selected{{/correct1}}>Opción 1</option>
                                     <option value="option2" {{#correct2}}selected{{/correct2}}>Opción 2</option>
                                     <option value="option3" {{#correct3}}selected{{/correct3}}>Opción 3</option>
@@ -107,7 +107,7 @@
                     <button type="submit" class="btn">
                         <i class="bi bi-download"></i> Guardar
                     </button>
-                    <a href="/login" class="btn btn-red" role="button">
+                    <a href="/quizzes" class="btn btn-red" role="button">
                         <i class="bi bi-x-lg"></i> Cancelar
                     </a>
                 </div>

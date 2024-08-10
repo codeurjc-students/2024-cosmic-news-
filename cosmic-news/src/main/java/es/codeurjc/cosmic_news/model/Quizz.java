@@ -91,7 +91,13 @@ public class Quizz {
     }
 
     public void setQuestions(List<Question> questions) {
-        this.questions = questions;
+        if (this.questions == null) {
+            this.questions = new ArrayList<>();
+        }
+        this.questions.clear();
+        if (questions != null) {
+            this.questions.addAll(questions);
+        }
     }
 
     public void addQuestion(Question question) {
