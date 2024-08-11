@@ -207,7 +207,7 @@ public class UserController {
         User user = userService.findUserByMail(mail);
         if (user != null){
             String messageForm = userService.checkNick(request.getParameter("nick"));
-            if (!messageForm.equals("")){
+            if ((!messageForm.equals("")) && (!user.getNick().equals(request.getParameter("nick")))){
                 model.addAttribute("title", "Error");
                 model.addAttribute("message", messageForm);
                 model.addAttribute("back", "javascript:history.back()");

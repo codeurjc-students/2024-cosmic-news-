@@ -18,6 +18,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import es.codeurjc.cosmic_news.model.Badge;
 import es.codeurjc.cosmic_news.model.Event;
 import es.codeurjc.cosmic_news.model.News;
 import es.codeurjc.cosmic_news.model.Picture;
@@ -55,8 +56,8 @@ public class DataBaseInitializer {
 
     @PostConstruct
     private void initDatabase(){
-        initUsers();
         initQuizzes();
+        initUsers();
         initPictures();
         initNews();
         initEvents();
@@ -89,10 +90,15 @@ public class DataBaseInitializer {
             "xd",
             passwordEncoder.encode("xd"),
             "USER","ADMIN");
-        
+
+        Blob photo = null;
+        photo = photoToBlob("static/images/logo.png");
+        user3.addBadge(new Badge(photo,"Bienvenida", 0));
+ 
         userRepository.save(user1);
         userRepository.save(user2);
         userRepository.save(user3);
+
         
     }
 

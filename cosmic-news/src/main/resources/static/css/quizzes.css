@@ -67,5 +67,10 @@
     height: auto;
     margin: auto;
     max-width: 80%;
-    margin-left: 20%;
+}
+
+.google-visualization-tooltip {
+    width: auto !important;
+    max-width: 200px ;
+    white-space: normal;
 }

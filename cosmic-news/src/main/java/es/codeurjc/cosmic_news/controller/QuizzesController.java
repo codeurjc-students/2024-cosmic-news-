@@ -44,7 +44,7 @@ public class QuizzesController {
 
     @GetMapping("/quizzes")
     public String getQuizzes(Model model) {
-        HashMap<String, Integer> map = fillAttitudes();
+        HashMap<String, Integer> map = fillQuizzes();
 
         model.addAttribute("quizzesChart", map);
         model.addAttribute("quizzes", quizzService.getAllQuizzes());
@@ -178,7 +178,7 @@ public class QuizzesController {
         }
     }
 
-    public HashMap<String, Integer> fillAttitudes() {
+    public HashMap<String, Integer> fillQuizzes() {
         HashMap<String, Integer> map = new HashMap<String, Integer>();
         List<Quizz> quizzList = quizzService.getAllQuizzes();
         for (Quizz quizz : quizzList) {

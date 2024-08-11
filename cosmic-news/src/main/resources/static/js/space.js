@@ -1,6 +1,6 @@
 // Clase para representar planetas
 class Planet {
-    constructor(name, radius, col, orbitRadius = 0, orbitSpeed = 0, img = null) {
+    constructor(name, radius, col, orbitRadius = 0, orbitSpeed = 0, imgSrc = null) {
         this.name = name;
         this.radius = 2 * radius;
         this.col = col;
@@ -9,9 +9,16 @@ class Planet {
         this.orbitAngle = random(TWO_PI);
         this.orbitCenterX = 0;
         this.orbitCenterY = 0;
-        this.img = img;
+        this.imgSrc = imgSrc;
+        this.img = null;
         this.x = 0;
         this.y = 0;
+    }
+
+    async loadImage() {
+        if (this.imgSrc) {
+            this.img = await loadImage(this.imgSrc); // Cargar la imagen desde Base64
+        }
     }
 
     update() {
@@ -43,18 +50,7 @@ class Planet {
 }
 
 let sun;
-let sunImage;
-let earthImage;
-let mercuryImage;
-let venusImage;
-let marsImage;
-let jupiterImage;
-let saturnImage;
-let uranusImage;
-let neptuneImage;
-let moonImage;
 let planets = [];
-let stars = [];
 let moon;
 let zoom = 1; // Factor de zoom inicial
 let offsetX = 0; // Desplazamiento en el eje X
@@ -65,67 +61,58 @@ let selectedObject = null; // Objeto actualmente seleccionado para mostrar infor
 let canvasCenterX, canvasCenterY; // Centro del canvas
 
 function preload() {
-    // Cargar las imágenes del Sol y los planetas
+    // Cargar las imágenes del Sol desde un recurso local
     sunImage = loadImage('images/sun.png');
-    earthImage = loadImage('images/earth.png');
-    mercuryImage = loadImage('images/mercury.png');
-    venusImage = loadImage('images/venus.png');
-    marsImage = loadImage('images/mars.png');
-    jupiterImage = loadImage('images/jupiter.png');
-    saturnImage = loadImage('images/saturn.png');
-    uranusImage = loadImage('images/uranus.png');
-    neptuneImage = loadImage('images/neptune.png');
-    moonImage = loadImage('images/moon.png');
+    // Cargar los planetas desde el backend
+    loadPlanets();
 }
 
-function setup() {
-    createCanvas(windowWidth, windowHeight);
-    noStroke();
+async function loadPlanets() {
+    try {
+        const response = await fetch('/api/planets');
+        const data = await response.json();
 
-    // Inicializar el centro del canvas
+        const planetPromises = data.map(async planetData => {
+            let imgSrc = null;
+            if (planetData.imageUrl) {
+                imgSrc = planetData.imageUrl; // URL Base64 de la imagen
+            }
+
+            return new Planet(
+                planetData.name,
+                planetData.radius,
+                color(planetData.color),
+                planetData.orbitRadius,
+                planetData.orbitSpeed,
+                imgSrc
+            );
+        });
+
+        planets = await Promise.all(planetPromises);
+        setupPlanets();
+    } catch (error) {
+        console.error('Error loading planets:', error);
+    }
+}
+
+function setupPlanets() {
     canvasCenterX = width / 2;
     canvasCenterY = height / 2;
 
-    // Crear estrellas de fondo y almacenar sus posiciones
-    createStars();
-
     // Configurar el Sol en el centro
     sun = new Planet('Sol', 50, color(255, 255, 0), 0, 0, sunImage);
+    sun.orbitCenterX = canvasCenterX;
+    sun.orbitCenterY = canvasCenterY;
 
-    // Planetas
-    planets.push(new Planet('Mercurio', 4, color(169, 169, 169), 110, 0.01, mercuryImage));
-    planets.push(new Planet('Venus', 7, color(255, 255, 204), 170, 0.007, venusImage));
-    planets.push(new Planet('La Tierra', 8, color(0, 0, 255), 240, 0.005, earthImage));
-    planets.push(new Planet('Marte', 7, color(255, 0, 0), 320, 0.004, marsImage));
-    planets.push(new Planet('Jupiter', 14, color(255, 204, 0), 400, 0.002, jupiterImage));
-    planets.push(new Planet('Saturno', 12, color(255, 204, 100), 500, 0.0015, saturnImage));
-    planets.push(new Planet('Urano', 11, color(173, 216, 230), 600, 0.0012, uranusImage));
-    planets.push(new Planet('Neptuno', 10, color(100, 149, 237), 700, 0.001, neptuneImage));
-    planets.push(sun);
-
-    // Establecer el centro de órbita de los planetas
-    for (let planet of planets) {
-        planet.orbitCenterX = canvasCenterX;
-        planet.orbitCenterY = canvasCenterY;
+    // Inicializar la Luna (como un planeta con órbita alrededor de la Tierra)
+    moon = planets.find(p => p.name === 'Luna');
+    if (moon) {
+        moon.orbitCenterX = canvasCenterX;
+        moon.orbitCenterY = canvasCenterY;
     }
 
-    // Luna (órbita alrededor de la Tierra)
-    moon = new Planet('Luna', 3, color(200, 200, 200), 30, 0.04, moonImage);
-    planets.push(moon);
-
-    // Inicializar el contenedor de información
-    infoContainer = select('#info');
-    infoImage = select('#info-image');
-    infoName = select('#info-name');
-
-    // Inicialmente ocultar el contenedor de información
-    infoContainer.style('display', 'none');
-
-    // Añadir evento para el botón de cerrar
-    let closeButton = select('#close-info');
-    closeButton.mousePressed(() => {
-        infoContainer.style('display', 'none');
-    });
+    // Cargar imágenes de los planetas
+    planets.forEach(planet => planet.loadImage());
 }
 
 function draw() {
@@ -143,10 +130,6 @@ function draw() {
         ellipse(star.x, star.y, 2);
     }
 
-    // Ajustar las coordenadas del ratón para la detección
-    let adjustedMouseX = (mouseX - offsetX - canvasCenterX) / zoom + canvasCenterX;
-    let adjustedMouseY = (mouseY - offsetY - canvasCenterY) / zoom + canvasCenterY;
-
     // Dibuja el Sol usando la imagen
     imageMode(CENTER);
     let sunX = canvasCenterX;
@@ -156,36 +139,31 @@ function draw() {
     // Dibuja y actualiza los planetas
     let hoveredObject = null;
     for (let planet of planets) {
-        if(planet.name===("Luna")){
-            for (let p of planets){
-                if (p.name===("La Tierra")){
-                    planet.updateMoon(p.x,p.y);
-                }
+        if (planet.name === 'Luna') {
+            const earth = planets.find(p => p.name === 'La Tierra');
+            if (earth) {
+                planet.updateMoon(earth.x, earth.y);
             }
-        }else{
+        } else {
             planet.update();
         }
         planet.display();
-        
+
         // Detección de si el ratón está sobre un planeta o la Luna
-        if (planet.isMouseOver(adjustedMouseX, adjustedMouseY)) {
+        if (planet.isMouseOver(mouseX, mouseY)) {
             hoveredObject = planet;
         }
 
-        if (planet.isMouseOver(adjustedMouseX, adjustedMouseY)) {
+        if (planet.isMouseOver(mouseX, mouseY)) {
             fill(255);
             textAlign(CENTER);
-            if(planet.name === ("Sol")){
-                text(planet.name, planet.x, planet.y - planet.radius + 25);
-            }else{
-                text(planet.name, planet.x, planet.y - planet.radius - 10);
-            }
+            text(planet.name, planet.x, planet.y - planet.radius - 10);
         }
     }
 
     // Actualiza la información del contenedor si hay un objeto seleccionado
     if (selectedObject) {
-        infoImage.attribute('src', selectedObject.img?.src || '');
+        infoImage.attribute('src', selectedObject.imgSrc || '');
         infoName.html(selectedObject.name);
         infoContainer.style('display', 'block');
     } else {
