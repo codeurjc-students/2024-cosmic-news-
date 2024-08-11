@@ -13,14 +13,18 @@ import java.util.List;
 
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import es.codeurjc.cosmic_news.model.Event;
 import es.codeurjc.cosmic_news.model.News;
+import es.codeurjc.cosmic_news.model.Picture;
 import es.codeurjc.cosmic_news.model.Question;
 import es.codeurjc.cosmic_news.model.Quizz;
 import es.codeurjc.cosmic_news.model.User;
+import es.codeurjc.cosmic_news.repository.EventRepository;
 import es.codeurjc.cosmic_news.repository.NewsRepository;
 import es.codeurjc.cosmic_news.repository.PictureRepository;
 import es.codeurjc.cosmic_news.repository.QuizzRepository;
@@ -42,6 +46,9 @@ public class DataBaseInitializer {
     @Autowired
     private PictureRepository pictureRepository;
 
+    @Autowired 
+    private EventRepository eventRepository;
+
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -52,6 +59,7 @@ public class DataBaseInitializer {
         initQuizzes();
         initPictures();
         initNews();
+        initEvents();
     }
 
     private void initUsers(){
@@ -228,7 +236,139 @@ public class DataBaseInitializer {
 
 
     private void initPictures(){
-        
+        Picture picture1 = new Picture(
+            "El cazador se levanta",
+            "Panagiotis Andreou",
+            "Nueva Zelanda",
+            LocalDate.of(2024,2,18),
+            "Orión el Cazador se eleva sobre Aoraki, también conocido como Monte Cook, la montaña más alta de Nueva Zelanda. El fotógrafo utilizó una cámara DSLR Nikon y un objetivo de 40 mm f/1,4 con ISO 1600 para realizar 12 minutos de exposiciones del cielo, más un fotograma de 90 segundos para la montaña."
+        );
+
+        Blob photo = null;
+        photo = photoToBlob("static/images/hunter.jpeg");
+        picture1.setPhoto(photo);
+        picture1.setImage(photo != null);
+
+        Picture picture2 = new Picture(
+            "La marca de un lobo",
+            "Andrea Arbizzi",
+            "Modena, Italia",
+            LocalDate.of(2024,4,4),
+            "WR 134 en Cygnus es una de las primeras estrellas Wolf-Rayet conocidas, una clase de estrellas raras que llevan el nombre de sus descubridores, los astrónomos franceses Charles Wolf y Georges Rayet. Las estrellas WR originalmente destacaban por sus amplias bandas de emisión. Más tarde, los investigadores descubrieron que eran el resultado de intensos vientos estelares, que pueden formar nebulosas como la que se ve aquí. Esta imagen fue tomada durante 24¾ horas con un filtro de doble banda Ha/OIII y un visor de 8 pulgadas a f/7,3." //
+        );
+
+        photo = photoToBlob("static/images/wolf.jpeg");
+        picture2.setPhoto(photo);
+        picture2.setImage(photo != null);
+
+        Picture picture3 = new Picture(
+            "Un diario de viaje de la estrella de la mañana",
+            "Tunç Tezel",
+            "Bursa, Turquía",
+            LocalDate.of(2024,6,4),
+            "La aparición matutina de Venus en 2023-2024 se captura en esta secuencia de imágenes, tomadas al mismo tiempo cada mañana despejada desde finales de agosto de 2023 hasta principios de febrero de 2024. Venus ahora se está volviendo más visible en el cielo nocturno, después de haber pasado por una conjunción superior el 4 de junio."
+        );
+
+        photo = photoToBlob("static/images/travelog.jpeg");
+        picture3.setPhoto(photo);
+        picture3.setImage(photo != null);
+
+        Picture picture4 = new Picture(
+            "Soplando burbujas",
+            "Steve Leonard",
+            "Markham, Ontario, Canadá",
+            LocalDate.of(2024,1,21),
+            "La Nebulosa Burbuja (NGC 7635) es una nebulosa de emisión que rodea a la estrella SAO 20575 en Casiopea; el débil caparazón es creado por sus intensos vientos. El generador de imágenes utilizó un refractor de 4,5 pulgadas f/5,7 para tomar 24 horas de datos SHO y 3 horas de datos RGB. La imagen final es una combinación de una interpretación de la paleta Hubble y una paleta dinámica Foraxx, que utiliza una combinación no lineal de canales."
+        );
+
+        photo = photoToBlob("static/images/bubble.jpeg");
+        picture4.setPhoto(photo);
+        picture4.setImage(photo != null);
+
+        Picture picture5 = new Picture(
+            "Centauro A",
+            "Vikas Chander",
+            "Observatorio El Sauce in the Río Hurtado Valley, Chile",
+            LocalDate.of(2023,11,30),
+            "A sólo 12 millones de años luz de distancia, Centaurus A (NGC 5128) es la galaxia activa más cercana a nosotros, con un agujero negro supermasivo en su núcleo que escupe material al medio intergaláctico. Es famoso que estos flujos de salida se puedan ver en las emisiones de radio como enormes lóbulos a ambos lados de la galaxia. Sin embargo, esta imagen Hα/OIII/LRGB tomada desde el desierto de Atacama en Chile con un telescopio robótico de 24 pulgadas (y casi 24 horas de exposición) ofrece una vista detallada de las eyecciones de materia en luz visible en la parte inferior derecha."
+        );
+
+        photo = photoToBlob("static/images/centaurus.jpeg");
+        picture5.setPhoto(photo);
+        picture5.setImage(photo != null);
+
+        Picture picture6 = new Picture(
+            "Historia de dos senderos",
+            "Giovanni Passalacqua",
+            "Sicilia, Italia",
+            LocalDate.of(2024,6,28),
+            "Los rastros dejados por bolas brillantes de gas y trozos de roca fundida se complementan en esta fotografía del Monte Etna en erupción el 28 de junio."
+        );
+
+        photo = photoToBlob("static/images/trails.jpeg");
+        picture6.setPhoto(photo);
+        picture6.setImage(photo != null);
+
+        Picture picture7 = new Picture(
+            "Acumulación de tormentas",
+            "Mark Johnston",
+            "Scottsdale, Arizona",
+            LocalDate.of(2024,3,15),
+            "Los fuegos artificiales del ciclo solar 25 continúan, como se ve en esta fotografía de Hα del 2 de julio que presenta un filamento en la parte inferior izquierda y protuberancias que saltan del borde del Sol activo. La foto se tomó con un refractor de 6 pulgadas equipado con un filtro de rechazo de energía y un etalón Lunt con un “ocular” Daystar Hα."
+        );
+
+        photo = photoToBlob("static/images/storm.jpeg");
+        picture7.setPhoto(photo);
+        picture7.setImage(photo != null);
+
+        Picture picture8 = new Picture(
+            "Estrellas y estrellas de mar",
+            "Rob Lyons",
+            "Vancouver, Canadá",
+            LocalDate.of(2024,5,17),
+            "El fotógrafo cuenta cómo consiguió esta espectacular foto:\r\n" + //
+            "\r\n" + //
+            "He intentado tomar esta fotografía durante tres años durante mis viajes anuales a Tofino, Columbia Británica. El primer año no pude encontrar ninguna estrella de mar. En el segundo año encontré algunas e hice una imagen, pero las estrellas de mar eran tan pequeñas que necesitarías un telescopio para verlas. El año pasado, después de una semana de búsqueda, encontré algunos en mi última noche de viaje. Estas estrellas de mar estaban adheridas a una roca que se encuentra en un lugar popular para practicar surf, por lo que las olas son muy activas. Para obtener el primer plano, fotografié en la hora azul y utilicé mi cámara Sony A7R con una lente de 20 mm f/1,8 para acercarme a la estrella de mar. La marea subía rápido y la estrella de mar ya estaba medio sumergida, así que trabajé rápido para capturar la foto. Luego instalé mi rastreador de estrellas en la seguridad de los acantilados rocosos cercanos, tomé 15 imágenes de la Vía Láctea [con un corte UV/IR de Kolari Vision y un filtro de paso Hα] y las apilé. Luego se combinaron los dos disparos."
+        );
+
+        photo = photoToBlob("static/images/starfish.jpeg");
+        picture8.setPhoto(photo);
+        picture8.setImage(photo != null);
+
+        Picture picture9 = new Picture(
+            "Eruipción de auroras",
+            "Marty Weintraub",
+            "Duluth, Minnesota",
+            LocalDate.of(2024,2,6),
+            "Las auroras, las nubes y el terreno se combinan para crear la ilusión de un vórtice de luz que brota de las montañas, visto desde Tungeneset en la isla noruega de Senja en esta fotografía tomada el 6 de febrero. El fotógrafo utilizó una cámara sin espejo Sony y una lente de 14 mm a f /1,8 para realizar una exposición de 2,5 segundos a ISO 1600."
+        );
+
+        photo = photoToBlob("static/images/aurora.jpeg");
+        picture9.setPhoto(photo);
+        picture9.setImage(photo != null);
+
+        Picture picture10 = new Picture(
+            "Un sol tormentoso",
+            "Marco Meniero",
+            "Roma, Italia",
+            LocalDate.of(2023,12,12),
+            "La enormidad total del grupo de manchas solares AR 3664 (en la parte inferior del disco solar en esta imagen) es evidente en esta fotografía tomada con una cámara sin espejo Nikon Z9 y una lente de 400 mm a ISO 32. La fotografía es una fotografía compuesta, expuesta al sol. disco (1/32.000 de segundo a f/32) y uno para el paisaje (1/4.000 de segundo y f/9). AR 3664 tiene aproximadamente 16 veces el tamaño de la Tierra y es responsable de la tormenta geomagnética de este fin de semana."
+        );
+
+        photo = photoToBlob("static/images/sun.jpeg");
+        picture10.setPhoto(photo);
+        picture10.setImage(photo != null);
+
+        pictureRepository.save(picture1);
+        pictureRepository.save(picture2);
+        pictureRepository.save(picture3);
+        pictureRepository.save(picture4);
+        pictureRepository.save(picture5);
+        pictureRepository.save(picture6);
+        pictureRepository.save(picture7);
+        pictureRepository.save(picture8);
+        pictureRepository.save(picture9);
+        pictureRepository.save(picture10);
     }
 
     private void initQuizzes(){
@@ -330,6 +470,23 @@ public class DataBaseInitializer {
 
         quizz1.setQuestions(questions);
         quizzRepository.save(quizz1);
+    }
+
+    private void initEvents(){
+        Event event1 = new Event(
+            LocalDate.of(2024,8,19),
+            "bi bi-moon-fill",
+            "¡Luna llena! La Luna está en el lado opuesto de la Tierra por lo que el Sol la ilumina por completo. La Luna Llena es a las 18:27 UTC."
+        );
+
+        Event event2 = new Event(
+            LocalDate.of(2024,8,28),
+            "bi bi-diagram-3",
+            "¡Conjunción de la Luna y Marte! La Luna pasa a unos 5,1º al norte de Marte a las 00:23 UTC. La Luna tiene una magnitud de -11,4 y Marte una magnitud de 0,8. En este momento la fase lunar es del 32,9%."
+        );
+
+        eventRepository.save(event1);
+        eventRepository.save(event2);
     }
 
     public Blob photoToBlob(String photoStr) {

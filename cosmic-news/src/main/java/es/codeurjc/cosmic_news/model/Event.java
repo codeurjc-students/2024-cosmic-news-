@@ -28,7 +28,7 @@ public class Event {
     public Event(){}
 
     public Event(LocalDate date, String icon, String description){
-        this.date=date;
+        this.date = date;
         this.icon = icon;
         this.description = description;
     }

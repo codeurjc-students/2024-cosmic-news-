@@ -43,16 +43,11 @@ public class UserController {
     @GetMapping("/")
     public String getIndex(Model model, HttpServletRequest request) {
         model.addAttribute("notification", false);
-        System.out.println("********user"+request.getUserPrincipal());
         if (request.getUserPrincipal() != null) {
             User user = userService.findUserByMail(request.getUserPrincipal().getName());
-            System.out.println("********EVENTOS1"+user.getEvents());
             if (user != null && !user.getEvents().isEmpty()){
-                System.out.println("********EVENTOS"+user.getEvents());
                 Optional<Event> eventOp = userService.findEventByDate(user, LocalDate.now());
-                System.out.println("********EVENTOS70040"+eventOp);
                 if (eventOp.isPresent()){
-                    System.out.println("********EVENTOS7000"+eventOp);
                     model.addAttribute("notification", true);
                     model.addAttribute("event", eventOp.get());
                 }

@@ -1,6 +1,8 @@
 package es.codeurjc.cosmic_news.service;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,10 +42,20 @@ public class PictureService {
 
     public void updatePicture(Picture picture, HttpServletRequest request) {
         picture.setTitle(request.getParameter("title"));
-        //picture.setDateTaken(request.getParameter("dateTaken"));
         picture.setLocation(request.getParameter("location"));
         picture.setAuthor(request.getParameter("author"));
         picture.setDescription(request.getParameter("description"));
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date;
+        String dateStr = request.getParameter("dateTaken");
+
+        try {
+            date = LocalDate.parse(dateStr, formatter);
+            picture.setDateTaken(date);
+        } catch (DateTimeParseException e) {
+        }
+
         pictureRepository.save(picture);
     }
 

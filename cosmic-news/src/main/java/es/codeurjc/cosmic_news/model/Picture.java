@@ -3,6 +3,7 @@ package es.codeurjc.cosmic_news.model;
 import java.sql.Blob;
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +22,8 @@ public class Picture {
     private String author;
     private String location;
     private LocalDate dateTaken;
+
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     //@Lob

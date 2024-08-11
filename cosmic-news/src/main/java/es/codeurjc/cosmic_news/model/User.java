@@ -42,6 +42,7 @@ public class User {
     private boolean image;
 
     @ElementCollection(fetch = FetchType.EAGER)
+    @JsonIgnore
     @Lob
     private List<Badge> badges;
 
@@ -51,6 +52,7 @@ public class User {
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "event_id")
     )
+    @JsonIgnore
     private Set<Event> events = new HashSet<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
