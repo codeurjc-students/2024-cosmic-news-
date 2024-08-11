@@ -281,5 +281,11 @@ public class UserController {
         }
         return ResponseEntity.ok().body(Map.of("available", available));
     }
+
+    @GetMapping("/space")
+    public String getSpace() {
+        return "space";
+    }
+    
     
 }

@@ -147,6 +147,8 @@ public class SecurityConfiguration {
 					.requestMatchers("/picture/new").permitAll()
 					.requestMatchers("/picture/**").permitAll()
 
+					.requestMatchers("/space").permitAll()
+
 
                     // OpenAPI documentation
                     .requestMatchers("/v3/**").permitAll()
