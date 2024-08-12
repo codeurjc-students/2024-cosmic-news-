@@ -1,0 +1,20 @@
+
+
+{{#pictures}}
+<a href="/picture/{{id}}">
+    <img src="/picture/{{id}}/image" alt="{{title}}">
+    <p>{{title}}</p>
+    <p>
+        {{location}}
+        <i class="bi bi-square invisible-icon"></i>
+        {{likes}}<i class="bi bi-hand-thumbs-up"></i>
+    </p>
+</a>
+{{/pictures}}
+{{^pictures}}
+<p>{{alternative}}</p>
+{{/pictures}}
+
+{{#hasMore}}
+<div style="display:none;" id="hasMore"></div>
+{{/hasMore}}

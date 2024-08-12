@@ -1,0 +1,22 @@
+
+
+{{#news}}
+<a href="/news/{{id}}">
+    <img src="/news/{{id}}/image" alt="{{title}}">
+    <p>{{title}}</p>
+    <p>
+        {{likes}}<i class="bi bi-hand-thumbs-up"></i>
+        <i class="bi bi-square invisible-icon"></i>
+        <i class="bi bi-square invisible-icon"></i>
+        {{readingTime}} <i class="bi bi-clock"></i>
+    </p>
+
+</a>
+{{/news}}
+{{^news}}
+<p>{{alternative}}</p>
+{{/news}}
+
+{{#hasMore}}
+<div style="display:none;" id="hasMore"></div>
+{{/hasMore}}

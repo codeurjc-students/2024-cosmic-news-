@@ -163,7 +163,7 @@ public class DataBaseInitializer {
             LocalDate.of(2024,8,4)   
         );
 
-        photo = photoToBlob("static/images/light_echoes.jpeg");
+        photo = photoToBlob("static/images/light.jpeg");
         news3.setPhoto(photo);
         news3.setImage(photo != null);
 
@@ -349,7 +349,7 @@ public class DataBaseInitializer {
             "Las auroras, las nubes y el terreno se combinan para crear la ilusión de un vórtice de luz que brota de las montañas, visto desde Tungeneset en la isla noruega de Senja en esta fotografía tomada el 6 de febrero. El fotógrafo utilizó una cámara sin espejo Sony y una lente de 14 mm a f /1,8 para realizar una exposición de 2,5 segundos a ISO 1600."
         );
 
-        photo = photoToBlob("static/images/aurora.jpeg");
+        photo = photoToBlob("static/images/aurora.jpg");
         picture9.setPhoto(photo);
         picture9.setImage(photo != null);
 

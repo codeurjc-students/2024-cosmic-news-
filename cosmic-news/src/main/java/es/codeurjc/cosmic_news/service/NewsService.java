@@ -5,10 +5,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import es.codeurjc.cosmic_news.model.News;
-import es.codeurjc.cosmic_news.model.User;
 import es.codeurjc.cosmic_news.repository.NewsRepository;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -20,6 +21,10 @@ public class NewsService {
     
     public List<News> getAllNews(){
         return newsRepository.findAll();
+    }
+
+    public Page<News> findAll(Pageable pageable) {
+        return newsRepository.findAll(pageable);
     }
 
     public News saveNews(News news){

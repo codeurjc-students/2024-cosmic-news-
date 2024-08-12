@@ -7,6 +7,9 @@ import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -28,9 +31,19 @@ public class PicturesController {
     PictureService pictureService;
 
     @GetMapping("/pictures")
-    public String getPictures(Model model) {
-        model.addAttribute("pictures", pictureService.getAllPictures());
+    public String getPictures(Model model, Pageable page) {
         return "pictures";
+    }
+
+    @GetMapping("/pictures/load")
+    public String loadOffers(HttpServletRequest request, Model model, @RequestParam("page") int pageNumber,
+            @RequestParam("size") int size) {
+        Page<Picture> pictures = pictureService.findAll(PageRequest.of(pageNumber, size));
+
+        model.addAttribute("pictures", pictures);
+        model.addAttribute("hasMore", pictures.hasNext());
+        model.addAttribute("alternative", "No hay fotos");
+        return "picture_cards";
     }
      
     @GetMapping("/picture/new")

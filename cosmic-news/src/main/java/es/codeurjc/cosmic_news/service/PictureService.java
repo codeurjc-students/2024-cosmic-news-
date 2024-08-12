@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import es.codeurjc.cosmic_news.model.Picture;
@@ -21,6 +23,10 @@ public class PictureService {
 
     public List<Picture> getAllPictures(){
         return pictureRepository.findAll();
+    }
+
+    public Page<Picture> findAll(Pageable pageable) {
+        return pictureRepository.findAll(pageable);
     }
 
     public Picture savePicture(Picture picture){

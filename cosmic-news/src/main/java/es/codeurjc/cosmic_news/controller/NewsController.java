@@ -7,6 +7,9 @@ import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -27,10 +30,15 @@ public class NewsController {
     @Autowired
     NewsService newsService;
 
-    @GetMapping("/news")
-    public String getNews(Model model) {
-        model.addAttribute("news", newsService.getAllNews());
-        return "news";
+    @GetMapping("/news/load")
+    public String loadOffers(HttpServletRequest request, Model model, @RequestParam("page") int pageNumber,
+            @RequestParam("size") int size) {
+        Page<News> news = newsService.findAll(PageRequest.of(pageNumber, size));
+
+        model.addAttribute("news", news);
+        model.addAttribute("hasMore", news.hasNext());
+        model.addAttribute("alternative", "No hay noticias");
+        return "news_cards";
     }
      
     @GetMapping("/news/new")

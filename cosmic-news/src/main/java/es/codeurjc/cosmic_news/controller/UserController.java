@@ -11,6 +11,7 @@ import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import es.codeurjc.cosmic_news.model.Event;
 import es.codeurjc.cosmic_news.model.User;
 import es.codeurjc.cosmic_news.service.EventService;
+import es.codeurjc.cosmic_news.service.PictureService;
 import es.codeurjc.cosmic_news.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,7 +43,7 @@ public class UserController {
     EventService eventService;
     
     @GetMapping("/")
-    public String getIndex(Model model, HttpServletRequest request) {
+    public String getIndex(Model model, HttpServletRequest request, Pageable page) {
         model.addAttribute("notification", false);
         if (request.getUserPrincipal() != null) {
             User user = userService.findUserByMail(request.getUserPrincipal().getName());
@@ -52,7 +54,6 @@ public class UserController {
                     model.addAttribute("event", eventOp.get());
                 }
             }
-
         }
         return "index";
     }

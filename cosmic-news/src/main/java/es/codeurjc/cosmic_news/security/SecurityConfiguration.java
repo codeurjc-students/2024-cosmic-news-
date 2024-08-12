@@ -142,10 +142,12 @@ public class SecurityConfiguration {
 					.requestMatchers("/news").permitAll()
 					.requestMatchers("/news/new").permitAll()
 					.requestMatchers("/news/**").permitAll()
+					.requestMatchers("/news/load").permitAll()
 
 					.requestMatchers("/pictures").permitAll()
 					.requestMatchers("/picture/new").permitAll()
 					.requestMatchers("/picture/**").permitAll()
+					.requestMatchers("/pictures/load").permitAll()
 
 					.requestMatchers("/space").permitAll()
 

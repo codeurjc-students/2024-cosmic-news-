@@ -7,6 +7,7 @@
     <link type="text/css" rel="stylesheet" href="/css/cards.css" />
     <link type="text/css" rel="stylesheet" href="/css/maps.css" />
     <script src="/js/notification.js"></script>
+    <script src="/js/cards.js"></script>
 </head>
 
 <body>
@@ -29,12 +30,34 @@
                         <i class="bi bi-funnel-fill"></i><tool-tip>Filtrar</tool-tip>
                     </a>
                 </div>
+
+                <h2>Noticias</h2>
+
+                <div class="right-cont">
+                    <a class="btn" href="/pictures">
+                        <i class="bi bi-camera"></i><tool-tip>Fotos</tool-tip>
+                    </a>
+                </div>
+
             </div>
+
+            <section class="cards" id="news"></section>
+
+            <div class="btn-cont" id="load">
+                <button class="btn" onclick='load()'>
+                    <i class="bi bi-chevron-double-down"></i> Cargar más
+                </button>
+            </div>
+
+            <div class="btn-cont bottom-right-button">
+                <a href="/news/new" class="btn" role="btn">
+                    <i class="bi bi-plus-circle"></i><tool-tip style="top: auto; bottom: 100%;">Añadir noticia</tool-tip>
+                </a>
+            </div>
+
         </main>
     </div>
 
 </body>
-
-
 
 </html>
