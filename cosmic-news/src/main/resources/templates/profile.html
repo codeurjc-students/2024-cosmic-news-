@@ -8,6 +8,8 @@
 
     <link type="text/css" rel="stylesheet" href="/css/data.css" />
     <link type="text/css" rel="stylesheet" href="/css/profile.css" />
+    <link type="text/css" rel="stylesheet" href="/css/cards.css" />
+    <script src="/js/cards.js"></script>
 </head>
 
 <body>
@@ -53,7 +55,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         {{#photo}}
                         <img id="img-user" src="/user/{{id}}/image">
                         {{/photo}}
@@ -62,10 +64,10 @@
                         {{/photo}}
                     </div>
 
-                    <div class="col-md-8">
-                        <p><strong>Nick:</strong> {{nick}}</p>
-                        <p><strong>E-Mail:</strong> {{mail}}</p>
-                        <p><strong>Descripción:</strong> {{description}}</p>
+                    <div class="col-md-6">
+                        <p style="text-align: left;"><strong>Nick:</strong> {{nick}}</p>
+                        <p style="text-align: left;"><strong>E-Mail:</strong> {{mail}}</p>
+                        <p style="text-align: left;"><strong>Descripción:</strong> {{description}}</p>
 
                     </div>
                 </div>
@@ -84,8 +86,44 @@
                         {{/badges}}
                     </ul>
                 </div>
-
             </main>
+
+            <div class="container">
+                <div class="top-container">
+    
+                    <h2>Noticias que te han gustado</h2>
+
+                </div>
+                
+                <section class="cards" id="newsUser"></section>
+
+                <div class="no-content" id="noNewsUser">¡Dale like a tus noticias favoritas para poder verlas aquí!</div>
+
+                <div class="btn-cont" id="loadNewsUser">
+                    <button class="btn" onclick='load("newsUser",0)'>
+                        <i class="bi bi-chevron-double-down"></i> Cargar más
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="container">
+                <div class="top-container">
+    
+                    <h2>Fotos que te han gustado</h2>
+                </div>
+
+                <section class="cards" id="picturesUser"></section>
+
+                <div class="no-content" id="noPicturesUser">¡Dale like a tus fotos favoritas para poder verlas aquí!</div>
+
+                <div class="btn-cont" id="loadPicturesUser">
+                    <button class="btn" onclick='load("picturesUser",0)'>
+                        <i class="bi bi-chevron-double-down"></i> Cargar más
+                    </button>
+                </div>
+            </div>
+
         {{/user}}
     </div>
 </body>

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,7 +23,7 @@ public class Event {
     private String icon;
     private String description;
 
-    @ManyToMany(mappedBy = "events")
+    @ManyToMany
     private Set<User> users = new HashSet<>();
 
     public Event(){}

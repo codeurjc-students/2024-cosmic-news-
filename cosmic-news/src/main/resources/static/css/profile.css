@@ -80,3 +80,9 @@ ul {
     color: var(--main-color-dark);
     font-weight: bold;
 }
+
+.no-content {
+    display: none;
+    text-align: center;
+    padding: 20px;
+}

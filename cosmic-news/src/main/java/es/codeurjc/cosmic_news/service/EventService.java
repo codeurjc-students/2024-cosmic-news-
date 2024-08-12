@@ -14,12 +14,16 @@ import es.codeurjc.cosmic_news.model.Event;
 import es.codeurjc.cosmic_news.model.Picture;
 import es.codeurjc.cosmic_news.model.User;
 import es.codeurjc.cosmic_news.repository.EventRepository;
+import es.codeurjc.cosmic_news.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class EventService {
     @Autowired
     private EventRepository eventRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public List<Event> getAllEvents(){
         return eventRepository.findAll();
@@ -53,6 +57,10 @@ public class EventService {
         Optional<Event> event = eventRepository.findById(id);
 
         if (event.isPresent()){
+            for (User user: event.get().getUsers()){
+                user.removeEvent(event.get());
+                userRepository.save(user);
+            }
             eventRepository.deleteById(id);
             return true;
         }else {

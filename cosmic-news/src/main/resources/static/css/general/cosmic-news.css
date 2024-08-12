@@ -21,15 +21,6 @@
     --subcontainer-text-color: #ffffff;
 }
 
-.background-container {
-    background-image: url('fondo1.avif'); /* Ruta a tu imagen */
-    background-size: cover; /* Ajusta la imagen para cubrir el elemento */
-    background-position: center; /* Centra la imagen */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
-    height: 100%; /* Altura del contenedor */
-    width: 100%; /* Ancho del contenedor */
-}
-
 * {
     font-family: "Fredoka";
     font-size: 18px;

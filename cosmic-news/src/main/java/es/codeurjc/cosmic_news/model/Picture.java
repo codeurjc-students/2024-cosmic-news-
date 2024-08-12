@@ -2,12 +2,15 @@ package es.codeurjc.cosmic_news.model;
 
 import java.sql.Blob;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -25,6 +28,9 @@ public class Picture {
 
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
+
+    @ManyToMany(mappedBy = "pictures")
+    private Set<User> users = new HashSet<>();
 
     //@Lob
     private Blob photo;
@@ -112,6 +118,14 @@ public class Picture {
 
     public void setLikes(int likes) {
         this.likes = likes;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 
 }

@@ -26,9 +26,16 @@
         <main class="container">
             <div class="top-container">
                 <div class="left-cont">
-                    <a class="btn" onclick="filterByDistance()">
-                        <i class="bi bi-funnel-fill"></i><tool-tip>Filtrar</tool-tip>
-                    </a>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownButton2" data-toggle="dropdown">
+                            <i class="bi bi-filter"></i> <tool-tip>Filtrar</tool-tip>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li><a class="dropdown-item" onclick='setFilter("news", "date")'><i class="bi bi-clock"></i> Más recientes</a></li>
+                            <li><a class="dropdown-item" onclick='setFilter("news", "likes")'><i class="bi bi-hand-thumbs-up"></i> Likes</a></li>
+                            <li><a class="dropdown-item" onclick='setFilter("news", "time")'><i class="bi bi-hourglass"></i> Tiempo de lectura </a></li>
+                        </ul>
+                    </div>
                 </div>
 
                 <h2>Noticias</h2>
@@ -43,8 +50,10 @@
 
             <section class="cards" id="news"></section>
 
-            <div class="btn-cont" id="load">
-                <button class="btn" onclick='load()'>
+            <div class="no-content" id="noNews">Sin noticias</div>
+
+            <div class="btn-cont" id="loadNews">
+                <button class="btn" onclick='load("news",0)'>
                     <i class="bi bi-chevron-double-down"></i> Cargar más
                 </button>
             </div>

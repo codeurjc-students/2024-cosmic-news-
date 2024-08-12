@@ -36,21 +36,25 @@
 
                 </div>
 
-                <div class="row">
-                    <div class="col-md-4">
+                <div class="row flex-container">
+                    <div class="col-md-8">
                         {{#photo}}
-                        <img id="img-user" src="/news/{{id}}/image">
+                        <img id="img-user" src="/news/{{id}}/image" style="width: 500px; height: auto;">
                         {{/photo}}
                         {{^photo}}
-                        <img id="img-user" src="/images/noPhotoUser.jpg">
+                        <img id="img-user" src="/images/noPhotoUser.jpg" style="width: 500px; height: auto;">
                         {{/photo}}
                     </div>
 
-                    <div class="col-md-8">
-                        <p><strong>Autor</strong> {{author}}</p>
-                        <p><strong>Tema</strong> {{topic}}</p>
-                        <p><strong>Tiempo de lectura</strong> {{readingTime}}</p>
-                        <p><strong>Cuerpo noticia:</strong> {{bodyText}}</p>
+                    <div class="col-md-4">
+                        <p style="text-align: left;"><strong>Autor: </strong> {{author}}</p>
+                        <p style="text-align: left;"><strong>Tema: </strong> {{topic}}</p>
+                        <p style="text-align: left;"><strong>Tiempo de lectura: </strong> {{readingTime}} minutos</p>
+                        <p style="text-align: left;"><strong>Fecha de publicación: </strong> {{date}}</p>
+                        <p style="text-align: left;"><strong>Likes: </strong> {{likes}} <a href="/news/{{id}}/like"><i class="bi bi-hand-thumbs-up"></i></a></p>
+                    </div>
+                    <div>
+                        <p> {{bodyText}}</p>
                     </div>
                 </div>
             </main>

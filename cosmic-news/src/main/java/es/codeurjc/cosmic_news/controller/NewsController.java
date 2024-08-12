@@ -21,7 +21,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.cosmic_news.model.News;
+import es.codeurjc.cosmic_news.model.Picture;
+import es.codeurjc.cosmic_news.model.User;
 import es.codeurjc.cosmic_news.service.NewsService;
+import es.codeurjc.cosmic_news.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
@@ -30,15 +33,53 @@ public class NewsController {
     @Autowired
     NewsService newsService;
 
+    @Autowired
+    UserService userService;
+
     @GetMapping("/news/load")
-    public String loadOffers(HttpServletRequest request, Model model, @RequestParam("page") int pageNumber,
-            @RequestParam("size") int size) {
-        Page<News> news = newsService.findAll(PageRequest.of(pageNumber, size));
+    public String loadNews(HttpServletRequest request, Model model, @RequestParam("page") int pageNumber,
+            @RequestParam("size") int size, @RequestParam("filter") String filter) {
+        
+        Page<News> news = null;
+        if (filter.equals("likes")){
+            news = newsService.findAllByLikes(PageRequest.of(pageNumber, size));
+        }else if(filter.equals("date")){
+            news = newsService.findAllByDate(PageRequest.of(pageNumber, size));
+        }else if(filter.equals("time")){
+            news = newsService.findAllByTime(PageRequest.of(pageNumber, size));
+        }else{
+            news = newsService.findAll(PageRequest.of(pageNumber, size));
+        }
 
         model.addAttribute("news", news);
         model.addAttribute("hasMore", news.hasNext());
-        model.addAttribute("alternative", "No hay noticias");
         return "news_cards";
+    }
+
+    @GetMapping("/newsUser/load")
+    public String loadNewsUsers(HttpServletRequest request, Model model, @RequestParam("page") int pageNumber,
+            @RequestParam("size") int size) {
+
+        if (request.getUserPrincipal() != null) {
+            User user = userService.findUserByMail(request.getUserPrincipal().getName());
+            if (user != null){
+                Page<News> news = newsService.findAllByUserId(user.getId(),pageNumber,size);
+                model.addAttribute("news", news);
+                model.addAttribute("hasMore", news.hasNext());
+                return "news_cards";
+            }else{
+                model.addAttribute("title", "Error");
+                model.addAttribute("message", "Usuario no encontrado");
+                model.addAttribute("back", "javascript:history.back()");
+                return "message";
+            }
+        }else{
+            model.addAttribute("title", "Error");
+            model.addAttribute("message", "Usuario no encontrado");
+            model.addAttribute("back", "javascript:history.back()");
+            return "message";
+        }
+
     }
      
     @GetMapping("/news/new")
@@ -105,7 +146,7 @@ public class NewsController {
         boolean deleted = newsService.deleteNews(id);
 
         if(deleted){
-            return "redirect:/news";
+            return "redirect:/";
         }else{
             model.addAttribute("title", "Error");
             model.addAttribute("message", "Error al eliminar la noticia");
@@ -146,6 +187,27 @@ public class NewsController {
             model.addAttribute("back", "javascript:history.back()");
             return "message";
         }
+    }
 
+    @GetMapping("/news/{id}/like")
+    public String likeNews(@PathVariable Long id, Model model, HttpServletRequest request) {
+        if (request.getUserPrincipal() != null) {
+            User user = userService.findUserByMail(request.getUserPrincipal().getName());
+            News news = newsService.findNewsById(id);
+            if (user != null && news != null){
+                newsService.like(news,user);
+                return "redirect:/news/{id}";
+            }else{
+                model.addAttribute("title", "Error");
+                model.addAttribute("message", "Usuario o noticia no encontrados.");
+                model.addAttribute("back", "javascript:history.back()");
+                return "message";
+            }
+        }else{
+            model.addAttribute("title", "Error");
+            model.addAttribute("message", "¡Regístrate para poder dar likes a las fotos!");
+            model.addAttribute("back", "javascript:history.back()");
+            return "message";
+        }
     }
 }

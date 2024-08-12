@@ -9,8 +9,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import es.codeurjc.cosmic_news.model.Event;
+import es.codeurjc.cosmic_news.model.News;
+import es.codeurjc.cosmic_news.model.Picture;
 import es.codeurjc.cosmic_news.model.Quizz;
 import es.codeurjc.cosmic_news.model.User;
+import es.codeurjc.cosmic_news.repository.EventRepository;
+import es.codeurjc.cosmic_news.repository.NewsRepository;
+import es.codeurjc.cosmic_news.repository.PictureRepository;
 import es.codeurjc.cosmic_news.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -18,6 +23,15 @@ import jakarta.servlet.http.HttpServletRequest;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private EventRepository eventRepository;
+
+    @Autowired
+    private PictureRepository pictureRepository;
+
+    @Autowired
+    private NewsRepository newsRepository;
 
    @Autowired
     private PasswordEncoder passwordEncoder;
@@ -38,10 +52,25 @@ public class UserService {
     }
 
     public boolean deleteUser(String mail){
-        Optional<User> user = userRepository.findByMail(mail);
+        Optional<User> userOp = userRepository.findByMail(mail);
 
-        if (user.isPresent()){
-            userRepository.deleteById(user.get().getId());
+        if (userOp.isPresent()){
+            User user = userOp.get();
+            for (Event event: user.getEvents()){
+                user.removeEvent(event);
+                eventRepository.save(event);
+            }
+            for (Picture picture: user.getPictures()){
+                user.removePicture(picture);
+                picture.setLikes(picture.getLikes()-1);
+                pictureRepository.save(picture);
+            }
+            for (News news: user.getNews()){
+                user.removeNews(news);
+                news.setLikes(news.getLikes()-1);
+                newsRepository.save(news);
+            }
+            userRepository.deleteById(user.getId());
 
             return true;
         }else {
@@ -112,7 +141,7 @@ public class UserService {
         return message;
     }
 
-     public Optional<Event> findEventByDate(User user, LocalDate date) {
+    public Optional<Event> findEventByDate(User user, LocalDate date) {
         return user.getEvents().stream()
                 .filter(event -> event.getDate().equals(date))
                 .findFirst();

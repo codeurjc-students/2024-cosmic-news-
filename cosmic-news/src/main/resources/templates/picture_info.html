@@ -17,7 +17,7 @@
             <main class="container">
                 <div class="top-container">
                     <div class="left-cont">
-                        <a href="/" class="btn" role="button">
+                        <a href="/pictures" class="btn" role="button">
                             <i class="bi bi-arrow-left"></i><tool-tip>Volver</tool-tip>
                         </a>
                     </div>
@@ -36,22 +36,19 @@
 
                 </div>
 
-                <div class="row">
-                    <div class="col-md-4">
-                        {{#photo}}
-                        <img id="img-user" src="/picture/{{id}}/image">
-                        {{/photo}}
-                        {{^photo}}
-                        <img id="img-user" src="/images/noPhotoUser.jpg">
-                        {{/photo}}
-                    </div>
+                <div>
+                    {{#photo}}
+                    <img id="img-user" src="/picture/{{id}}/image" style="width: 800px; height: auto;">
+                    {{/photo}}
+                    {{^photo}}
+                    <img id="img-user" src="/images/noPhotoUser.jpg" style="width: 800px; height: auto;">
+                    {{/photo}}
+                </div>
 
-                    <div class="col-md-8">
-                        <p><strong>Autor</strong> {{author}}</p>
-                        <p><strong>Lugar</strong> {{location}}</p>
-                        <p><strong>Fecha</strong> {{dateTaken}}</p>
-                        <p><strong>Descripcion:</strong> {{description}}</p>
-                    </div>
+                <div >
+                    <p>{{author}}, {{location}}, {{dateTaken}}</p>
+                    <p><strong>Likes: </strong>{{likes}} <a href="/picture/{{id}}/like"><i class="bi bi-hand-thumbs-up"></i></a></p>
+                    <p>{{description}}</p>
                 </div>
             </main>
         {{/picture}}

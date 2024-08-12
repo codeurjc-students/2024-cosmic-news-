@@ -9,6 +9,7 @@ import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.annotation.Generated;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -54,6 +55,24 @@ public class User {
     )
     @JsonIgnore
     private Set<Event> events = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+        name = "user_news",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "news_id")
+    )
+    @JsonIgnore
+    private Set<News> news = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+        name = "user_picture",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "picture_id")
+    )
+    @JsonIgnore
+    private Set<Picture> pictures = new HashSet<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles;
@@ -195,6 +214,42 @@ public class User {
     public void removeEvent(Event event) {
         events.remove(event);
         event.getUsers().remove(this);
+    }
+
+    public Set<News> getNews() {
+        return news;
+    }
+
+    public void setNews(Set<News> news) {
+        this.news = news;
+    }
+
+    public void addNews(News n) {
+        news.add(n);
+        n.getUsers().add(this); 
+    }
+
+    public void removeNews(News n) {
+        news.remove(n);
+        n.getUsers().remove(this);
+    }
+
+    public Set<Picture> getPictures() {
+        return pictures;
+    }
+
+    public void setPictures(Set<Picture> pictures) {
+        this.pictures = pictures;
+    }
+
+    public void addPicture(Picture picture) {
+        pictures.add(picture);
+        picture.getUsers().add(this); 
+    }
+
+    public void removePicture(Picture picture) {
+        pictures.remove(picture);
+        picture.getUsers().remove(this);
     }
 
     public List<String> getRoles() {
