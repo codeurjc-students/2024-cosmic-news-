@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{video.title}}</title>
+
+    {{> config}}
+
+    <link type="text/css" rel="stylesheet" href="/css/data.css" />
+    <link type="text/css" rel="stylesheet" href="/css/profile.css" />
+    <link type="text/css" rel="stylesheet" href="/css/video.css" />
+</head>
+
+<body>
+    {{> header}}
+    <div class="background-container">
+        {{#video}}
+            <main class="container">
+                <div class="top-container">
+                    <div class="left-cont">
+                        <a href="/videos" class="btn" role="button">
+                            <i class="bi bi-arrow-left"></i><tool-tip>Volver</tool-tip>
+                        </a>
+                    </div>
+
+                    <h2>{{title}}</h2>
+
+                    <div class="right-cont">
+                    <a href="/video/{{id}}/edit" class="btn" role="button">
+                        <i class="bi bi-pencil-fill"></i><tool-tip>Editar vídeo</tool-tip>
+                    </a>
+
+                    <a href="/video/{{id}}/delete" class="btn" role="button">
+                            <i class="bi bi-trash-fill"></i><tool-tip>Borrar vídeo</tool-tip>
+                    </a>
+                    </div>
+
+                </div>
+
+                <div class="video-container">
+                    <div class="video">
+                        <iframe src="https://www.youtube.com/embed/{{videoUrl}}" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                </div>
+
+                <div >
+                    <p>{{description}}</p>
+                </div>
+            </main>
+        {{/video}}
+    </div>
+</body>
+
+</html>

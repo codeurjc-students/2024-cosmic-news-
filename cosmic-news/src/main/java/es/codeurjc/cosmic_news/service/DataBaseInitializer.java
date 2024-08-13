@@ -25,11 +25,13 @@ import es.codeurjc.cosmic_news.model.Picture;
 import es.codeurjc.cosmic_news.model.Question;
 import es.codeurjc.cosmic_news.model.Quizz;
 import es.codeurjc.cosmic_news.model.User;
+import es.codeurjc.cosmic_news.model.Video;
 import es.codeurjc.cosmic_news.repository.EventRepository;
 import es.codeurjc.cosmic_news.repository.NewsRepository;
 import es.codeurjc.cosmic_news.repository.PictureRepository;
 import es.codeurjc.cosmic_news.repository.QuizzRepository;
 import es.codeurjc.cosmic_news.repository.UserRepository;
+import es.codeurjc.cosmic_news.repository.VideoRepository;
 import jakarta.annotation.PostConstruct;
 
 @Component
@@ -50,6 +52,9 @@ public class DataBaseInitializer {
     @Autowired 
     private EventRepository eventRepository;
 
+    @Autowired 
+    private VideoRepository videoRepository;
+
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -61,6 +66,7 @@ public class DataBaseInitializer {
         initPictures();
         initNews();
         initEvents();
+        initVideos();
     }
 
     private void initUsers(){
@@ -493,6 +499,60 @@ public class DataBaseInitializer {
 
         eventRepository.save(event1);
         eventRepository.save(event2);
+    }
+
+    private void initVideos(){
+        Video video1 = new Video(
+            "¿Qué pasa dentro de un agujero negro?",
+            "6:34",
+            "Los agujeros negros son uno de los fenómenos más enigmáticos del universo: para que use formen, primero una estrella tiene morir. Además, todo lo que entra, jamás logra escapar,  tampoco la luz. Y en su corazón, en la llamada singularidad, el tiempo y el espacio se detienen. ¿Pero qué son exactamente los agujeros negros? ¿Y por qué es importante entender qué es la singularidad, ese punto en el que dejan de tener sentido las leyes de la naturaleza que conocemos?",
+            "dMEho2ZcVtE"
+        );
+
+        Video video2 = new Video(
+            "Toda la evolución de la Tierra en solo 10 minutos",
+            "10:41",
+            "¿Y si repasáramos toda la evolución de la Tierra en solo 9 minutos? ¿Preparado?",
+            "XrA5qcs31iw"
+        );
+
+        Video video3 = new Video(
+            "NOTICIAS DE MARTE - AGOSTO 2024",
+            "29:59",
+            "Repasamos las últimas noticias acerca del planeta Marte",
+            "7HV-grdOmGo"
+        );
+
+        Video video4 = new Video(
+            "¿Qué es el Sol y cómo funciona? ¿Es una bola de fuego?",
+            "13:07",
+            "Qué es realmente el Sol y cómo funciona su interior. Aprovechar el Sol mediante esferas de Dyson. Gracias Giordano Bruno a Kepler, Newton y Einstein entre otros, descubrimos el Universo y que el Sol es una estrella, además de ser un reactor de fusión nuclear que nos da calor en forma de radiación electromagnética.",
+            "ePY07OymPkU"
+        );
+
+        Video video5 = new Video(
+            "¿Qué pasaría si un asteroide impactara la Tierra en 2024?",
+            "8:03",
+            "Un asteroide viene directo hacia la Tierra. Al principio, los científicos dijeron que pasaría de largo, pero al parecer, han cometido graves errores de cálculo.\r\n" + //
+                                "\r\n" + //
+                                "¿Podríamos alterar la trayectoria del asteroide?\r\n" + //
+                                "¿Y por qué dicen que podría ocurrir antes de 2029?",
+            "V5Eh_tZP5yQ"
+        );
+
+        Video video6 = new Video(
+            "¿Cómo es realmente la Vía Láctea?",
+            "16:34",
+            "Según la hipótesis científica actualmente dominante, hace unos 13.800 millones de años, un grandioso evento llamado \"Big Bang\" dio origen a nuestro universo. Poco después, ondas gravitatorias de increíble fuerza comprimieron el gas primordial en coágulos gigantes, y las inexorables fuerzas de atracción encendieron un fuego termonuclear en sus profundidades, dando al universo la luz de las primeras estrellas. Las mismas fuerzas unieron las luminarias en cúmulos a gran escala y, luego, en estructuras aún más complejas de dimensiones colosales. Miles de millones de años después, uno de estos se convirtió en la cuna de un fenómeno asombroso: la \"vida\". Y aunque el hombre aún no es capaz de salir de su sistema de origen, ha aprendido mucho sobre su propia Galaxia. Entonces, ¿qué sabemos ya sobre la Vía Láctea?",
+            "aqxpcRod_9k"
+        );
+
+        videoRepository.save(video1);
+        videoRepository.save(video2);
+        videoRepository.save(video3);
+        videoRepository.save(video4);
+        videoRepository.save(video5);
+        videoRepository.save(video6);     
     }
 
     public Blob photoToBlob(String photoStr) {

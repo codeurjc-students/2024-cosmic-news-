@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Formulario nuevos vídeos</title>
+
+    {{> config}}
+
+    <link type="text/css" rel="stylesheet" href="/css/form.css" />
+    <link type="text/css" rel="stylesheet" href="/css/skills.css" />
+
+</head>
+
+<body>
+    {{> header}}
+    <div class="background-container">
+        <div class="container">
+            {{#edit}}
+            <h2>Editar vídeo</h2>
+            {{/edit}}
+            {{^edit}}
+            <h2>Nuevo vídeo</h2>
+            {{/edit}}
+
+            {{#edit}}
+            <form role="form" action="/video/{{video.id}}/edit" method="post" enctype="multipart/form-data">
+            {{/edit}}
+            {{^edit}}
+            <form role="form" action="/video/new" method="post" enctype="multipart/form-data">
+            {{/edit}}
+                <input type ="hidden" name="_csrf" value="{{token}}"/>
+
+                <div class="row">
+                    <div class="form-group col-md-8 col-sm-12">
+                        <label for="title">Título</label>
+                        <input type="text" class="form-control" name="title" placeholder="Nombre del vídeo" value="{{#video}}{{video.title}}{{/video}}">
+                    </div>
+                    <div class="form-group col-md-4 col-sm-12">
+                        <label for="duration">Duración</label>
+                        <input type="text" class="form-control" name="duration" placeholder="Duración del vídeo" value="{{#video}}{{video.duration}}{{/video}}">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Descripción</label>
+                    <textarea type="text" class="form-control" name="description" placeholder="Descripción del vídeo">{{#video}}{{video.description}}{{/video}}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="videoUrl">URL</label>
+                    <input type="text" class="form-control" name="videoUrl" placeholder="Link del vídeo" value="{{#video}}{{video.videoUrl}}{{/video}}">
+                </div>
+
+                <!-- Buttons -->
+                <div class="btn-cont">
+                    <button type="submit" class="btn">
+                        <i class="bi bi-download"></i> Guardar
+                    </button>
+                    <a href="/videos" class="btn btn-red" role="button">
+                        <i class="bi bi-x-lg"></i> Cancelar
+                    </a>
+                </div>
+            <input type ="hidden" name="_csrf" value="{{token}}"/>
+        </form>
+        </div>
+    </div>
+</body>
+
+</html>

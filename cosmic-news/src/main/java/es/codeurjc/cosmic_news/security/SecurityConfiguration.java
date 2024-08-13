@@ -154,6 +154,10 @@ public class SecurityConfiguration {
 					.requestMatchers("/pictures/load").permitAll()
 					.requestMatchers("/picturesUser/load").permitAll()
 
+					.requestMatchers("/videos").permitAll()
+					.requestMatchers("/video/new").permitAll()
+					.requestMatchers("/video/**").permitAll()
+
 					.requestMatchers("/space").permitAll()
 
 
