@@ -102,7 +102,7 @@ public class NewsController {
             model.addAttribute("back", "javascript:history.back()");
             return "message";
         } else {
-            return "redirect:/news";
+            return "redirect:/";
         }
     }
 
@@ -179,7 +179,7 @@ public class NewsController {
                 news.setPhoto(BlobProxy.generateProxy(photoField.getInputStream(), photoField.getSize()));
             }
             newsService.updateNews(news,request);
-            return "redirect:/news/{id}";
+            return "redirect:/new/{id}";
         }else{
             model.addAttribute("title", "Error");
             model.addAttribute("message", "Noticia no encontrada");
@@ -195,7 +195,7 @@ public class NewsController {
             News news = newsService.findNewsById(id);
             if (user != null && news != null){
                 newsService.like(news,user);
-                return "redirect:/news/{id}";
+                return "redirect:/new/{id}";
             }else{
                 model.addAttribute("title", "Error");
                 model.addAttribute("message", "Usuario o noticia no encontrados.");

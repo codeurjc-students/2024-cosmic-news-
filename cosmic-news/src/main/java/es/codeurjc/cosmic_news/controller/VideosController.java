@@ -100,7 +100,7 @@ public class VideosController {
         Video video = videoService.findVideoById(id);
         if (video != null){
             videoService.updateVideo(video,request);
-            return "redirect:/video/{id}";
+            return "redirect:/videos/{id}";
         }else{
             model.addAttribute("title", "Error");
             model.addAttribute("message", "Vídeo no encontrado");

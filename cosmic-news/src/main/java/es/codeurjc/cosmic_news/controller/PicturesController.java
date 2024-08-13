@@ -182,7 +182,7 @@ public class PicturesController {
                 picture.setPhoto(BlobProxy.generateProxy(photoField.getInputStream(), photoField.getSize()));
             }
             pictureService.updatePicture(picture,request);
-            return "redirect:/picture/{id}";
+            return "redirect:/pictures/{id}";
         }else{
             model.addAttribute("title", "Error");
             model.addAttribute("message", "Foto no encontrada");
@@ -198,7 +198,7 @@ public class PicturesController {
             Picture picture = pictureService.findPictureById(id);
             if (user != null && picture != null){
                 pictureService.like(picture,user);
-                return "redirect:/picture/{id}";
+                return "redirect:/pictures/{id}";
             }else{
                 model.addAttribute("title", "Error");
                 model.addAttribute("message", "Usuario o foto no encontrados.");

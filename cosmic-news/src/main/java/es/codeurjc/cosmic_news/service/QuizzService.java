@@ -2,6 +2,7 @@ package es.codeurjc.cosmic_news.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -104,6 +105,18 @@ public class QuizzService {
 		Optional<Quizz> quizz = quizzRepository.findById(id);
 
 		if (quizz.isPresent()) {
+            List<User> users = userRepository.findAll();
+            for (User user: users){
+                Iterator<Badge> iterator = user.getBadges().iterator();
+                while (iterator.hasNext()) {
+                    Badge badge = iterator.next();
+                    if (badge.getName().equals(quizz.get().getName())) {
+                        iterator.remove();
+                        break;
+                    }
+                }
+                userRepository.save(user);
+            }
 			quizzRepository.deleteById(id);
 
 			return quizz.get();
