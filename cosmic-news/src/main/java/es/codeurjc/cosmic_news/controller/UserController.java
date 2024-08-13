@@ -2,7 +2,6 @@ package es.codeurjc.cosmic_news.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.time.LocalDate;
 import java.util.Map;
 import java.util.Optional;
@@ -26,12 +25,8 @@ import org.springframework.web.multipart.MultipartFile;
 import es.codeurjc.cosmic_news.model.Event;
 import es.codeurjc.cosmic_news.model.User;
 import es.codeurjc.cosmic_news.service.EventService;
-import es.codeurjc.cosmic_news.service.PictureService;
 import es.codeurjc.cosmic_news.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.web.bind.annotation.RequestBody;
-
-
 
 @Controller
 public class UserController {
@@ -45,6 +40,7 @@ public class UserController {
     @GetMapping("/")
     public String getIndex(Model model, HttpServletRequest request, Pageable page) {
         model.addAttribute("notification", false);
+        model.addAttribute("admin", request.isUserInRole("ADMIN"));
         if (request.getUserPrincipal() != null) {
             User user = userService.findUserByMail(request.getUserPrincipal().getName());
             if (user != null && !user.getEvents().isEmpty()){
@@ -58,6 +54,11 @@ public class UserController {
         return "index";
     }
 
+    @GetMapping("/error")
+    public String getError() {
+        return "error";
+    }
+    
     @GetMapping("/login")
     public String getLogin(HttpServletRequest request) {
         if (request.getUserPrincipal() != null) {

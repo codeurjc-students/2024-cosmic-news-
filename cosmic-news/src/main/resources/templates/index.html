@@ -5,7 +5,6 @@
 
     {{> config}}
     <link type="text/css" rel="stylesheet" href="/css/cards.css" />
-    <link type="text/css" rel="stylesheet" href="/css/maps.css" />
     <script src="/js/notification.js"></script>
     <script src="/js/cards.js"></script>
 </head>
@@ -59,7 +58,7 @@
             </div>
 
             <div class="btn-cont bottom-right-button">
-                <a href="/news/new" class="btn" role="btn">
+                <a href="/news/new" class="btn {{^admin}}hidden{{/admin}}" role="btn">
                     <i class="bi bi-plus-circle"></i><tool-tip style="top: auto; bottom: 100%;">Añadir noticia</tool-tip>
                 </a>
             </div>

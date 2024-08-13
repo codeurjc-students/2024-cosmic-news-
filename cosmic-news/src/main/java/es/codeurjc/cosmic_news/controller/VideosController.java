@@ -19,7 +19,8 @@ public class VideosController {
     VideoService videoService;
     
     @GetMapping("/videos")
-    public String getVideos(Model model) {
+    public String getVideos(Model model, HttpServletRequest request) {
+        model.addAttribute("admin", request.isUserInRole("ADMIN"));
         model.addAttribute("videos", videoService.getAllVideos());
         return "videos";
     }
@@ -47,11 +48,12 @@ public class VideosController {
     }
 
 
-    @GetMapping("/video/{id}")
+    @GetMapping("/videos/{id}")
     public String showVideo(Model model, HttpServletRequest request, @PathVariable Long id) {
 
         Video video = videoService.findVideoById(id);
         if (video != null){
+            model.addAttribute("admin", request.isUserInRole("ADMIN"));
             model.addAttribute("video", video);
             return "/video_info";
         }else{

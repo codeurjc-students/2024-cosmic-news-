@@ -8,10 +8,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
 
 import es.codeurjc.cosmic_news.model.Event;
-import es.codeurjc.cosmic_news.model.Picture;
 import es.codeurjc.cosmic_news.model.User;
 import es.codeurjc.cosmic_news.repository.EventRepository;
 import es.codeurjc.cosmic_news.repository.UserRepository;

@@ -18,15 +18,15 @@
 }
 
 .quiz-item.fácil {
-    background-color: #d4edda; /* Verde claro para fácil */
+    background-color: #d4edda;
 }
 
 .quiz-item.normal {
-    background-color: #fff3cd; /* Amarillo claro para normal */
+    background-color: #fff3cd;
 }
 
 .quiz-item.difícil {
-    background-color: #f8d7da; /* Rojo claro para difícil */
+    background-color: #f8d7da;
 }
 
 .btn-cont5 {
@@ -58,15 +58,15 @@
 }
 
 .btn-cont .btn {
-    min-width: 70px;
+    max-width: 40px;
+    max-height: 40px;
 }
 
 #piechart {
-    text-align: center;
-    width: auto;
+    width: 100%;
     height: auto;
-    margin: auto;
-    max-width: 80%;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .google-visualization-tooltip {

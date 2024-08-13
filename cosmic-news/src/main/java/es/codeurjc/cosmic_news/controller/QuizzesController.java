@@ -2,11 +2,9 @@ package es.codeurjc.cosmic_news.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.util.HashMap;
 import java.util.List;
 
-import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -20,18 +18,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.cosmic_news.model.Badge;
-import es.codeurjc.cosmic_news.model.Picture;
 import es.codeurjc.cosmic_news.model.Question;
 import es.codeurjc.cosmic_news.model.Quizz;
 import es.codeurjc.cosmic_news.model.User;
 import es.codeurjc.cosmic_news.service.QuizzService;
 import es.codeurjc.cosmic_news.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestBody;
-
-
-
 
 @Controller
 public class QuizzesController {
@@ -43,9 +35,10 @@ public class QuizzesController {
     UserService userService;
 
     @GetMapping("/quizzes")
-    public String getQuizzes(Model model) {
+    public String getQuizzes(Model model, HttpServletRequest request) {
         HashMap<String, Integer> map = fillQuizzes();
 
+        model.addAttribute("admin", request.isUserInRole("ADMIN"));
         model.addAttribute("quizzesChart", map);
         model.addAttribute("quizzes", quizzService.getAllQuizzes());
         return "quizzes";
@@ -80,7 +73,7 @@ public class QuizzesController {
 		}
 	}
 
-    @GetMapping("/quizz/{id}")
+    @GetMapping("/quiz/{id}")
     public String getQuizz(@PathVariable Long id, Model model) {
         Quizz quizz = quizzService.findQuizzById(id);
         if (quizz == null){

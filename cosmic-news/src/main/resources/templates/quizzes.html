@@ -3,7 +3,6 @@
     <title>Quizzes</title>
     {{> config}}
     <link type="text/css" rel="stylesheet" href="/css/quizzes.css" />
-    <link type="text/css" rel="stylesheet" href="/css/data.css" />
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript" src="/js/chart.js"></script>
@@ -19,19 +18,26 @@
                     </a>
                 </div>
                 <h2>Quizzes</h2>
+                <div class="rigth-cont">
+                    <i class="bi bi-square invisible-icon"></i>
+                    <i class="bi bi-square invisible-icon"></i>
+                </div>
+            
             </div>
             <ul class="quiz-list">
                 {{#quizzes}}
                 <li class="quiz-item {{difficulty}}">
-                    <a href="/quizz/{{id}}">
+                    <a href="/quiz/{{id}}">
                         <span>Quizz {{name}}, Dificultad: {{difficulty}}</span>
                     </a>
                     <div class="btn-cont">
+                        {{#admin}}
                         <a href="/quizz/{{id}}/edit" class="btn" role="button">
                             <i class="bi bi-pencil-fill"></i><tool-tip>Editar Quizz</tool-tip>
                         </a>
+                        {{/admin}}
                         <form role="form" action='/quizz/delete/{{id}}' method="post">
-                            <button type="submit" class="btn btn-red">
+                            <button type="submit" class="btn btn-red {{^admin}}hidden{{/admin}}">
                                 <i class="bi bi-trash-fill"></i><tool-tip>Borrar</tool-tip>
                             </button>
                             <input type="hidden" name="_csrf" value="{{token}}"/>
@@ -59,7 +65,7 @@
     </div>
 
     <div class="btn-cont bottom-right-button">
-        <a href="/quizz/new" class="btn" role="btn">
+        <a href="/quizz/new" class="btn {{^admin}}hidden{{/admin}}" role="btn">
             <i class="bi bi-plus-circle"></i><tool-tip style="top: auto; bottom: 100%;">Añadir quizz</tool-tip>
         </a>
     </div>

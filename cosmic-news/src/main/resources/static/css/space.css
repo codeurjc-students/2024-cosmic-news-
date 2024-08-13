@@ -1,0 +1,38 @@
+body {
+    margin: 0;
+    overflow: hidden;
+}
+canvas {
+    display: block;
+}
+#info {
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px;
+    display: none;
+    z-index: 10;
+    border-radius: 5px;
+}
+#info img {
+    max-width: 100px;
+    max-height: 100px;
+    display: block;
+    margin-bottom: 10px;
+}
+#close-info {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#close-info:hover {
+    color: red;
+}

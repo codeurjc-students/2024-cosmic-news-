@@ -19,7 +19,7 @@ header .right-cont-wrapper {
 
 header .center-cont {
     display: flex;
-    flex: 1;  /* Esto permite que el contenedor central se expanda para centrar su contenido */
+    flex: 1; 
     justify-content: center;
 }
 
@@ -27,32 +27,32 @@ header .center-cont {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    margin-right: 30px; /* Añade un margen derecho entre los right-cont */
+    margin-right: 30px;
 }
 
 .right-cont a {
     display: flex;
-    flex-direction: column; /* Coloca el icono y el texto en una columna */
+    flex-direction: column;
     align-items: center;
     text-decoration: none;
     color: var(--second-color);
 }
 
 .right-cont:last-child {
-    margin-right: 0; /* Elimina el margen derecho del último right-cont */
+    margin-right: 0;
 }
 
 .right-cont i {
-    font-size: 2em; /* Tamaño del icono */
+    font-size: 2em; 
 }
 
 .right-cont span {
-    margin-top: 5px; /* Espacio entre el icono y el texto */
-    font-size: 0.875em; /* Tamaño del texto */
+    margin-top: 5px;
+    font-size: 0.875em;
 }
 
 header a:hover, .dropdown button:hover, .dropdown-item:hover {
-    color: var(--logo-color); /* Color del texto al pasar el ratón */
+    color: var(--logo-color);
 }
 
 .logo-cont {

@@ -32,19 +32,17 @@
     
             
             <div class="modal-buttons">
-                
                 <form role="form" action='/event/edit' method="post">
                     <input type="hidden" id="eventId" name="eventId" />
-                    <button type="submit" id="editButton" class="btn btn-secondary">Editar</button>
+                    <button type="submit" id="editButton" class="btn btn-secondary {{^admin}}hidden{{/admin}}">Editar</button>
                     <input type="hidden" name="_csrf" value="{{token}}"/>
                 </form>
 
                 <form role="form" action='/event/delete' method="post">
                     <input type="hidden" id="eventId2" name="eventId2" />
-                    <button type="submit" id="deleteButton" class="btn btn-danger">Borrar</button>
+                    <button type="submit" id="deleteButton" class="btn btn-danger {{^admin}}hidden{{/admin}}">Borrar</button>
                     <input type="hidden" name="_csrf" value="{{token}}"/>
                 </form>
-
                 <form role="form" action='/notify' method="post">
                     <input type="hidden" id="eventId3" name="eventId3" />
                     <button type="submit" id="notifyButton" class="btn btn-info">Notificar</button>
@@ -55,7 +53,7 @@
     </div>
 
     <div class="btn-cont bottom-right-button">
-        <a href="/event/new" class="btn" role="btn">
+        <a href="/event/new" class="btn {{^admin}}hidden{{/admin}}" role="btn">
             <i class="bi bi-plus-circle"></i><tool-tip style="top: auto; bottom: 100%;">Añadir evento</tool-tip>
         </a>
     </div>

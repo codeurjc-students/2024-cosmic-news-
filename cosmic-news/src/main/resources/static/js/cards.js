@@ -1,10 +1,9 @@
-// Global variable to store the current filters
 let currentFilters = {
     news: "date",
     pictures: "date"
 };
 
-const cardWidth = 250 + 2 * 20; // Maximum width of each offer + margins (edges are included in the a)
+const cardWidth = 250 + 2 * 20;
 
 document.addEventListener('DOMContentLoaded', function () {
     load("newsUser", 0);
@@ -23,7 +22,7 @@ async function checkLoadMore(cardType, page) {
     const loadMoreId = `load${cardType.charAt(0).toUpperCase() + cardType.slice(1)}`;
     const loadMore = document.getElementById(loadMoreId);
 
-    if (!loadMore) return; // If the load more button container is not found, exit the function
+    if (!loadMore) return;
 
     const loadMoreButton = loadMore.querySelector("button");
     loadMoreButton.setAttribute("onclick", `load("${cardType}", ${page}, "${currentFilters[cardType]}")`);
@@ -34,11 +33,10 @@ async function load(cardType, page, filter) {
     const noContent = document.getElementById(`no${cardType.charAt(0).toUpperCase() + cardType.slice(1)}`);
     const loadMore = document.getElementById(`load${cardType.charAt(0).toUpperCase() + cardType.slice(1)}`);
 
-    if (!cards || !noContent || !loadMore) return; // If the cards container or no-content message is not found, exit the function
+    if (!cards || !noContent || !loadMore) return;
 
-    const amount = Math.max(2, Math.min(5, calculateColumns(cards)));  // Between 2 and 5 cards
+    const amount = Math.max(2, Math.min(5, calculateColumns(cards))); 
 
-    // Update global filter if one is provided
     if (filter !== undefined) {
         currentFilters[cardType] = filter;
     }
@@ -52,7 +50,6 @@ async function load(cardType, page, filter) {
         cards.insertAdjacentHTML("beforeend", newCards);
     }
 
-    // Show or hide the "No content" message and load more button
     if (cards.children.length === 0) {
         noContent.style.display = 'block';
         loadMore.style.display = 'none';
@@ -61,11 +58,10 @@ async function load(cardType, page, filter) {
         loadMore.style.display = 'block';
     }
 
-    checkLoadMore(cardType, page + 1);  // Prepare for next page
+    checkLoadMore(cardType, page + 1);
 }
 
-// Function to update the current filter and reload the content
 function setFilter(cardType, filter) {
-    currentFilters[cardType] = filter; // Update the global filter
-    load(cardType, 0, filter); // Reload the content with the selected filter
+    currentFilters[cardType] = filter;
+    load(cardType, 0, filter);
 }

@@ -4,14 +4,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalDate = document.getElementById('modalDate');
     const modalInfo = document.getElementById('modalInfo');
     const closeModal = document.querySelector('.close');
-    const editButton = document.getElementById('editButton');
-    const deleteButton = document.getElementById('deleteButton');
-    const notifyButton = document.getElementById('notifyButton');
 
-    let selectedEvent = null; // Para almacenar el evento seleccionado
+    let selectedEvent = null;
 
     function fetchEvents() {
-        fetch('/events') // Endpoint para obtener eventos
+        fetch('/events')
             .then(response => response.json())
             .then(data => {
                 events = data;
@@ -105,5 +102,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const today = new Date();
-    fetchEvents(); // Fetch events and create calendar
+    fetchEvents();
 });

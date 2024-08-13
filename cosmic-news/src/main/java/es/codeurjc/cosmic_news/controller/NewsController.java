@@ -9,7 +9,6 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.cosmic_news.model.News;
-import es.codeurjc.cosmic_news.model.Picture;
 import es.codeurjc.cosmic_news.model.User;
 import es.codeurjc.cosmic_news.service.NewsService;
 import es.codeurjc.cosmic_news.service.UserService;
@@ -109,11 +107,12 @@ public class NewsController {
     }
 
 
-    @GetMapping("/news/{id}")
+    @GetMapping("/new/{id}")
     public String showNews(Model model, HttpServletRequest request, @PathVariable Long id) {
 
         News news = newsService.findNewsById(id);
         if (news != null){
+            model.addAttribute("admin", request.isUserInRole("ADMIN"));
             model.addAttribute("news", news);
             return "/news_info";
         }else{

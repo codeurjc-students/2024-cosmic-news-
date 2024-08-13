@@ -1,9 +1,7 @@
 package es.codeurjc.cosmic_news.controller;
 
-import java.io.IOException;
 import java.util.List;
 
-import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,19 +10,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import es.codeurjc.cosmic_news.model.Event;
-import es.codeurjc.cosmic_news.model.Picture;
-import es.codeurjc.cosmic_news.model.User;
 import es.codeurjc.cosmic_news.service.EventService;
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-
-
-
-
-
 
 @Controller
 public class CalendarController {
@@ -33,7 +23,8 @@ public class CalendarController {
     EventService eventService;
     
     @GetMapping("/calendar")
-    public String getCalendar() {
+    public String getCalendar(Model model, HttpServletRequest request) {
+        model.addAttribute("admin", request.isUserInRole("ADMIN"));
         return "calendar";
     }
     

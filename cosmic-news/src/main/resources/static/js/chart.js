@@ -14,12 +14,28 @@ function drawChart() {
 
     var options = {
         title: 'Quizzes completados',
+        tooltip: { 
+            isHtml: true, 
+            textStyle: { fontSize: 16 }, 
+            showColorCode: true, 
+            ignoreBounds: true, 
+            isHtml: true, 
+            forceIFrame: true 
+        },
+        pieSliceText: 'value',
+        chartArea: {
+            left: '10%',
+            top: '10%',
+            width: '80%',
+            height: '80%'
+        },
         width: '100%',
         height: '100%',
-        tooltip: { isHtml: true, textStyle: { fontSize: 16 }, showColorCode: true, ignoreBounds: true, isHtml: true, forceIFrame: true },
-        pieSliceText: 'value',
+        responsive: true,
     };
 
     var chart = new google.visualization.PieChart(document.getElementById('piechart'));
     chart.draw(dataTable, options);
 }
+
+window.addEventListener('resize', drawChart);

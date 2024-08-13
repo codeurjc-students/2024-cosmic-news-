@@ -14,7 +14,7 @@ ul {
 
 .infoIcons button {
     color: var(--main-color-dark);
-    line-height: normal;  /* to prevent the button from stretching vertically */
+    line-height: normal; 
     border: none;
     padding: 0;
 }
@@ -39,7 +39,7 @@ ul {
 }
 
 :root {
-    --main-color-dark: #333; /* Define tu color principal */
+    --main-color-dark: #333;
 }
 
 .subcontainer {

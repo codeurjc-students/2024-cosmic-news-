@@ -4,8 +4,8 @@
 <head>
     <title>Quizz {{quizz.name}}</title>
     {{> config}}
-    <link type="text/css" rel="stylesheet" href="/css/quiz.css" /> <!-- Agrega esta línea -->
-    <script src="/js/quiz.js"></script> <!-- Agrega esta línea -->
+    <link type="text/css" rel="stylesheet" href="/css/quiz.css" />
+    <script src="/js/quiz.js"></script> 
 </head>
 
 <body>
@@ -19,13 +19,12 @@
                             <i class="bi bi-arrow-left"></i><tool-tip>Volver</tool-tip>
                         </a>
                     </div>
+                    <h2>Quizz {{name}}</h2>
                     <div class="rigth-cont">
                         <i class="bi bi-square invisible-icon"></i>
                     </div>
-                    <h2>Quizz {{name}}</h2>
                 </div>
 
-                <!-- Aquí se mostrarán las preguntas -->
                 <form id="quizz-form" action="/quizz/submit/{{quizz.id}}" method="post">
                 <div class="questions-container">
                     {{#questions}}

@@ -2,14 +2,14 @@
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    justify-content: center; /* Center the video horizontally */
+    justify-content: center;
 }
 .video {
-    width: 800px; /* Set a specific width for the video */
+    width: 800px;
     position: relative;
     cursor: pointer;
 }
 .video iframe {
     width: 100%;
-    height: 450px; /* Adjust the height as needed */
+    height: 450px;
 }

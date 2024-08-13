@@ -1,9 +1,9 @@
 .option.correct {
-    background-color: #d3ffd3; /* Verde claro para respuestas correctas */
+    background-color: #d3ffd3;
 }
 
 .option.incorrect {
-    background-color: #ffd3d3; /* Rojo claro para respuestas incorrectas */
+    background-color: #ffd3d3;
 }
 
 .options-container {
@@ -41,7 +41,7 @@
 }
 
 .btn-submit {
-    background-color: #007bff;
+    background-color: rgb(24, 23, 23);
     color: white;
     border: none;
     padding: 10px 20px;

@@ -1,11 +1,8 @@
 package es.codeurjc.cosmic_news.service;
 
 import java.io.IOException;
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.hibernate.engine.jdbc.BlobProxy;
@@ -17,7 +14,6 @@ import es.codeurjc.cosmic_news.model.Badge;
 import es.codeurjc.cosmic_news.model.Question;
 import es.codeurjc.cosmic_news.model.Quizz;
 import es.codeurjc.cosmic_news.model.User;
-import es.codeurjc.cosmic_news.repository.QuestionRepository;
 import es.codeurjc.cosmic_news.repository.QuizzRepository;
 import es.codeurjc.cosmic_news.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;

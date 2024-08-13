@@ -1,7 +1,5 @@
 package es.codeurjc.cosmic_news.model;
 
-import java.time.LocalDate;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

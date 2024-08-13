@@ -19,7 +19,7 @@
             <ul class="video-list">
                 {{#videos}}
                 <li class="video-item">
-                    <a href="/video/{{id}}" class="video-link">
+                    <a href="/videos/{{id}}" class="video-link">
                         <div class="video-content">
                             <img id="img-video" src="https://img.youtube.com/vi/{{videoUrl}}/maxresdefault.jpg" alt="{{title}}" class="video-image"/>
                             <div class="video-info">
@@ -34,7 +34,7 @@
         </main>
     </div>
     <div class="btn-cont bottom-right-button">
-        <a href="/video/new" class="btn" role="btn">
+        <a href="/video/new" class="btn {{^admin}}hidden{{/admin}}" role="btn">
             <i class="bi bi-plus-circle"></i><tool-tip style="top: auto; bottom: 100%;">Añadir vídeo</tool-tip>
         </a>
     </div>

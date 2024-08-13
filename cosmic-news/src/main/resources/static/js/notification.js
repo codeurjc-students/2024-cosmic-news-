@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
         notificationElement.style.display = 'block';
         setTimeout(function() {
             notificationElement.style.display = 'none';
-        }, 10000); // Desaparecer después de 5 segundos
+        }, 10000);
     }
 });
 

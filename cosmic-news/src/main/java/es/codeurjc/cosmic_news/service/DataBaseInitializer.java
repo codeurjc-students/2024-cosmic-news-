@@ -1,19 +1,13 @@
 package es.codeurjc.cosmic_news.service;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Blob;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -413,12 +407,12 @@ public class DataBaseInitializer {
         questions.add(question1);
 
         Question question2 = new Question();
-        question2.setQuestion("¿Si tienes alguna duda dónde debes acudir?");
-        question2.setOption1("Foro");
+        question2.setQuestion("¿Si quieres informarte acerca del Sistema Solar dónde debes acudir?");
+        question2.setOption1("Sistema Solar");
         question2.setOption2("Perfil");
         question2.setOption3("Fotos");
         question2.setOption4("Calendario");
-        question2.setAnswer("Foro");
+        question2.setAnswer("Sistema Solar");
         question2.setNum(2);
         question2.setQuizz(quizz1);
 
@@ -449,7 +443,7 @@ public class DataBaseInitializer {
         Question question4 = new Question();
         question4.setQuestion("¿Dónde puedes encontrar la fecha de eventos astronómicos?");
         question4.setOption1("Perfil");
-        question4.setOption2("Foro");
+        question4.setOption2("Sistema Solar");
         question4.setOption3("Calendario");
         question4.setOption4("Quizzes");
         question4.setAnswer("Calendario");
@@ -464,7 +458,7 @@ public class DataBaseInitializer {
         questions.add(question4);
 
         Question question5 = new Question();
-        question5.setQuestion("¿Puedes dar like y guardarte fotos y noticias?");
+        question5.setQuestion("¿Puedes dar like a las fotos y noticias?");
         question5.setOption1("Sí");
         question5.setOption2("No");
         question5.setOption3("Sólo fotos");

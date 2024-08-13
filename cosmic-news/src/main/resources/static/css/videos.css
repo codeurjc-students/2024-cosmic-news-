@@ -1,15 +1,15 @@
 .video-list {
     display: flex;
-    flex-wrap: wrap; /* Permite que los elementos se envuelvan a la siguiente línea */
+    flex-wrap: wrap;
     list-style-type: none;
     padding: 0;
     margin: 0;
-    gap: 15px; /* Espacio entre los elementos */
+    gap: 15px;
 }
 
 .video-item {
-    flex: 1 1 300px; /* Los elementos ocupan un mínimo de 300px y se expanden para llenar el espacio disponible */
-    box-sizing: border-box; /* Incluye el padding y el borde en el ancho total del elemento */
+    flex: 1 1 300px;
+    box-sizing: border-box;
 }
 
 .video-link {
@@ -49,6 +49,5 @@
 }
 
 .video-duration {
-    display: flex;
     align-items: center;
 }

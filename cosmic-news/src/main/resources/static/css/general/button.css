@@ -111,3 +111,7 @@
 #applied:hover .bi.bi-bookmark-x-fill {
     display: inline-block;
 }
+
+.hidden {
+    display: none;
+}

@@ -11,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import es.codeurjc.cosmic_news.model.News;
-import es.codeurjc.cosmic_news.model.Picture;
 import es.codeurjc.cosmic_news.model.User;
 import es.codeurjc.cosmic_news.repository.NewsRepository;
 import es.codeurjc.cosmic_news.repository.UserRepository;

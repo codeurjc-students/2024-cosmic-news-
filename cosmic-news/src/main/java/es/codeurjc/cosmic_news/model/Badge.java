@@ -1,9 +1,6 @@
 package es.codeurjc.cosmic_news.model;
 import java.sql.Blob;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 
 @jakarta.persistence.Embeddable

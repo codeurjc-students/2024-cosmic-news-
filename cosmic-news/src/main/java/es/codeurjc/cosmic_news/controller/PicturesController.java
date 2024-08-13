@@ -2,8 +2,6 @@ package es.codeurjc.cosmic_news.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.Optional;
 
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import es.codeurjc.cosmic_news.model.Event;
 import es.codeurjc.cosmic_news.model.Picture;
 import es.codeurjc.cosmic_news.model.User;
 import es.codeurjc.cosmic_news.service.PictureService;
@@ -39,7 +36,8 @@ public class PicturesController {
     UserService userService;
 
     @GetMapping("/pictures")
-    public String getPictures(Model model, Pageable page) {
+    public String getPictures(Model model, Pageable page, HttpServletRequest request) {
+        model.addAttribute("admin", request.isUserInRole("ADMIN"));
         return "pictures";
     }
 
@@ -55,7 +53,6 @@ public class PicturesController {
         }else{
             pictures = pictureService.findAll(PageRequest.of(pageNumber, size));
         }
-
         model.addAttribute("pictures", pictures);
         model.addAttribute("hasMore", pictures.hasNext());
         return "picture_cards";
@@ -114,11 +111,12 @@ public class PicturesController {
     }
 
 
-    @GetMapping("/picture/{id}")
+    @GetMapping("/pictures/{id}")
     public String showPicture(Model model, HttpServletRequest request, @PathVariable Long id) {
 
         Picture picture = pictureService.findPictureById(id);
         if (picture != null){
+            model.addAttribute("admin", request.isUserInRole("ADMIN"));
             model.addAttribute("picture", picture);
             return "/picture_info";
         }else{
