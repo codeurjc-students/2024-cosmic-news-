@@ -50,6 +50,10 @@ public class UserService {
         }
     }
 
+    public void saveUserRest(User user){
+        userRepository.save(user);
+    }
+
     public boolean deleteUser(String mail){
         Optional<User> userOp = userRepository.findByMail(mail);
 

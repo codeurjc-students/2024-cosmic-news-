@@ -24,7 +24,6 @@ import es.codeurjc.cosmic_news.model.Badge;
 import es.codeurjc.cosmic_news.model.Question;
 import es.codeurjc.cosmic_news.model.Quizz;
 import es.codeurjc.cosmic_news.model.User;
-import es.codeurjc.cosmic_news.model.Video;
 import es.codeurjc.cosmic_news.service.QuizzService;
 import es.codeurjc.cosmic_news.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;

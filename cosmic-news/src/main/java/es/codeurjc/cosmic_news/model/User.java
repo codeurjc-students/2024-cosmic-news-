@@ -36,7 +36,7 @@ public class User {
     @JsonIgnore
     private String pass;
 
-    //@Lob
+    @JsonIgnore
     private Blob photo;
     private boolean image;
 

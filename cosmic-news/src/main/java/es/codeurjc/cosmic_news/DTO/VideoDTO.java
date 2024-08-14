@@ -1,37 +1,38 @@
-package es.codeurjc.cosmic_news.model;
+package es.codeurjc.cosmic_news.DTO;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import es.codeurjc.cosmic_news.model.Video;
 
-@Entity
-public class Video {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class VideoDTO {
+
     private Long id;
-
     private String title;
     private String duration;
-    @Column(name = "bodyText", columnDefinition = "TEXT")
     private String description;
     private String videoUrl;
 
-    public Video(){}
+    public VideoDTO(){}
 
-    public Video(String title, String duration, String description, String videoUrl){
-        this.title = title;
-        this.duration = duration;
-        this.description = description;
-        this.videoUrl = videoUrl;
+    public VideoDTO(Video video){
+        this.id = video.getId();
+        this.title = video.getTitle();
+        this.duration = video.getDuration();
+        this.videoUrl = video.getVideoUrl();
     }
 
-    public Long getId(){
+    public Video toVideo(){
+        Video video = new Video();
+        video.setTitle(this.title);
+        video.setDuration(this.duration);
+        video.setDescription(this.description);
+        video.setVideoUrl(this.videoUrl);
+        return video;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Long id){
+    public void setId(Long id) {
         this.id = id;
     }
 
