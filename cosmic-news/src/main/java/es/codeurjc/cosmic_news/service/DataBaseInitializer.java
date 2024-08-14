@@ -92,7 +92,7 @@ public class DataBaseInitializer {
             "USER","ADMIN");
 
         Blob photo = null;
-        photo = photoToBlob("static/images/logo.png");
+        photo = photoToBlob("static/images/logo2.png");
         user3.addBadge(new Badge(photo,"Bienvenida", 0));
  
         userRepository.save(user1);
@@ -384,7 +384,7 @@ public class DataBaseInitializer {
         quizz1.setDifficulty("Fácil");
 
         Blob photo = null;
-        photo = photoToBlob("static/images/logo.png");
+        photo = photoToBlob("static/images/logo2.png");
         quizz1.setPhoto(photo);
         quizz1.setImage(photo != null);
 

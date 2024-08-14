@@ -8,6 +8,8 @@ import java.util.Optional;
 
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,6 +32,10 @@ public class QuizzService {
     
     public List<Quizz> getAllQuizzes(){
         return quizzRepository.findAll();
+    }
+
+    public Page<Quizz> findAll(Pageable pageable) {
+        return quizzRepository.findAll(pageable);
     }
     
     public Quizz saveQuizz(HttpServletRequest request, MultipartFile photoField) throws IOException{

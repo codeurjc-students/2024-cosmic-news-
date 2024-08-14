@@ -1,0 +1,18 @@
+
+
+{{#videos}}
+<a href="/videos/{{id}}">
+    <img src="https://img.youtube.com/vi/{{videoUrl}}/maxresdefault.jpg" alt="{{title}}">
+    <p>{{title}}</p>
+    <p>
+        {{duration}} <i class="bi bi-clock"></i>
+    </p>
+
+</a>
+{{/videos}}
+{{^videos}}
+{{/videos}}
+
+{{#hasMore}}
+<div style="display:none;" id="hasMore"></div>
+{{/hasMore}}

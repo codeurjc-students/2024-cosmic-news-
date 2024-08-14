@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import es.codeurjc.cosmic_news.model.Video;
@@ -17,6 +19,10 @@ public class VideoService {
 
     public List<Video> getAllVideos(){
         return videoRepository.findAll();
+    }
+
+    public Page<Video> findAll(Pageable pageable) {
+        return videoRepository.findAll(pageable);
     }
 
     public Video saveVideo(Video video){

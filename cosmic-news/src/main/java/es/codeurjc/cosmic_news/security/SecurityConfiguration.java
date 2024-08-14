@@ -116,11 +116,13 @@ public class SecurityConfiguration {
 					.requestMatchers("/notify").authenticated()
 
 					.requestMatchers("/quizzes").permitAll()
+					.requestMatchers("/quizzes/load").permitAll()
+					.requestMatchers("/quizz/**/image").permitAll()
 					.requestMatchers("/quiz/**").authenticated()
 					.requestMatchers("/quizz/review/**").authenticated()
 					.requestMatchers("/quizz/submit/**").authenticated()
 					.requestMatchers("/quizz/new").hasRole("ADMIN")
-					.requestMatchers("/quizz/delete/**").hasRole("ADMIN")
+					.requestMatchers("/quizz/**/delete").hasRole("ADMIN")
 					.requestMatchers("/quizz/**/edit").hasRole("ADMIN")
 
 					.requestMatchers("/news").permitAll()
@@ -143,6 +145,7 @@ public class SecurityConfiguration {
 
 					.requestMatchers("/videos").permitAll()
 					.requestMatchers("/videos/**").permitAll()
+					.requestMatchers("/videos/load").permitAll()
 					.requestMatchers("/video/new").hasRole("ADMIN")
 					.requestMatchers("/video/**/edit").hasRole("ADMIN")
 					.requestMatchers("/video/**/delete").hasRole("ADMIN")

@@ -8,6 +8,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,12 +17,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.cosmic_news.model.Badge;
 import es.codeurjc.cosmic_news.model.Question;
 import es.codeurjc.cosmic_news.model.Quizz;
 import es.codeurjc.cosmic_news.model.User;
+import es.codeurjc.cosmic_news.model.Video;
 import es.codeurjc.cosmic_news.service.QuizzService;
 import es.codeurjc.cosmic_news.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -40,8 +44,17 @@ public class QuizzesController {
 
         model.addAttribute("admin", request.isUserInRole("ADMIN"));
         model.addAttribute("quizzesChart", map);
-        model.addAttribute("quizzes", quizzService.getAllQuizzes());
         return "quizzes";
+    }
+
+    @GetMapping("/quizzes/load")
+    public String loadPictures(HttpServletRequest request, Model model, @RequestParam("page") int pageNumber,
+            @RequestParam("size") int size) {
+        
+        Page<Quizz> quizzes = quizzService.findAll(PageRequest.of(pageNumber, size));
+        model.addAttribute("quizzes", quizzes);
+        model.addAttribute("hasMore", quizzes.hasNext());
+        return "quizz_cards";
     }
      
     @GetMapping("/quizz/new")
@@ -59,7 +72,7 @@ public class QuizzesController {
         return "redirect:/quizzes";
     }
 
-    @PostMapping("/quizz/delete/{id}")
+    @GetMapping("/quizz/{id}/delete")
 	public String removeQuizz(@PathVariable Long id, Model model) {
 		Quizz removedQuizz = quizzService.removeQuizz(id);
 
@@ -74,7 +87,7 @@ public class QuizzesController {
 	}
 
     @GetMapping("/quiz/{id}")
-    public String getQuizz(@PathVariable Long id, Model model) {
+    public String getQuizz(@PathVariable Long id, Model model, HttpServletRequest request) {
         Quizz quizz = quizzService.findQuizzById(id);
         if (quizz == null){
             model.addAttribute("title", "Error");
@@ -85,6 +98,7 @@ public class QuizzesController {
             List<Question> questions = quizz.getQuestions();
             model.addAttribute("quizz", quizz);
             model.addAttribute("questions", questions);
+            model.addAttribute("admin", request.isUserInRole("ADMIN"));
             return "quizz";
         }
     }

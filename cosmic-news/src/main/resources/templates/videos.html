@@ -1,42 +1,45 @@
+<!DOCTYPE html>
 <html>
+
 <head>
     <title>Vídeos</title>
+
     {{> config}}
-    <link type="text/css" rel="stylesheet" href="/css/videos.css" />
+
+    <link type="text/css" rel="stylesheet" href="/css/cards.css" />
+
+    <script src="/js/cards.js"></script>
 </head>
+
 <body>
     {{> header}}
+
     <div class="background-container">
         <main class="container">
             <div class="top-container">
-                <div class="left-cont">
-                    <a href="/" class="btn" role="button">
-                        <i class="bi bi-arrow-left"></i><tool-tip>Volver</tool-tip>
-                    </a>
-                </div>
+
                 <h2>Vídeos</h2>
+
             </div>
-            <ul class="video-list">
-                {{#videos}}
-                <li class="video-item">
-                    <a href="/videos/{{id}}" class="video-link">
-                        <div class="video-content">
-                            <img id="img-video" src="https://img.youtube.com/vi/{{videoUrl}}/maxresdefault.jpg" alt="{{title}}" class="video-image"/>
-                            <div class="video-info">
-                                <span class="video-title">{{title}}</span>
-                                <span class="video-duration">{{duration}}<i class="bi bi-clock"></i></span>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-                {{/videos}}
-            </ul>
+
+            <section class="cards" id="videos"></section>
+
+            <div class="no-content" id="noVideos">Sin vídeos</div>
+
+            <div class="btn-cont" id="loadVideos">
+                <button class="btn" onclick='load("videos",0)'>
+                    <i class="bi bi-chevron-double-down"></i> Cargar más
+                </button>
+            </div>
         </main>
     </div>
+
     <div class="btn-cont bottom-right-button">
         <a href="/video/new" class="btn {{^admin}}hidden{{/admin}}" role="btn">
-            <i class="bi bi-plus-circle"></i><tool-tip style="top: auto; bottom: 100%;">Añadir vídeo</tool-tip>
+            <i class="bi bi-plus-circle"></i><tool-tip style="top: auto; bottom: 100%;">Añadir foto</tool-tip>
         </a>
     </div>
+
 </body>
+
 </html>

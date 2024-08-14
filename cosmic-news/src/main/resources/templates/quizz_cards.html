@@ -1,0 +1,18 @@
+
+
+{{#quizzes}}
+<a href="/quiz/{{id}}">
+    <img src="/quizz/{{id}}/image" alt="{{name}}">
+    <p>{{name}}</p>
+    <p>
+        Dificultad: {{difficulty}}
+    </p>
+
+</a>
+{{/quizzes}}
+{{^quizzes}}
+{{/quizzes}}
+
+{{#hasMore}}
+<div style="display:none;" id="hasMore"></div>
+{{/hasMore}}

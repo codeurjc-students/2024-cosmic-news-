@@ -20,9 +20,18 @@
                         </a>
                     </div>
                     <h2>Quizz {{name}}</h2>
-                    <div class="rigth-cont">
-                        <i class="bi bi-square invisible-icon"></i>
+
+                    {{#admin}}
+                    <div class="right-cont">
+                    <a href="/quizz/{{id}}/edit" class="btn" role="button">
+                        <i class="bi bi-pencil-fill"></i><tool-tip>Editar quizz</tool-tip>
+                    </a>
+
+                    <a href="/quizz/{{id}}/delete" class="btn" role="button">
+                            <i class="bi bi-trash-fill"></i><tool-tip>Borrar quizz</tool-tip>
+                    </a>
                     </div>
+                    {{/admin}}
                 </div>
 
                 <form id="quizz-form" action="/quizz/submit/{{quizz.id}}" method="post">

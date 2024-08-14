@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', function () {
     load("picturesUser", 0);
     load("pictures", 0, currentFilters.pictures);
     load("news", 0, currentFilters.news);
+    load("videos",0);
+    load("quizzes",0);
 });
 
 function calculateColumns(cards) {

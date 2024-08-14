@@ -2,11 +2,14 @@ package es.codeurjc.cosmic_news.controller;
 
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.cosmic_news.model.Video;
@@ -21,8 +24,17 @@ public class VideosController {
     @GetMapping("/videos")
     public String getVideos(Model model, HttpServletRequest request) {
         model.addAttribute("admin", request.isUserInRole("ADMIN"));
-        model.addAttribute("videos", videoService.getAllVideos());
         return "videos";
+    }
+
+    @GetMapping("/videos/load")
+    public String loadPictures(HttpServletRequest request, Model model, @RequestParam("page") int pageNumber,
+            @RequestParam("size") int size) {
+        
+        Page<Video> videos = videoService.findAll(PageRequest.of(pageNumber, size));
+        model.addAttribute("videos", videos);
+        model.addAttribute("hasMore", videos.hasNext());
+        return "video_cards";
     }
      
     @GetMapping("/video/new")
