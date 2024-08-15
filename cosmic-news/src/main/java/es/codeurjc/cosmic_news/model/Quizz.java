@@ -4,6 +4,8 @@ import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,9 +25,11 @@ public class Quizz {
     private String difficulty;
 
     //@Lob
+    @JsonIgnore
     private Blob photo;
     private boolean image;
 
+    @JsonIgnore
     private int score;
 
     @OneToMany(mappedBy = "quizz", cascade = CascadeType.ALL, orphanRemoval = true)

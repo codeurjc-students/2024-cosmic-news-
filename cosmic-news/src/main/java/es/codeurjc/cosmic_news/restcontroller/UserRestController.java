@@ -102,7 +102,7 @@ public class UserRestController {
 	 description = "User posted correctly",
 	 content = {@Content(
 		mediaType = "application/json",
-		schema = @Schema(implementation=User.class)
+		schema = @Schema(implementation=UserDTO.class)
 		)}
 	 ),
 	 @ApiResponse(
@@ -133,7 +133,7 @@ public class UserRestController {
 	 description = "User updated correctly. You can update only the fields you want",
 	 content = {@Content(
 		mediaType = "application/json",
-		schema = @Schema(implementation=User.class)
+		schema = @Schema(implementation=UserDTO.class)
 		)}
 	 ),
 	 @ApiResponse(
@@ -227,7 +227,7 @@ public class UserRestController {
 
 				user.setImage(true);
 				user.setPhoto(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
-				userService.saveUser(user);
+				userService.saveUserRest(user);
 
 				return ResponseEntity.created(location).build();
 			}else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -296,7 +296,7 @@ public class UserRestController {
 				user.setPhoto(null);
 				user.setImage(false);
 
-				userService.saveUser(user);
+				userService.saveUserRest(user);
 
 				return ResponseEntity.noContent().build();
 			}else return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -9,6 +9,7 @@ public class PictureDTO {
     private String title;
     private String author;
     private String location;
+    private String description;
     private LocalDate dateTaken;
     private int likes;
 
@@ -19,6 +20,7 @@ public class PictureDTO {
         this.title = picture.getTitle();
         this.author = picture.getAuthor();
         this.location = picture.getLocation();
+        this.description = picture.getDescription();
         this.dateTaken = picture.getDateTaken();
         this.likes = picture.getLikes();
     }
@@ -28,8 +30,8 @@ public class PictureDTO {
         picture.setTitle(this.title);
         picture.setAuthor(this.author);
         picture.setLocation(this.location);
+        picture.setDescription(this.description);
         picture.setDateTaken(this.dateTaken);
-        picture.setLikes(this.likes);
         return picture;
     }
 
@@ -63,6 +65,14 @@ public class PictureDTO {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public LocalDate getDateTaken() {

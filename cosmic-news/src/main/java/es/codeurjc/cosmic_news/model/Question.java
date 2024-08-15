@@ -1,5 +1,7 @@
 package es.codeurjc.cosmic_news.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,6 +14,7 @@ import jakarta.persistence.Table;
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonIgnore
     private Long id;
 
     private String question;
@@ -21,19 +24,29 @@ public class Question {
     private String option4;
     private String answer;
 
+    @JsonIgnore
     private boolean select1;
+    @JsonIgnore
     private boolean select2;
+    @JsonIgnore
     private boolean select3;
+    @JsonIgnore
     private boolean select4;
 
+    @JsonIgnore
     private boolean correct1;
+    @JsonIgnore
     private boolean correct2;
+    @JsonIgnore
     private boolean correct3;
+    @JsonIgnore
     private boolean correct4;
 
+    @JsonIgnore
     private int num;
 
     @ManyToOne
+    @JsonIgnore
     private Quizz quizz;
 
     public Question(){}

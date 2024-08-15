@@ -12,7 +12,7 @@ public class NewsDTO {
     private String author;
     private String topic;
     private String bodyText;
-    private int readingTime;
+    private String readingTime;
     private LocalDate date;   
     private int likes;
 
@@ -22,10 +22,10 @@ public class NewsDTO {
         this.id = news.getId();
         this.title = news.getTitle();
         this.subtitle = news.getSubtitle();
-        this.author = news.getSubtitle();
+        this.author = news.getAuthor();
         this.topic = news.getTopic();
         this.bodyText = news.getBodyText();
-        this.readingTime = news.getReadingTime();
+        this.readingTime = Integer.toString(news.getReadingTime());
         this.date = news.getDate();
         this.likes = news.getLikes();
     }
@@ -37,7 +37,9 @@ public class NewsDTO {
         news.setAuthor(this.author);
         news.setTopic(this.topic);
         news.setBodyText(this.bodyText);
-        news.setReadingTime(this.readingTime);
+        if (this.readingTime!=null){
+            news.setReadingTime(Integer.parseInt(this.readingTime));
+        }
         news.setDate(this.date);
         news.setLikes(this.likes);
         return news;
@@ -91,11 +93,11 @@ public class NewsDTO {
         this.bodyText = bodyText;
     }
 
-    public int getReadingTime() {
+    public String getReadingTime() {
         return readingTime;
     }
 
-    public void setReadingTime(int readingTime) {
+    public void setReadingTime(String readingTime) {
         this.readingTime = readingTime;
     }
 

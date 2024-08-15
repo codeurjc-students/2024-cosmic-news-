@@ -57,6 +57,10 @@ public class NewsService {
         return news;
     }
 
+    public void saveNewsRest(News news){
+        newsRepository.save(news);
+    }
+
     public boolean deleteNews(Long id){
         Optional<News> news = newsRepository.findById(id);
 

@@ -1,6 +1,9 @@
 package es.codeurjc.cosmic_news.DTO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import es.codeurjc.cosmic_news.model.Question;
+import es.codeurjc.cosmic_news.model.Quizz;
 
 public class QuestionDTO {
 
@@ -9,7 +12,17 @@ public class QuestionDTO {
     private String option1;
     private String option2;
     private String option3;
-    private String option4;
+    private String option4;   
+    private String answer;
+
+    @JsonIgnore
+    private boolean correct1;
+    @JsonIgnore
+    private boolean correct2;
+    @JsonIgnore
+    private boolean correct3;
+    @JsonIgnore
+    private boolean correct4;
 
     public QuestionDTO(){}
 
@@ -20,15 +33,26 @@ public class QuestionDTO {
         this.option2 = question.getOption2();
         this.option3 = question.getOption3();
         this.option4 = question.getOption4();
+        this.answer = question.getAnswer();
+        this.correct1 = question.isCorrect1();
+        this.correct2 = question.isCorrect2();
+        this.correct3 = question.isCorrect3();
+        this.correct4 = question.isCorrect4();
     }
 
-    public Question toQuestion(){
+    public Question toQuestion(Quizz quizz){
         Question question = new Question();
         question.setQuestion(this.question);
         question.setOption1(this.option1);
         question.setOption2(this.option2);
         question.setOption3(this.option3);
         question.setOption4(this.option4);
+        question.setAnswer(this.answer);
+        question.setCorrect1(this.correct1);
+        question.setCorrect1(this.correct2);
+        question.setCorrect1(this.correct3);
+        question.setCorrect1(this.correct4);
+        question.setQuizz(quizz);
         return question;
     }
 
@@ -78,5 +102,45 @@ public class QuestionDTO {
 
     public void setOption4(String option4) {
         this.option4 = option4;
+    }
+
+    public String getAnswer(){
+        return answer;
+    }
+
+    public void setAnswer(String answer){
+        this.answer = answer;
+    }
+
+    public boolean isCorrect1() {
+        return correct1;
+    }
+
+    public void setCorrect1(boolean correct1) {
+        this.correct1 = correct1;
+    }
+
+    public boolean isCorrect2() {
+        return correct2;
+    }
+
+    public void setCorrect2(boolean correct2) {
+        this.correct2 = correct2;
+    }
+
+    public boolean isCorrect3() {
+        return correct3;
+    }
+
+    public void setCorrect3(boolean correct3) {
+        this.correct3 = correct3;
+    }
+
+    public boolean isCorrect4() {
+        return correct4;
+    }
+
+    public void setCorrect4(boolean correct4) {
+        this.correct4 = correct4;
     }
 }

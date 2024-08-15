@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,12 +34,14 @@ public class News {
     private LocalDate date;
 
     //@Lob
+    @JsonIgnore
     private Blob photo;
     private boolean image;
     
     private int likes;
 
     @ManyToMany(mappedBy = "news")
+    @JsonIgnore
     private Set<User> users = new HashSet<>();
 
     public News(){}

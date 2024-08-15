@@ -16,6 +16,7 @@ public class VideoDTO {
         this.id = video.getId();
         this.title = video.getTitle();
         this.duration = video.getDuration();
+        this.description = video.getDescription();
         this.videoUrl = video.getVideoUrl();
     }
 

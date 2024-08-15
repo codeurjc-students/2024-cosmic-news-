@@ -107,6 +107,10 @@ public class QuizzService {
         }
     }
 
+    public void saveQuizzRest(Quizz quizz){
+        quizzRepository.save(quizz);
+    }
+
     public Quizz removeQuizz(Long id) {
 		Optional<Quizz> quizz = quizzRepository.findById(id);
 

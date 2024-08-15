@@ -54,6 +54,10 @@ public class PictureService {
         return picture;
     }
 
+    public void savePictureRest(Picture picture){
+        pictureRepository.save(picture);
+    }
+
     public boolean deletePicture(Long id){
         Optional<Picture> picture = pictureRepository.findById(id);
 
