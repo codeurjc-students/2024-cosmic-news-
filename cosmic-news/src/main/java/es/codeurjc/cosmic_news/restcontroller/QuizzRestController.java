@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -38,6 +40,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/api/quizzes")
@@ -112,7 +115,8 @@ public class QuizzRestController {
 	})
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteQuizz(@PathVariable long id, Principal principal){
-        if(principal !=null){
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        if(principal !=null && request.isUserInRole("ADMIN")){
 			Quizz quizz = quizzService.findQuizzById(id);
 			if (quizz != null){
 				quizzService.removeQuizz(quizz.getId());
@@ -135,14 +139,22 @@ public class QuizzRestController {
 	 responseCode = "400",
 	 description = "Data entered incorrectly.",
 	 content = @Content
+	 ),
+	 @ApiResponse(
+	 responseCode = "401",
+	 description = "You are not authorized",
+	 content = @Content
 	 )
 	})
     @PostMapping()
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<Quizz> createQuizz(@RequestBody QuizzDTO quizzDTO) {
-        Quizz quizz = quizzDTO.toQuizz();
-		quizzService.saveQuizzRest(quizz);
-		return new ResponseEntity<>(quizz, HttpStatus.OK);
+	public ResponseEntity<Quizz> createQuizz(@RequestBody QuizzDTO quizzDTO, Principal principal) {
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        if(principal !=null && request.isUserInRole("ADMIN")){
+			Quizz quizz = quizzDTO.toQuizz();
+			quizzService.saveQuizzRest(quizz);
+			return new ResponseEntity<>(quizz, HttpStatus.OK);
+		}else return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
 
     @Operation(summary = "Update a quizz fields by ID. You need to be an administrator.")
@@ -173,13 +185,16 @@ public class QuizzRestController {
 	})
     @PutMapping("/{id}")
 	public ResponseEntity<Quizz> updateQuizz(@PathVariable long id, @RequestBody QuizzDTO quizzDTO, Principal principal) throws SQLException {
-        Quizz quizz = quizzService.findQuizzById(id);
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        if(principal !=null && request.isUserInRole("ADMIN")){
+			Quizz quizz = quizzService.findQuizzById(id);
 			if (quizz != null) {
-                updateQuizz(quizz, quizzDTO);
+				updateQuizz(quizz, quizzDTO);
 				return new ResponseEntity<>(quizz, HttpStatus.OK);
 			} else	{
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			}
+		}else return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
 
     @Operation(summary = "Post a new badge of a quizz by id")
@@ -203,7 +218,8 @@ public class QuizzRestController {
     @PostMapping("/{id}/badge")
 	public ResponseEntity<Object> uploadBadge(@PathVariable long id, @RequestParam MultipartFile imageFile, Principal principal)
 			throws IOException {
-		if(principal !=null){
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+		if(principal !=null && request.isUserInRole("ADMIN")){
             Quizz quizz = quizzService.findQuizzById(id);
 			if (quizz != null) {
 				URI location = ServletUriComponentsBuilder.fromCurrentRequest().build().toUri();
@@ -273,7 +289,8 @@ public class QuizzRestController {
 	})
 	@DeleteMapping("/{id}/badge")
 	public ResponseEntity<Object> deleteBadge(@PathVariable long id, Principal principal) throws IOException {
-		if(principal !=null){
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        if(principal !=null && request.isUserInRole("ADMIN")){
             Quizz quizz = quizzService.findQuizzById(id);
 			if (quizz != null) {
 				quizz.setPhoto(null);
@@ -293,6 +310,7 @@ public class QuizzRestController {
             List<Question> questions = new ArrayList<>();
             for (QuestionDTO questionDTO: newQuizz.getQuestions()){
                 Question question = questionDTO.toQuestion(quizz);
+				question.setNum(questions.size()+1);
                 questions.add(question);
             }
             quizz.setQuestions(questions);

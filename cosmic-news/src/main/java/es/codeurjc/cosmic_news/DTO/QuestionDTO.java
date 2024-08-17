@@ -1,7 +1,5 @@
 package es.codeurjc.cosmic_news.DTO;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import es.codeurjc.cosmic_news.model.Question;
 import es.codeurjc.cosmic_news.model.Quizz;
 
@@ -15,13 +13,9 @@ public class QuestionDTO {
     private String option4;   
     private String answer;
 
-    @JsonIgnore
     private boolean correct1;
-    @JsonIgnore
     private boolean correct2;
-    @JsonIgnore
     private boolean correct3;
-    @JsonIgnore
     private boolean correct4;
 
     public QuestionDTO(){}
@@ -49,9 +43,9 @@ public class QuestionDTO {
         question.setOption4(this.option4);
         question.setAnswer(this.answer);
         question.setCorrect1(this.correct1);
-        question.setCorrect1(this.correct2);
-        question.setCorrect1(this.correct3);
-        question.setCorrect1(this.correct4);
+        question.setCorrect2(this.correct2);
+        question.setCorrect3(this.correct3);
+        question.setCorrect4(this.correct4);
         question.setQuizz(quizz);
         return question;
     }

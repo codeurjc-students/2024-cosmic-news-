@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.net.URI;
 import java.security.Principal;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,9 +28,16 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import es.codeurjc.cosmic_news.DTO.NewsDTO;
+import es.codeurjc.cosmic_news.DTO.PictureDTO;
 import es.codeurjc.cosmic_news.DTO.UserDTO;
+import es.codeurjc.cosmic_news.model.Badge;
+import es.codeurjc.cosmic_news.model.Event;
 import es.codeurjc.cosmic_news.model.News;
+import es.codeurjc.cosmic_news.model.Picture;
 import es.codeurjc.cosmic_news.model.User;
+import es.codeurjc.cosmic_news.service.NewsService;
+import es.codeurjc.cosmic_news.service.PictureService;
 import es.codeurjc.cosmic_news.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -42,6 +51,12 @@ public class UserRestController {
 
     @Autowired
     private UserService userService;
+
+	@Autowired
+    private NewsService newsService;
+
+	@Autowired
+    private PictureService pictureService;
     
     @Operation(summary = "Get a user by its id")
 	@ApiResponses(value = {
@@ -234,7 +249,7 @@ public class UserRestController {
 		}else return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
  
-	@Operation(summary = "Get the photo a user by id")
+	@Operation(summary = "Get the photo of a user by id")
 	@ApiResponses(value = {
 	 @ApiResponse(
 	 responseCode = "200",
@@ -303,40 +318,126 @@ public class UserRestController {
 		}else return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
 
+	@Operation(summary = "Get paged news of a user.")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "News found", content = {
+        @Content(mediaType = "application/json", schema = @Schema(implementation = NewsDTO.class)) }),
+        @ApiResponse(responseCode = "204", description = "News not found, probably high page number supplied", content = @Content),
+		@ApiResponse(responseCode = "400", description = "Data entered incorrectly, probably invalid id supplied", content = @Content
+	 )
+    })
+    @GetMapping("/{id}/news")
+    public ResponseEntity<List<NewsDTO>> getNews(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "5") int size, @PathVariable long id) {
 
-	@Operation(summary = "Get the news of a user by id. You need to be an admin or the own employer")
+		User user = userService.findUserById(id);
+		if (user != null){
+
+			Page<News> newsList = newsService.findAllByUserId(id,page, size);
+			List<NewsDTO> newsDTO = new ArrayList<>();
+
+			for (News news : newsList) {
+				newsDTO.add(new NewsDTO(news));
+			}
+
+			if (newsDTO.isEmpty())
+				return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
+			return ResponseEntity.status(HttpStatus.OK).body(newsDTO);
+		} else{
+			return ResponseEntity.notFound().build();
+		}
+    }
+	
+	@Operation(summary = "Get paged pictures of a user.")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Pictures found", content = {
+        @Content(mediaType = "application/json", schema = @Schema(implementation = PictureDTO.class)) }),
+        @ApiResponse(responseCode = "204", description = "Pictures not found, probably high page number supplied", content = @Content),
+		@ApiResponse(responseCode = "400", description = "Data entered incorrectly, probably invalid id supplied", content = @Content)
+    })
+    @GetMapping("/{id}/pictures")
+    public ResponseEntity<List<PictureDTO>> getPictures(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "5") int size, @PathVariable long id) {
+
+		User user = userService.findUserById(id);
+		if (user != null){
+			Page<Picture> pictures = pictureService.findAllByUserId(id,page, size);
+			List<PictureDTO> picturesDTO = new ArrayList<>();
+
+			for (Picture picture : pictures) {
+				picturesDTO.add(new PictureDTO(picture));
+			}
+
+			if (picturesDTO.isEmpty())
+				return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
+        	return ResponseEntity.status(HttpStatus.OK).body(picturesDTO);
+		}else{
+			return ResponseEntity.notFound().build();
+		}
+    }
+
+	@Operation(summary = "Get events of a user.")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Events found", content = {
+        @Content(mediaType = "application/json", schema = @Schema(implementation = Event.class)) }),
+		@ApiResponse(responseCode = "400", description = "Data entered incorrectly, probably invalid id supplied", content = @Content)
+    })
+    @GetMapping("/{id}/events")
+	public ResponseEntity<Collection<Event>> getUserEvents(@PathVariable long id) {
+		User user = userService.findUserById(id);
+		if (user != null){
+			return ResponseEntity.status(HttpStatus.OK).body(user.getEvents());
+		}else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
+
+	@Operation(summary = "Get badges of a user.")
+    @ApiResponses(value = {
+		@ApiResponse(responseCode = "200", description = "Badges found", content = {
+		@Content(mediaType = "application/json", schema = @Schema(implementation = Badge.class)) }),
+		@ApiResponse(responseCode = "400", description = "Data entered incorrectly, probably invalid id supplied", content = @Content)
+    })
+    @GetMapping("/{id}/badges")
+	public ResponseEntity<Collection<Badge>> getUserBadges(@PathVariable long id) {
+		User user = userService.findUserById(id);
+		if (user != null){
+			return ResponseEntity.status(HttpStatus.OK).body(user.getBadges());
+		}else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
+
+	@Operation(summary = "Get the photo of a badge of a user by id")
 	@ApiResponses(value = {
 	 @ApiResponse(
 	 responseCode = "200",
-	 description = "Found the news list of the user",
+	 description = "Found the photo",
 	 content = @Content
 	 ),
 	 @ApiResponse(
-	 responseCode = "401",
-	 description = "You are not authorized",
-	 content = @Content
-	 ),	
-	 @ApiResponse(
-	 responseCode = "404",
+	 responseCode = "400",
 	 description = "Data entered incorrectly, probably invalid id supplied",
 	 content = @Content
 	 ),	 
+	 @ApiResponse(
+	 responseCode = "404",
+	 description = "That badge does not have a photo",
+	 content = @Content
+	 )
 	})
-	@GetMapping("/{id}/news")
-	public ResponseEntity<List<News>> getUserNews(@PathVariable long id, Principal principal){ 
-    	if(principal !=null){
-			User user = userService.findUserById(id);
-			if (user != null) {
+	@GetMapping("/{id}/badges/{position}")
+	public ResponseEntity<Object> downloadPhotoBadge(@PathVariable long id, @PathVariable int position) throws SQLException {
+        User user = userService.findUserById(id);
+		if (user != null) {
+			Badge badge = user.getBadges().get(position);
+			if (badge != null && badge.getImage() != null) {
 
-				List<News> news = user.getNews().stream()
-					.map(n -> new News(n.getTitle(), n.getSubtitle(), n.getAuthor(), n.getTopic(), n.getBodyText(), n.getReadingTime(), n.getDate()))
-					.collect(Collectors.toList());
-			
-				return ResponseEntity.status(HttpStatus.OK).body(news);
+				org.springframework.core.io.Resource file = new InputStreamResource(badge.getImage().getBinaryStream());
+
+				return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+						.contentLength(badge.getImage().length()).body(file);
+
 			} else {
-				return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+				return ResponseEntity.notFound().build();
 			}
-		}else return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 
     public void updateUser(User user, UserDTO newUser){

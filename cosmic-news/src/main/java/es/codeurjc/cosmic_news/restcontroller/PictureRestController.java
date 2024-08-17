@@ -25,23 +25,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import es.codeurjc.cosmic_news.DTO.PictureDTO;
 import es.codeurjc.cosmic_news.model.Picture;
+import es.codeurjc.cosmic_news.model.User;
 import es.codeurjc.cosmic_news.service.PictureService;
+import es.codeurjc.cosmic_news.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/api/pictures")
 public class PictureRestController {
     @Autowired
     private PictureService pictureService;
+
+	@Autowired
+	private UserService userService;
 
      @Operation(summary = "Get paged pictures.")
     @ApiResponses(value = {
@@ -50,11 +58,16 @@ public class PictureRestController {
         @ApiResponse(responseCode = "204", description = "Pictures not found, probably high page number supplied", content = @Content)
     })
     @GetMapping
-    public ResponseEntity<List<PictureDTO>> getPictures(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size) {
+    public ResponseEntity<List<PictureDTO>> getPictures(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size, @RequestParam(defaultValue = "date") String filter) {
 
-        Page<Picture> pictures = pictureService.findAll(PageRequest.of(page, size));
+		Page<Picture> pictures = null;
+		if (filter.equals("likes")){
+			pictures = pictureService.findAllByLikes(PageRequest.of(page, size));
+        }else if(filter.equals("date")){
+			pictures = pictureService.findAllByDate(PageRequest.of(page, size));
+        }else{
+			pictures = pictureService.findAll(PageRequest.of(page, size));
+        }
         List<PictureDTO> picturesDTO = new ArrayList<>();
 
         for (Picture picture : pictures) {
@@ -110,7 +123,8 @@ public class PictureRestController {
 	})
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePicture(@PathVariable long id, Principal principal){
-        if(principal !=null){
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        if(principal !=null && request.isUserInRole("ADMIN")){
 			Picture picture = pictureService.findPictureById(id);
 			if (picture != null){
 				pictureService.deletePicture(picture.getId());
@@ -137,10 +151,13 @@ public class PictureRestController {
 	})
     @PostMapping()
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<Picture> createPicture(@RequestBody PictureDTO pictureDTO) {
-        Picture picture = pictureDTO.toPicture();
-		pictureService.savePicture(picture);
-		return new ResponseEntity<>(picture, HttpStatus.OK);
+	public ResponseEntity<Picture> createPicture(@RequestBody PictureDTO pictureDTO, Principal principal) {
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        if(principal !=null && request.isUserInRole("ADMIN")){
+			Picture picture = pictureDTO.toPicture();
+			pictureService.savePicture(picture);
+			return new ResponseEntity<>(picture, HttpStatus.OK);
+		}else return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
 
     @Operation(summary = "Update a picture fields by ID. You need to be an administrator.")
@@ -171,6 +188,8 @@ public class PictureRestController {
 	})
     @PutMapping("/{id}")
 	public ResponseEntity<Picture> updatePicture(@PathVariable long id, @RequestBody PictureDTO pictureDTO, Principal principal) throws SQLException {
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        if(principal !=null && request.isUserInRole("ADMIN")){
         Picture picture = pictureService.findPictureById(id);
 			if (picture != null) {
                 updatePicture(picture, pictureDTO);
@@ -178,6 +197,7 @@ public class PictureRestController {
 			} else	{
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			}
+		}else return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
 
     @Operation(summary = "Post a new photo of a picture by id")
@@ -201,7 +221,8 @@ public class PictureRestController {
     @PostMapping("/{id}/image")
 	public ResponseEntity<Object> uploadPhoto(@PathVariable long id, @RequestParam MultipartFile imageFile, Principal principal)
 			throws IOException {
-		if(principal !=null){
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+		if(principal !=null && request.isUserInRole("ADMIN")){
             Picture picture = pictureService.findPictureById(id);
 			if (picture != null) {
 				URI location = ServletUriComponentsBuilder.fromCurrentRequest().build().toUri();
@@ -271,7 +292,8 @@ public class PictureRestController {
 	})
 	@DeleteMapping("/{id}/image")
 	public ResponseEntity<Object> deletePhoto(@PathVariable long id, Principal principal) throws IOException {
-		if(principal !=null){
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        if(principal !=null && request.isUserInRole("ADMIN")){
             Picture picture = pictureService.findPictureById(id);
 			if (picture != null) {
 				picture.setPhoto(null);
@@ -282,6 +304,40 @@ public class PictureRestController {
 				return ResponseEntity.noContent().build();
 			}else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}else return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+	}
+
+	@Operation(summary = "Give a like to the picture by id. If you already gave like to this picture, this will be a unlike")
+	@ApiResponses(value = {
+	 @ApiResponse(
+	 responseCode = "200",
+	 description = "Like/Unlike given",
+	 content = @Content
+	 ),
+	 @ApiResponse(
+	 responseCode = "404",
+	 description = "Data entered incorrectly, probably invalid id supplied",
+	 content = @Content
+	 ),	 
+	 @ApiResponse(
+	 responseCode = "401",
+	 description = "You are not authorized",
+	 content = @Content
+	 )
+	})
+	@PostMapping("/{id}/like")
+	public ResponseEntity<Picture> likePicture(@PathVariable long id, Principal principal) {
+		if (principal != null) {
+            User user = userService.findUserByMail(principal.getName());
+            Picture picture = pictureService.findPictureById(id);
+            if (user != null && picture != null){
+                pictureService.like(picture,user);
+				return new ResponseEntity<>(picture, HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }else{
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
 	}
 
     public void updatePicture(Picture picture, PictureDTO newPicture){

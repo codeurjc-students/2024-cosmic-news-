@@ -31,7 +31,9 @@ public class QuizzDTO {
         quizz.setDifficulty(this.difficulty);
         List<Question> questionList = new ArrayList<>();
         for (QuestionDTO questionDTO: this.questions){
-            questionList.add(questionDTO.toQuestion(quizz));
+            Question question = questionDTO.toQuestion(quizz);
+            question.setNum(questionList.size()+1);
+            questionList.add(question);
         }
         quizz.setQuestions(questionList);
         return quizz;

@@ -16,22 +16,30 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import es.codeurjc.cosmic_news.DTO.EventDTO;
 import es.codeurjc.cosmic_news.DTO.PictureDTO;
 import es.codeurjc.cosmic_news.model.Event;
+import es.codeurjc.cosmic_news.model.User;
 import es.codeurjc.cosmic_news.service.EventService;
+import es.codeurjc.cosmic_news.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/api/events")
 public class EventRestController {
     @Autowired
     private EventService eventService;
+
+	@Autowired
+	private UserService userService;
 
     @Operation(summary = "Get events.")
     @ApiResponses(value = {
@@ -43,7 +51,7 @@ public class EventRestController {
 		return eventService.getAllEvents();
 	}
 
-        @Operation(summary = "Get an event by its id")
+    @Operation(summary = "Get an event by its id")
 	@ApiResponses(value = {
 	 @ApiResponse(
 	 responseCode = "200",
@@ -86,7 +94,8 @@ public class EventRestController {
 	})
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteEvent(@PathVariable long id, Principal principal){
-        if(principal !=null){
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        if(principal !=null && request.isUserInRole("ADMIN")){
 			Event event = eventService.findEventById(id);
 			if (event != null){
 				eventService.deleteEvent(event.getId());
@@ -109,14 +118,22 @@ public class EventRestController {
 	 responseCode = "400",
 	 description = "Data entered incorrectly.",
 	 content = @Content
+	 ),
+	 @ApiResponse(
+	 responseCode = "401",
+	 description = "You are not authorized",
+	 content = @Content
 	 )
 	})
     @PostMapping()
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<Event> createEvent(@RequestBody EventDTO eventDTO) {
-        Event event = eventDTO.toEvent();
-		eventService.saveEvent(event);
-		return new ResponseEntity<>(event, HttpStatus.OK);
+	public ResponseEntity<Event> createEvent(@RequestBody EventDTO eventDTO, Principal principal) {
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        if(principal !=null && request.isUserInRole("ADMIN")){
+			Event event = eventDTO.toEvent();
+			eventService.saveEvent(event);
+			return new ResponseEntity<>(event, HttpStatus.OK);
+		}else return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
 
     @Operation(summary = "Update a event fields by ID. You need to be an administrator.")
@@ -147,13 +164,32 @@ public class EventRestController {
 	})
     @PutMapping("/{id}")
 	public ResponseEntity<Event> updateEvent(@PathVariable long id, @RequestBody EventDTO eventDTO, Principal principal) throws SQLException {
-        Event event = eventService.findEventById(id);
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        if(principal !=null && request.isUserInRole("ADMIN")){
+			Event event = eventService.findEventById(id);
 			if (event != null) {
-                updateEvent(event, eventDTO);
+				updateEvent(event, eventDTO);
 				return new ResponseEntity<>(event, HttpStatus.OK);
 			} else	{
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			}
+		}else return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+	}
+
+	@PostMapping("/{id}/notify")
+	public ResponseEntity<Event> notifyEvent(@PathVariable long id, Principal principal) {
+		if (principal != null) {
+            User user = userService.findUserByMail(principal.getName());
+            Event event = eventService.findEventById(id);
+            if (user != null && event != null){
+                userService.addEvent(user,event);
+				return new ResponseEntity<>(event, HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }else{
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
 	}
 
     public void updateEvent(Event event, EventDTO newEvent){

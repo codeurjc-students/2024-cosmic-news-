@@ -1,12 +1,15 @@
 package es.codeurjc.cosmic_news.model;
 import java.sql.Blob;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Lob;
 
 @jakarta.persistence.Embeddable
 public class Badge {
 
     @Lob
+    @JsonIgnore
     private Blob image;
     private String name;
 

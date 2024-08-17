@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import es.codeurjc.cosmic_news.DTO.VideoDTO;
 import es.codeurjc.cosmic_news.model.Video;
@@ -29,6 +31,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/api/videos")
@@ -59,7 +62,7 @@ public class VideoRestController {
         return ResponseEntity.status(HttpStatus.OK).body(videosDTO);
     }
 
-        @Operation(summary = "Get a video by its id")
+    @Operation(summary = "Get a video by its id")
 	@ApiResponses(value = {
 	 @ApiResponse(
 	 responseCode = "200",
@@ -102,7 +105,8 @@ public class VideoRestController {
 	})
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteVideo(@PathVariable long id, Principal principal){
-        if(principal !=null){
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        if(principal !=null && request.isUserInRole("ADMIN")){
 			Video video = videoService.findVideoById(id);
 			if (video != null){
 				videoService.deleteVideo(video.getId());
@@ -125,14 +129,22 @@ public class VideoRestController {
 	 responseCode = "400",
 	 description = "Data entered incorrectly.",
 	 content = @Content
+	 ),
+	 @ApiResponse(
+	 responseCode = "401",
+	 description = "You are not authorized",
+	 content = @Content
 	 )
 	})
     @PostMapping()
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<Video> createVideo(@RequestBody VideoDTO videoDTO) {
-        Video video = videoDTO.toVideo();
-		videoService.saveVideo(video);
-		return new ResponseEntity<>(video, HttpStatus.OK);
+	public ResponseEntity<Video> createVideo(@RequestBody VideoDTO videoDTO, Principal principal) {
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        if(principal !=null && request.isUserInRole("ADMIN")){
+			Video video = videoDTO.toVideo();
+			videoService.saveVideo(video);
+			return new ResponseEntity<>(video, HttpStatus.OK);
+		}else return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
 
     @Operation(summary = "Update a video fields by ID. You need to be an administrator.")
@@ -163,13 +175,16 @@ public class VideoRestController {
 	})
     @PutMapping("/{id}")
 	public ResponseEntity<Video> updateVideo(@PathVariable long id, @RequestBody VideoDTO videoDTO, Principal principal) throws SQLException {
-        Video video = videoService.findVideoById(id);
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        if(principal !=null && request.isUserInRole("ADMIN")){
+			Video video = videoService.findVideoById(id);
 			if (video != null) {
-                updateVideo(video, videoDTO);
+				updateVideo(video, videoDTO);
 				return new ResponseEntity<>(video, HttpStatus.OK);
 			} else	{
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			}
+		}else return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
     public void updateVideo(Video video, VideoDTO newVideo){
 		if (newVideo.getTitle()!=null) video.setTitle(newVideo.getTitle());
