@@ -16,6 +16,7 @@ import es.codeurjc.cosmic_news.model.Badge;
 import es.codeurjc.cosmic_news.model.Event;
 import es.codeurjc.cosmic_news.model.News;
 import es.codeurjc.cosmic_news.model.Picture;
+import es.codeurjc.cosmic_news.model.Planet;
 import es.codeurjc.cosmic_news.model.Question;
 import es.codeurjc.cosmic_news.model.Quizz;
 import es.codeurjc.cosmic_news.model.User;
@@ -23,6 +24,7 @@ import es.codeurjc.cosmic_news.model.Video;
 import es.codeurjc.cosmic_news.repository.EventRepository;
 import es.codeurjc.cosmic_news.repository.NewsRepository;
 import es.codeurjc.cosmic_news.repository.PictureRepository;
+import es.codeurjc.cosmic_news.repository.PlanetRepository;
 import es.codeurjc.cosmic_news.repository.QuizzRepository;
 import es.codeurjc.cosmic_news.repository.UserRepository;
 import es.codeurjc.cosmic_news.repository.VideoRepository;
@@ -49,6 +51,9 @@ public class DataBaseInitializer {
     @Autowired 
     private VideoRepository videoRepository;
 
+    @Autowired 
+    private PlanetRepository planetRepository;
+
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -61,6 +66,7 @@ public class DataBaseInitializer {
         initNews();
         initEvents();
         initVideos();
+        initPlanets();
     }
 
     private void initUsers(){
@@ -473,9 +479,220 @@ public class DataBaseInitializer {
         question5.setCorrect4(false);
 
         questions.add(question5);
-
         quizz1.setQuestions(questions);
+
+        Quizz quizz2 = new Quizz();
+        quizz2.setName("El Sol");
+        quizz2.setDifficulty("Difícil");
+
+        photo = photoToBlob("static/images/sun.png");
+        quizz2.setPhoto(photo);
+        quizz2.setImage(photo != null);
+
+        questions = new ArrayList<Question>();
+        question1 = new Question();
+        question1.setQuestion("¿Hace cuántos años se formó?");
+        question1.setOption1("4600 millones de años");
+        question1.setOption2("5000 millones de años");
+        question1.setOption3("5400 millones de años");
+        question1.setOption4("6000 millones de años");
+        question1.setAnswer("4600 millones de años");
+        question1.setNum(1);
+        question1.setQuizz(quizz2);
+
+        question1.setCorrect1(true);
+        question1.setCorrect2(false);
+        question1.setCorrect3(false);
+        question1.setCorrect4(false);
+
+        questions.add(question1);
+
+        question2 = new Question();
+        question2.setQuestion("¿Cuál es la distancia media del Sol a la Tierra?");
+        question2.setOption1("100 millones de kilometros");
+        question2.setOption2("125 millones de kilometros");
+        question2.setOption3("150 millones de kilometros");
+        question2.setOption4("200 millones de kilometros");
+        question2.setAnswer("150 millones de kilometros");
+        question2.setNum(2);
+        question2.setQuizz(quizz2);
+
+        question2.setCorrect1(false);
+        question2.setCorrect2(false);
+        question2.setCorrect3(true);
+        question2.setCorrect4(false);
+
+        questions.add(question2);
+
+        question3 = new Question();
+        question3.setQuestion("El Sol es una estrella de tipo...");
+        question3.setOption1("F");
+        question3.setOption2("G");
+        question3.setOption3("O");
+        question3.setOption4("Z");
+        question3.setAnswer("G");
+        question3.setNum(3);
+        question3.setQuizz(quizz2);
+
+        question3.setCorrect1(false);
+        question3.setCorrect2(true);
+        question3.setCorrect3(false);
+        question3.setCorrect4(false);
+
+        questions.add(question3);
+
+        question4 = new Question();
+        question4.setQuestion("El Sol es de edad...");
+        question4.setOption1("Joven");
+        question4.setOption2("Intermedia");
+        question4.setOption3("Avanzada");
+        question4.setOption4("Vieja");
+        question4.setAnswer("Intermedia");
+        question4.setNum(4);
+        question4.setQuizz(quizz2);
+
+        question4.setCorrect1(false);
+        question4.setCorrect2(true);
+        question4.setCorrect3(false);
+        question4.setCorrect4(false);
+
+        questions.add(question4);
+
+        question5 = new Question();
+        question5.setQuestion("¿Cuánto tarda en viajar la luz del Sol a la Tierra?");
+        question5.setOption1("10 minutos");
+        question5.setOption2("11 minutos y 10 segundos");
+        question5.setOption3("9 minutos y 31 segundos");
+        question5.setOption4("8 minutos y 20 segundos");
+        question5.setAnswer("8 minutos y 20 segundos");
+        question5.setNum(5);
+        question5.setQuizz(quizz2);
+
+        question5.setCorrect1(false);
+        question5.setCorrect2(false);
+        question5.setCorrect3(false);
+        question5.setCorrect4(true);
+
+        questions.add(question5);
+
+        quizz2.setQuestions(questions);
+
+        Quizz quizz3 = new Quizz();
+        quizz3.setName("Sistema Solar");
+        quizz3.setDifficulty("Media");
+
+        photo = photoToBlob("static/images/earth.png");
+        quizz3.setPhoto(photo);
+        quizz3.setImage(photo != null);
+
+        questions = new ArrayList<Question>();
+        question1 = new Question();
+        question1.setQuestion("¿Cuál es el planeta más cercano al Sol?");
+        question1.setOption1("Venus");
+        question1.setOption2("Mercurio");
+        question1.setOption3("Marte");
+        question1.setOption4("Plutón");
+        question1.setAnswer("Mercurio");
+        question1.setNum(1);
+        question1.setQuizz(quizz3);
+
+        question1.setCorrect1(false);
+        question1.setCorrect2(true);
+        question1.setCorrect3(false);
+        question1.setCorrect4(false);
+
+        questions.add(question1);
+
+        question2 = new Question();
+        question2.setQuestion("La luna es un satélite de...");
+        question2.setOption1("La Tierra");
+        question2.setOption2("Marte");
+        question2.setOption3("Júpiter");
+        question2.setOption4("Saturno");
+        question2.setAnswer("La Tierra");
+        question2.setNum(2);
+        question2.setQuizz(quizz3);
+
+        question2.setCorrect1(true);
+        question2.setCorrect2(false);
+        question2.setCorrect3(false);
+        question2.setCorrect4(false);
+
+        questions.add(question2);
+
+        question3 = new Question();
+        question3.setQuestion("El planeta más antiguo del Sistema Solar es...");
+        question3.setOption1("La Tierra");
+        question3.setOption2("Mercurio");
+        question3.setOption3("Júpiter");
+        question3.setOption4("Neptuno");
+        question3.setAnswer("Júpiter");
+        question3.setNum(3);
+        question3.setQuizz(quizz3);
+
+        question3.setCorrect1(false);
+        question3.setCorrect2(false);
+        question3.setCorrect3(true);
+        question3.setCorrect4(false);
+
+        questions.add(question3);
+
+        question4 = new Question();
+        question4.setQuestion("¿Qué planeta recibe su nombre debido a la diosa romana del amor (en la Antigua Grecia, Afrodita)?");
+        question4.setOption1("Urano");
+        question4.setOption2("Mercurio");
+        question4.setOption3("Neptuno");
+        question4.setOption4("Venus");
+        question4.setAnswer("Venus");
+        question4.setNum(4);
+        question4.setQuizz(quizz3);
+
+        question4.setCorrect1(false);
+        question4.setCorrect2(true);
+        question4.setCorrect3(false);
+        question4.setCorrect4(false);
+
+        questions.add(question4);
+
+        question5 = new Question();
+        question5.setQuestion("¿Qué planeta es conocido como 'El planeta rojo'?");
+        question5.setOption1("Mercurio");
+        question5.setOption2("Júpiter");
+        question5.setOption3("Marte");
+        question5.setOption4("Urano");
+        question5.setAnswer("Marte");
+        question5.setNum(5);
+        question5.setQuizz(quizz3);
+
+        question5.setCorrect1(false);
+        question5.setCorrect2(false);
+        question5.setCorrect3(true);
+        question5.setCorrect4(false);
+
+        questions.add(question5);
+
+        Question question6 = new Question();
+        question6.setQuestion("¿Quién fue la primera persona en observar los anillos de Saturno?");
+        question6.setOption1("Galileo Galilei");
+        question6.setOption2("Nicolás Copérnico");
+        question6.setOption3("Johannes Kepler");
+        question6.setOption4("Sócrates");
+        question6.setAnswer("Galileo Galilei");
+        question6.setNum(6);
+        question6.setQuizz(quizz3);
+
+        question6.setCorrect1(true);
+        question6.setCorrect2(false);
+        question6.setCorrect3(false);
+        question6.setCorrect4(false);
+
+        questions.add(question6);
+
+        quizz3.setQuestions(questions);
+
         quizzRepository.save(quizz1);
+        quizzRepository.save(quizz2);
+        quizzRepository.save(quizz3);
     }
 
     private void initEvents(){
@@ -547,6 +764,145 @@ public class DataBaseInitializer {
         videoRepository.save(video4);
         videoRepository.save(video5);
         videoRepository.save(video6);     
+    }
+
+    private void initPlanets(){
+        Planet planet1 = new Planet(
+            "Mercurio",
+            4,
+            110,
+            0.01,
+            "Mercurio es el planeta del sistema solar más cercano al Sol y el más pequeño. Forma parte de los denominados planetas interiores y carece de satélites naturales al igual que Venus. Se conocía muy poco sobre su superficie hasta que fue enviada la sonda planetaria Mariner 10 y se hicieron observaciones con radar y radiotelescopios. Posteriormente fue estudiado por la sonda MESSENGER de la NASA y actualmente la astronave de la Agencia Europea del Espacio (ESA) denominada BepiColombo, lanzada en octubre de 2018, se halla en vuelo rumbo a Mercurio a donde llegará en 2025 y se espera que aporte nuevos conocimientos sobre el origen y composición del planeta, así como de su geología y campo magnético.\n\n"
+                + "Antiguamente se pensaba que Mercurio siempre presentaba la misma cara al Sol (rotación capturada), situación similar al caso de la Luna con la Tierra; es decir, que su periodo de rotación era igual a su periodo de traslación, ambos de 88 días. Sin embargo, en 1965 se mandaron impulsos de radar hacia Mercurio, con lo cual quedó definitivamente demostrado que su periodo de rotación era de 58,7 días, lo cual es ⅔ de su periodo de traslación. Esto no es coincidencia, y es una situación denominada resonancia orbital.\n\n"
+                + "Al ser un planeta cuya órbita es inferior a la de la Tierra, lo observamos pasar periódicamente delante del Sol, fenómeno que se denomina tránsito astronómico. Observaciones de su órbita a través de muchos años demostraron que el perihelio gira 43\" de arco más por siglo de lo predicho por la mecánica clásica de Newton. Esta discrepancia llevó a un astrónomo francés, Urbain Le Verrier, a pensar que existía un planeta aún más cerca del Sol, al cual llamaron Vulcano, que perturbaba la órbita de Mercurio. Ahora se sabe que Vulcano no existe; la explicación correcta del comportamiento del perihelio de Mercurio se encuentra en la teoría general de la relatividad de Einstein.",
+            "images/mercury.png"
+        );
+
+        Planet planet2 = new Planet(
+            "Venus",
+            7,
+            170,
+            0.007,
+            "Venus es el segundo planeta del sistema solar en orden de proximidad al Sol y el tercero más pequeño después de Mercurio y Marte. Al igual que Mercurio, carece de satélites naturales. Recibe su nombre en honor a Venus, la diosa romana del amor (en la Antigua Grecia, Afrodita). Al ser el segundo objeto natural más brillante después de la Luna, puede ser visto en un cielo nocturno despejado a simple vista. Aparece al despuntar el día y al atardecer. Debido a las distancias de las órbitas de Venus y la Tierra desde el Sol, Venus nunca es visible más de tres horas antes del amanecer o tres horas después del ocaso.\n\n"
+                + "Se trata de un planeta interior de tipo rocoso y terrestre, llamado con frecuencia el planeta hermano de la Tierra, ya que ambos son similares en cuanto a tamaño, masa y composición, aunque totalmente diferentes en cuestiones térmicas y atmosféricas (la temperatura media de Venus es de 463.85 °C). Su órbita es una elipse con una excentricidad de menos del 1 %, formando la órbita más circular de todos los planetas; apenas supera la de Neptuno. Su presión atmosférica es 90 veces superior a la terrestre; es, por lo tanto, la mayor presión atmosférica de todos los planetas rocosos del sistema solar. Es de color amarillento debido a su atmósfera, que está compuesta en su mayoría por dióxido de carbono (CO2), ácido sulfhídrico (H2S) y nitrógeno (N2).\n\n"
+                + "Pese a situarse más lejos del Sol que Mercurio, Venus posee la atmósfera más caliente del sistema solar; esto se debe a que está principalmente compuesta por gases de efecto invernadero, como el dióxido de carbono, atrapando mucho más calor del Sol. Actualmente carece de agua líquida y sus condiciones en superficie se consideran incompatibles con la vida conocida, aunque en descubrimientos recientes se ha encontrado fosfina en su superficie nebular, una molécula que en la Tierra es generada por microbios, lo que da indicios de una posible existencia de vida. No obstante, el Instituto Goddard de Estudios Espaciales de la NASA y otros han postulado que en el pasado Venus pudo tener océanos con tanta agua como el terrestre y reunir condiciones de habitabilidad planetaria.\n\n"
+                + "Este planeta además posee el día más largo del sistema solar —243 días terrestres—, su movimiento es dextrógiro, es decir, gira en el sentido de las manecillas del reloj, contrario al movimiento de los otros planetas. Por ello, en un día venusiano el Sol sale por el oeste y se pone por el este. Sus nubes, sin embargo, pueden dar la vuelta al planeta en cuatro días terrestres. De hecho, previamente a estudiarlo con naves no tripuladas en su superficie o con radares, se pensaba que el período de rotación de Venus era de unos cuatro días terrestres.\n\n"
+                + "Al encontrarse Venus más cercano al Sol que la Tierra, siempre se puede encontrar en las inmediaciones del Sol (su mayor elongación es de 47.8°), por lo que desde la Tierra se puede ver solo durante unas pocas horas antes del orto (salida del Sol) en unos determinados meses del año; también durante unas pocas horas después del ocaso (puesta del Sol) en el resto del año. A pesar de ello, cuando Venus es más brillante puede ser visto durante el día, siendo uno de los tres únicos cuerpos celestes que pueden ser vistos de día a simple vista además de la Luna y el Sol. Conocido como la estrella de la mañana («lucero del alba») o de la tarde («lucero vespertino»), cuando es visible en el cielo nocturno es el segundo objeto más brillante del firmamento tras la Luna, por lo que Venus debió ser ya conocido desde los tiempos prehistóricos.\n\n"
+                + "La mayoría de las antiguas civilizaciones conocían los movimientos en el cielo de Venus, por lo que adquirió importancia en casi todas las interpretaciones astrológicas del movimiento planetario. En particular, la civilización maya elaboró un calendario religioso basado en los ciclos astronómicos, incluidos los ciclos de Venus. El símbolo del planeta Venus es una representación estilizada del espejo de la diosa Venus: un círculo con una pequeña cruz debajo, utilizado también hoy para denotar el sexo femenino.",
+            "images/venus.png"
+        );
+
+        Planet planet3 = new Planet(
+            "La Tierra",
+            8,
+            240,
+            0.005,
+            "La Tierra (del latín Terra, deidad romana equivalente a Gea, diosa griega de la feminidad y la fecundidad) es un planeta del sistema solar que gira alrededor de su estrella —el Sol— en la tercera órbita más interna. Es el más denso y el quinto mayor de los ocho planetas del sistema solar. También es el más grande de los cuatro planetas terrestres o rocosos.\n\n"
+                + "La Tierra se formó hace aproximadamente 4550 millones de años y la vida surgió unos mil millones de años después. Es el hogar de millones de especies, incluidos los seres humanos y actualmente el único cuerpo astronómico donde se conoce la existencia de vida. La atmósfera y otras condiciones abióticas han sido alteradas significativamente por la biosfera del planeta, favoreciendo la proliferación de organismos aerobios, así como la formación de una capa de ozono que junto con el campo magnético terrestre bloquean la radiación solar dañina, permitiendo así la vida en la Tierra. Las propiedades físicas de la Tierra, la historia geológica y su órbita han permitido que la vida siga existiendo. Se estima que el planeta seguirá siendo capaz de sustentar vida durante otros 500 millones de años, ya que según las previsiones actuales, pasado ese tiempo la creciente luminosidad del Sol terminará causando la extinción de la biosfera.\n\n"
+                + "La superficie terrestre o corteza está dividida en varias placas tectónicas que se deslizan sobre el magma durante periodos de varios millones de años. La superficie está cubierta por continentes e islas; estos poseen varios lagos, ríos y otras fuentes de agua, que junto con los océanos de agua salada que representan cerca del 71 % de la superficie constituyen la hidrósfera. No se conoce ningún otro planeta con este equilibrio de agua líquida, que es indispensable para cualquier tipo de vida conocida. Los polos de la Tierra están cubiertos en su mayoría de hielo sólido (indlandsis de la Antártida) o de banquisas (casquete polar ártico). El interior del planeta es geológicamente activo, con una gruesa capa de manto relativamente sólido, un núcleo externo líquido que genera un campo magnético, y un sólido núcleo interior compuesto por aproximadamente un 88 % de hierro.\n\n"
+                + "La Tierra interactúa gravitatoriamente con otros objetos en el espacio, especialmente el Sol y la Luna. En la actualidad, la Tierra completa una órbita alrededor del Sol cada vez que realiza 366.26 giros sobre su eje, lo cual es equivalente a 365.26 días solares o un año sideral. El eje de rotación de la Tierra se encuentra inclinado 23.4° con respecto a la perpendicular a su plano orbital, lo que produce las variaciones estacionales en la superficie del planeta con un período de un año tropical (365.24 días solares). La Tierra posee un único satélite natural, la Luna, que comenzó a orbitar la Tierra hace 4530 millones de años; esta produce las mareas, estabiliza la inclinación del eje terrestre y reduce gradualmente la velocidad de rotación del planeta. Hace aproximadamente 3800 a 4100 millones de años, durante el llamado bombardeo intenso tardío, numerosos asteroides impactaron en la Tierra, causando significativos cambios en la mayor parte de su superficie.\n\n"
+                + "Tanto los minerales del planeta como los productos de la biosfera aportan recursos que se utilizan para sostener a la población humana mundial. Sus habitantes están agrupados en unos 200 estados soberanos independientes, que interactúan a través de la diplomacia, los viajes, el comercio y la acción militar. Las culturas humanas han desarrollado muchas ideas sobre el planeta, incluida la personificación de una deidad, la creencia en una Tierra plana o en la Tierra como centro del universo, y una perspectiva moderna del mundo como un entorno integrado que requiere administración.",
+            "images/earth.png"
+        );
+
+        Planet planet4 = new Planet(
+            "Marte",
+            7,
+            320,
+            0.004,
+            "Marte es el cuarto planeta en orden de distancia al Sol y el segundo más pequeño del sistema solar, después de Mercurio. Recibió su nombre en homenaje al homónimo dios de la guerra de la mitología romana (Ares en la mitología griega), y también es conocido como «el planeta rojo» debido a la apariencia rojiza que le confiere el óxido de hierro predominante en su superficie. Marte es el planeta interior más alejado del Sol. Es un planeta telúrico con una atmósfera delgada de dióxido de carbono, y tiene dos satélites pequeños y de forma irregular, Fobos y Deimos (hijos del dios griego), que podrían ser asteroides capturados similares al asteroide troyano (5261) Eureka. Sus características superficiales recuerdan tanto a los cráteres de la Luna como a los valles, desiertos y casquetes polares de la Tierra.\n\n"
+                + "El periodo de rotación y los ciclos estacionales son similares a los de la Tierra, ya que la inclinación es lo que genera las estaciones. Marte alberga el Monte Olimpo, la montaña y el volcán más grande y alto conocido en el sistema solar, y los Valles Marineris, uno de los mayores cañones del sistema solar. La llana cuenca Boreal en el hemisferio norte cubre el 40% del planeta y puede ser característica de un gigantesco impacto. Aunque en apariencia podría parecer un planeta muerto, no lo es. Sus campos de dunas siguen siendo mecidos por el viento marciano, sus casquetes polares cambian con las estaciones e incluso parece que hay algunos pequeños flujos estacionales de agua.\n\n"
+                + "Las investigaciones en curso evalúan su habitabilidad potencial en el pasado, así como la posibilidad de existencia actual de vida. Se planean futuras investigaciones astrobiológicas, entre ellas la Mars 2020 de la NASA y la ExoMars de la ESA. El agua en estado líquido no puede existir en la superficie de Marte debido a su baja presión atmosférica, que es unas 100 veces inferior a la de la Tierra, excepto en las zonas menos elevadas durante cortos periodos de tiempo. Sus dos casquetes polares parecen estar formados en su mayor parte por agua. El volumen de agua helada del casquete polar sur, si se derritiera, sería suficiente como para cubrir la superficie planetaria al completo con una profundidad de 11 metros (36 pies).\n\n"
+                + "Marte se puede observar fácilmente a simple vista desde la Tierra, así como su coloración rojiza. Su magnitud aparente alcanza −2.97, y es solamente superada por Júpiter, Venus, la Luna y el Sol. Los telescopios ópticos terrestres están normalmente limitados a resoluciones de aproximadamente 300 km (190 millas) de distancia, cuando la Tierra y Marte están más cercanos, debido a la atmósfera terrestre.\n\n"
+                + "El astrónomo danés del siglo XVI Tycho Brahe midió con gran precisión el movimiento de Marte en el cielo. Los datos sobre el movimiento retrógrado aparente (los llamados «lazos») permitieron a Kepler hallar la naturaleza elíptica de su órbita y determinar las leyes del movimiento planetario conocidas como leyes de Kepler.",
+            "images/mars.png"
+        );
+
+        Planet planet5 = new Planet(
+            "Jupiter",
+            14,
+            400,
+            0.002,
+            "Júpiter es el planeta más grande del sistema solar y el quinto en orden de lejanía al Sol. Es un gigante gaseoso que forma parte de los denominados planetas exteriores. Recibe su nombre del dios romano Júpiter (Zeus en la mitología griega). Es uno de los objetos naturales más brillantes en un cielo nocturno despejado, superado solo por la Luna, Venus y algunas veces Marte.\n\n"
+                + "Se trata del planeta que ofrece un mayor brillo a lo largo del año dependiendo de su fase. Es, además, después del Sol, el mayor cuerpo celeste del sistema solar, con una masa casi dos veces y media de la de los demás planetas juntos (con una masa 318 veces mayor que la de la Tierra y tres veces mayor que la de Saturno, además de ser, en cuanto a volumen, 1321 veces más grande que la Tierra). También es el planeta más antiguo del sistema solar, siendo incluso más antiguo que el Sol; este descubrimiento fue realizado por investigadores de la universidad de Münster en Alemania.\n\n"
+                + "Júpiter es un cuerpo masivo gaseoso, formado principalmente por hidrógeno y helio, carente de una superficie interior definida. Entre los detalles atmosféricos es notable la Gran Mancha Roja (un enorme anticiclón situado en las latitudes tropicales del hemisferio sur), la estructura de nubes en bandas oscuras y zonas brillantes, y la dinámica atmosférica global determinada por intensos vientos zonales alternantes en latitud y con velocidades de hasta 140 m/s (504 km/h).",
+            "images/jupiter.png"
+        );
+
+        Planet planet6 = new Planet(
+            "Saturno",
+            12,
+            500,
+            0.0015,
+            "Saturno es el sexto planeta del sistema solar contando desde el Sol, el segundo en tamaño y masa después de Júpiter y el único con un sistema de anillos visible desde la Tierra. Su nombre proviene del dios romano Saturno. Forma parte de los denominados planetas exteriores o gaseosos. El aspecto más característico de Saturno son sus brillantes y grandes anillos. Antes de la invención del telescopio, Saturno era el más lejano de los planetas conocidos y, a simple vista, no parecía luminoso ni interesante.\n\n"
+                + "El primero en observar los anillos fue Galileo en 1610, pero la baja inclinación de los anillos y la baja resolución de su telescopio le hicieron pensar en un principio que se trataba de grandes satélites. Christiaan Huygens, con mejores medios de observación, pudo en 1659 observar con claridad los anillos. James Clerk Maxwell, en 1859, demostró matemáticamente que los anillos no podían ser un único objeto sólido sino que debían ser la agrupación de millones de partículas de menor tamaño. Las partículas que componen los anillos de Saturno giran a una velocidad de 48 000 km/h, 15 veces más rápido que una bala.",
+            "images/saturn.png"
+        );
+
+        Planet planet7 = new Planet(
+            "Urano",
+            11,
+            600,
+            0.0012,
+            "Urano es el séptimo planeta del sistema solar, el tercero de mayor tamaño, y el cuarto más masivo. Se llama así en honor de la divinidad griega del cielo Urano (del griego antiguo Οὐρανός), el padre de Crono (Saturno) y el abuelo de Zeus (Júpiter). Aunque es detectable a simple vista en el cielo nocturno, no fue catalogado como planeta por los astrónomos de la antigüedad debido a su escasa luminosidad y a la lentitud de su órbita. William Herschel anunció su descubrimiento el 13 de marzo de 1781, ampliando las fronteras entonces conocidas del sistema solar, por primera vez en la historia moderna. Urano es también el primer planeta descubierto por medio de un telescopio.\n\n"
+                + "Urano es similar en composición a Neptuno, y los dos tienen una composición diferente de los otros dos gigantes gaseosos (Júpiter y Saturno). Por ello, los astrónomos a veces los clasifican en una categoría diferente, los gigantes helados. La atmósfera de Urano, aunque es similar a la de Júpiter y Saturno por estar compuesta principalmente de hidrógeno y helio, contiene una proporción superior tanto de 'hielo' como de agua, amoníaco y metano, junto con trazas de hidrocarburos. Posee la atmósfera planetaria más fría del sistema solar, con una temperatura mínima de 49 K (-224 °C). Asimismo, tiene una estructura de nubes muy compleja, acomodada por niveles, donde se cree que las nubes más bajas están compuestas de agua y las más altas de metano. En contraste, el interior de Urano se encuentra compuesto principalmente de hielo y roca.\n\n"
+                + "Como los otros planetas gigantes, Urano tiene un sistema de anillos, una magnetosfera, y numerosos satélites. El sistema de Urano tiene una configuración única respecto a los otros planetas puesto que su eje de rotación está muy inclinado, casi hasta su plano de revolución alrededor del Sol. Por lo tanto, sus polos norte y sur se encuentran en donde la mayoría de los otros planetas tienen el ecuador. Vistos desde la Tierra, los anillos de Urano dan el aspecto de que rodean el planeta como una diana, y que los satélites giran a su alrededor como las agujas de un reloj, aunque en 2007 y 2008, los anillos aparecían justo de lado. El 24 de enero de 1986, las imágenes del Voyager 2 mostraron a Urano como un planeta sin ninguna característica especial de luz visible e incluso sin bandas de nubes o tormentas asociadas con los otros gigantes. Sin embargo, los observadores terrestres han visto señales de cambios de estación y un aumento de la actividad meteorológica en los últimos años a medida que Urano se acerca a su equinoccio. Las velocidades del viento en Urano pueden llegar o incluso sobrepasar los 250 m/s (900 km/h).",
+            "images/uranus.png"
+        );
+
+        Planet planet8 = new Planet(
+            "Neptuno",
+            10,
+            700,
+            0.001,
+            "Neptuno es el octavo planeta en distancia respecto al Sol y el más lejano del sistema solar. Forma parte de los denominados planetas exteriores, y dentro de estos, es uno de los gigantes helados, y es el primero que fue descubierto gracias a predicciones matemáticas. Su nombre fue puesto en honor al dios romano del mar —Neptuno—, y es el cuarto planeta en diámetro y el tercero más grande en masa. Su masa es diecisiete veces la de la Tierra y ligeramente mayor que la de su planeta 'gemelo' Urano, que tiene quince masas terrestres y no es tan denso. En promedio, Neptuno orbita el Sol a una distancia de 30,1 ua. Su símbolo astronómico es ♆, una versión estilizada del tridente del dios Neptuno.\n\n"
+                + "Tras el descubrimiento de Urano, se observó que las órbitas de Urano, Saturno y Júpiter no se comportaban tal como predecían las leyes de Kepler y de Newton. Adams y Le Verrier, de forma independiente, calcularon la posición de un hipotético planeta, Neptuno, que finalmente fue encontrado por Galle, el 23 de septiembre de 1846, a menos de un grado de la posición calculada por Le Verrier. Más tarde se advirtió que Galileo ya había observado Neptuno en 1612, pero lo había confundido con una estrella.\n\n"
+                + "Neptuno es un planeta dinámico, con manchas que recuerdan las tempestades de Júpiter. La más grande, la Gran Mancha Oscura, tenía un tamaño similar al de la Tierra, pero en 1994 desapareció y se ha formado otra. Los vientos más fuertes de cualquier planeta del sistema solar se encuentran en Neptuno.\n\n"
+                + "Neptuno tiene una composición bastante similar a la del planeta Urano, y ambos tienen composiciones que difieren mucho de los demás gigantes gaseosos, Júpiter y Saturno. La atmósfera de Neptuno, como las de Júpiter y de Saturno, se compone principalmente de hidrógeno y helio, junto con vestigios de hidrocarburos y posiblemente nitrógeno. Contiene una mayor proporción de hielos, tales como agua (H2O), amoníaco (NH3) y metano (CH4). Los científicos muchas veces categorizan Urano y Neptuno como gigantes helados para enfatizar la distinción entre estos y los gigantes de gas Júpiter y Saturno. El interior de Neptuno, como el de Urano, está compuesto principalmente de hielos y roca. Los rastros de metano en las regiones periféricas exteriores contribuyen para el aspecto azul vívido de este planeta.",
+            "images/neptune.png"
+        );
+
+        Planet planet9 = new Planet(
+            "Sol",
+            50,
+            0,
+            0,
+            "El Sol (del latín sol, solis, ‘dios Sol invictus’ o ‘sol’, a su vez de la raíz protoindoeuropea sauel, ‘luz’) es una estrella de tipo-G de la secuencia principal y clase de luminosidad V que se encuentra en el centro del sistema solar y constituye la mayor fuente de radiación electromagnética de este sistema planetario. Es una esfera casi perfecta de plasma, con un movimiento convectivo interno que genera un campo magnético a través de un proceso de dinamo. Cerca de tres cuartas partes de la masa del Sol constan de gases como el hidrógeno; el resto es principalmente helio, con cantidades mucho más pequeñas de elementos, incluyendo el oxígeno, carbono, neón y hierro.\n\n"
+    + "Se formó hace aproximadamente 4600 millones de años a partir del colapso gravitacional de la materia dentro de una región de una gran nube molecular. La mayor parte de esta materia se acumuló en el centro, mientras que el resto se aplanó en un disco en órbita que se convirtió en el sistema solar. La masa central se volvió cada vez más densa y caliente, dando lugar con el tiempo al inicio de la fusión nuclear en su núcleo. Se cree que casi todas las estrellas se forman por este proceso. El Sol es más o menos de edad intermedia y no ha cambiado drásticamente desde hace más de cuatro mil millones de años, y seguirá siendo bastante estable durante otros 5000 millones de años más. Sin embargo, después de que la fusión del hidrógeno en su núcleo se haya detenido, el Sol sufrirá cambios importantes y se convertirá en una gigante roja. Se estima que el Sol se volverá entonces lo suficientemente grande como para engullir las órbitas actuales de Mercurio, Venus y posiblemente la Tierra.\n\n"
+    + "La Tierra y otros cuerpos (incluidos otros planetas, asteroides, meteoroides, cometas y polvo) orbitan alrededor del Sol. Por sí solo, representa alrededor del 99,86 % de la masa del sistema solar. La distancia media del Sol a la Tierra fue definida exactamente por la Unión Astronómica Internacional en 149 597 870 700 metros (aproximadamente 150 millones de kilómetros). Su luz recorre esta distancia en 8 minutos y 20 segundos.\n\n"
+    + "La energía del Sol, en forma de luz solar, sustenta a casi todas las formas de vida en la Tierra a través de la fotosíntesis, y determina el clima de la Tierra y la meteorología.\n\n"
+    + "Es la estrella del sistema planetario en el que se encuentra la Tierra; por lo tanto, es el astro con mayor brillo aparente. Su visibilidad en el cielo local determina, respectivamente, el día y la noche en diferentes regiones de diferentes planetas. En la Tierra, la energía radiada por el Sol es aprovechada por los seres fotosintéticos que constituyen la base de la cadena trófica, siendo así la principal fuente de energía de la vida. También aporta la energía que mantiene en funcionamiento los procesos climáticos.\n\n"
+    + "El Sol es una estrella que se encuentra en la fase denominada secuencia principal, con un tipo espectral G2 y clase de luminosidad V, por tanto, también es denominada como enana amarilla. Se formó hace entre 4567,9 y 4570,1 millones de años y permanecerá en la secuencia principal aproximadamente 5000 millones de años más. El Sol, junto con todos los cuerpos celestes que orbitan a su alrededor, incluida la Tierra, forman el sistema solar.\n\n"
+    + "A pesar de ser una estrella enana, es la única cuya forma se puede apreciar a simple vista, con un diámetro angular de 32′35″ de arco en el perihelio y 31′31″ en el afelio, lo que da un diámetro medio de 32′03″. La combinación de tamaños y distancias del Sol y la Luna son tales que se ven, aproximadamente, con el mismo tamaño aparente en el cielo. Esto permite una amplia gama de eclipses solares distintos (totales, anulares o parciales).\n\n"
+    + "El vasto efecto del Sol sobre la Tierra ha sido reconocido desde tiempos prehistóricos y el astro ha sido considerado por algunas culturas como una deidad. El movimiento de la Tierra alrededor del Sol es la base del calendario solar, el cual es el calendario predominante en uso hoy en día.\n\n"
+    + "La disciplina científica que se encarga del estudio del Sol en su totalidad es la física solar.",
+            "images/sun.png"
+        );
+
+        Planet planet10 = new Planet(
+            "Luna",
+            3,
+            30,
+            0.04,
+            "La Luna es el único satélite natural de la Tierra. Con un diámetro ecuatorial de 3474,8 km, es el quinto satélite más grande del sistema solar, mientras que en cuanto al tamaño proporcional respecto a su planeta es el satélite más grande: un cuarto del diámetro de la Tierra y 1/81 de su masa. Es, además, después de Ío, el segundo satélite más denso. Se encuentra en relación síncrona con la Tierra, siempre mostrando la misma cara hacia el planeta. El hemisferio visible está marcado con oscuros mares lunares de origen volcánico entre las brillantes montañas antiguas y los destacados astroblemas.\n\n"
+    + "A pesar de ser, en apariencia, el objeto más brillante en el cielo después del Sol, su superficie es en realidad muy oscura, con una reflexión similar a la del carbón. Su prominencia en el cielo y su ciclo regular de fases han hecho de la Luna un objeto con importante influencia cultural desde la antigüedad, tanto en el lenguaje como en el calendario, el arte o la mitología. La influencia gravitatoria de la Luna produce las mareas y el aumento de la duración del día. La distancia orbital de la Luna, cerca de treinta veces el diámetro de la Tierra, hace que se vea en el cielo con el mismo tamaño que el Sol y permite que la Luna cubra exactamente al Sol en los eclipses solares totales.\n\n"
+    + "La Luna es el único cuerpo celeste en el que el ser humano ha realizado un descenso tripulado. Aunque el programa Luna de la Unión Soviética fue el primero en alcanzar la Luna con una nave espacial no tripulada, el programa Apolo de Estados Unidos realizó las únicas misiones tripuladas al satélite terrestre hasta la fecha, comenzando con la primera órbita lunar tripulada por el Apolo 8 en 1968, y seis alunizajes tripulados entre 1969 y 1972, siendo el primero el Apolo 11 en 1969, y el último el Apolo 17. Estas misiones regresaron con más de 380 kg de roca lunar, que han permitido alcanzar una detallada comprensión geológica de los orígenes de la Luna –se cree que se formó hace 4 500 000 000 (cuatro mil quinientos millones) de años después de un gran impacto–, la formación de su estructura interna y su posterior historia.\n\n"
+    + "En 1970 la Unión Soviética puso en la superficie el primer vehículo robótico controlado desde la Tierra: Lunojod 1. El rover fue enviando fotografías y vídeos de la superficie que recorrió (10 km.) durante casi un año.\n\n"
+    + "Desde la misión Apolo 17, en 1972, ha sido visitada únicamente por sondas espaciales no tripuladas, en particular por el astromóvil soviético Lunojod 2. Desde 2004, Japón, China, India, Estados Unidos y la Agencia Espacial Europea han enviado orbitadores. Estas naves espaciales han confirmado el descubrimiento de agua helada fijada al regolito lunar en cráteres que se encuentran en la zona de sombra permanente y están ubicados en los polos. Se han planeado futuras misiones tripuladas a la Luna, pero no se han puesto en marcha aún.\n\n"
+    + "La Luna se mantiene, bajo el Tratado sobre el espacio ultraterrestre, libre para la exploración de cualquier nación con fines pacíficos.",
+            "images/moon.png"
+        );
+
+        planetRepository.save(planet1);
+        planetRepository.save(planet2);
+        planetRepository.save(planet3);
+        planetRepository.save(planet4);
+        planetRepository.save(planet5);
+        planetRepository.save(planet6);
+        planetRepository.save(planet7);
+        planetRepository.save(planet8);
+        planetRepository.save(planet9);
+        planetRepository.save(planet10);
     }
 
     public Blob photoToBlob(String photoStr) {

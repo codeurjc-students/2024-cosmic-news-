@@ -1,15 +1,11 @@
 package es.codeurjc.cosmic_news.model;
 
-import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
-
-import java.sql.Blob;
 
 @Entity
 @Table(name = "planets")
@@ -21,28 +17,24 @@ public class Planet {
 
     private String name;
     private double radius;
-    private String color; // Puedes almacenar el color como un String en formato hexadecimal
     private double orbitRadius;
     private double orbitSpeed;
+    
+    @Column(name = "description", columnDefinition = "TEXT")
+    private String description;
+    private String imageUrl;
 
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    private Blob image; // Imagen almacenada como BLOB
-
-    // Constructor vacío
     public Planet() {}
 
-    // Constructor con parámetros
-    public Planet(String name, double radius, String color, double orbitRadius, double orbitSpeed, Blob image) {
+    public Planet(String name, double radius, double orbitRadius, double orbitSpeed, String description, String imageUrl) {
         this.name = name;
         this.radius = radius;
-        this.color = color;
         this.orbitRadius = orbitRadius;
         this.orbitSpeed = orbitSpeed;
-        this.image = image;
+        this.description = description;
+        this.imageUrl = imageUrl;
     }
 
-    // Getters y setters
     public Long getId() {
         return id; 
     }
@@ -65,14 +57,6 @@ public class Planet {
         this.radius = radius; 
     }
 
-    public String getColor() {
-        return color; 
-    }
-
-    public void setColor(String color) {
-        this.color = color; 
-    }
-
     public double getOrbitRadius() {
         return orbitRadius; 
     }
@@ -87,10 +71,18 @@ public class Planet {
         this.orbitSpeed = orbitSpeed; 
     }
 
-    public Blob getImage() { 
-        return image; 
+    public String getDescription(){
+        return description;
     }
-    public void setImage(Blob image) {
-         this.image = image; 
+
+    public void setDescription(String description){
+        this.description = description;
+    }
+
+    public String getImageUrl(){ 
+        return imageUrl; 
+    }
+    public void setImageUrl(String imageUrl){ 
+        this.imageUrl = imageUrl; 
     }
 }
