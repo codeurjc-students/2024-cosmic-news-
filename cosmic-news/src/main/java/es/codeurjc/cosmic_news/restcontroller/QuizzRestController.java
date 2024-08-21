@@ -5,6 +5,7 @@ import java.net.URI;
 import java.security.Principal;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.hibernate.engine.jdbc.BlobProxy;
@@ -32,9 +33,12 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import es.codeurjc.cosmic_news.DTO.QuestionDTO;
 import es.codeurjc.cosmic_news.DTO.QuizzDTO;
+import es.codeurjc.cosmic_news.model.Badge;
 import es.codeurjc.cosmic_news.model.Question;
 import es.codeurjc.cosmic_news.model.Quizz;
+import es.codeurjc.cosmic_news.model.User;
 import es.codeurjc.cosmic_news.service.QuizzService;
+import es.codeurjc.cosmic_news.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -47,6 +51,9 @@ import jakarta.servlet.http.HttpServletRequest;
 public class QuizzRestController {
     @Autowired
     private QuizzService quizzService;
+
+	@Autowired
+    private UserService userService;
     
      @Operation(summary = "Get paged quizzes.")
     @ApiResponses(value = {
@@ -302,6 +309,29 @@ public class QuizzRestController {
 			}else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}else return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
+
+	@GetMapping("/stats")
+    public ResponseEntity<HashMap<String,Integer>> getPStats(){
+        HashMap<String, Integer> map = fillQuizzes();
+        return ResponseEntity.status(HttpStatus.OK).body(map);
+    }
+
+	public HashMap<String, Integer> fillQuizzes() {
+        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        List<Quizz> quizzList = quizzService.getAllQuizzes();
+        for (Quizz quizz : quizzList) {
+            map.put(quizz.getName(), 0);
+        }
+        List<User> userList = userService.getAllUsers();
+        for (User user : userList) {
+            if (!user.getBadges().isEmpty()){
+                for (Badge badge : user.getBadges()) {
+                    map.put(badge.getName(), map.get(badge.getName()) + 1);
+                }
+            }
+        }
+        return map;
+    }
 
     public void updateQuizz(Quizz quizz, QuizzDTO newQuizz){
 		if (newQuizz.getName()!=null) quizz.setName(newQuizz.getName());

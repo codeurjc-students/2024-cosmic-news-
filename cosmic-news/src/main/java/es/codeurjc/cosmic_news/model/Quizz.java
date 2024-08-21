@@ -24,7 +24,6 @@ public class Quizz {
     private String name;
     private String difficulty;
 
-    //@Lob
     @JsonIgnore
     private Blob photo;
     private boolean image;

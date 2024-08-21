@@ -1,0 +1,63 @@
+.option.correct {
+    background-color: #d3ffd3;
+}
+
+.option.incorrect {
+    background-color: #ffd3d3;
+}
+
+.options-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+.option {
+    width: 48%;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    margin: 1%;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.3s, border-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.option.selected {
+    border-color: #007bff;
+}
+.option label {
+    display: block;
+    padding: 10px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.submit-button {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.btn-submit {
+    background-color: rgb(24, 23, 23);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-submit:hover {
+    background-color: #0056b3;
+}
+
+.question-item {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}

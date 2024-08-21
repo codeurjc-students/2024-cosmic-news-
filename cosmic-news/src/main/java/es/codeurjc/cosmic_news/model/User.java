@@ -87,7 +87,6 @@ public class User {
         this.roles = List.of(roles);
     }
 
-     // Getters and Setters
     public boolean isAdmin(){
         return hasRole("ADMIN");
     }
