@@ -1,0 +1,62 @@
+<div class="background-container">
+    <div class="container">
+        <h2 *ngIf="edit">Editar {{event.date}}</h2>
+        <h2 *ngIf="!edit">Nuevo evento</h2>
+    
+        <form>
+            <div class="form-group">
+                <label for="date">Fecha</label>
+                <input type="date" class="form-control" name="date" placeholder="Fecha" [(ngModel)]="event.date">
+            </div>
+
+
+            <div class="row">
+                <div class="form-group col-md-4 col-sm-12">
+                    <label for="icon">Icono:</label>
+                    <select class="form-control" name="icon" id="icon" [(ngModel)]="typeUser" (change)="showForm()">
+                        <!--{{#edit}}
+                        <option value="{{event.icon}}" selected hidden>{{event.icon}}</option>
+                        {{/edit}}-->
+                        <option value="bi bi-sun">Sol</option>
+                        <option value="bi bi-moon">Luna</option>
+                        <option value="bi bi-circle-fill">Eclipse</option>
+                        <option value="bi bi-moon-fill">Luna rellena</option>
+                        <option value="bi bi-circle">Círculo</option>
+                        <option value="bi bi-star">Estrella</option>
+                        <option value="bi bi-stars">Estrellas</option>
+                        <option value="bi bi-globe">Globo</option>
+                        <option value="bi bi-moon-stars">Luna y Estrellas</option>
+                        <option value="bi bi-flower1">Flor</option>
+                        <option value="bi bi-tree">Arbol</option>
+                        <option value="bi bi-snow">Nieve</option>
+                        <option value="bi bi-diagram-3">Alineación</option>
+                    </select>
+
+                    <!--<div id="iconPreview" class="icon-preview col-md-6 col-sm-12">
+                        {{^edit}}
+                        <i class="bi bi-sun"></i>
+                        {{/edit}}
+                        {{#edit}}
+                        <i class="{{event.icon}}"></i>
+                        {{/edit}}
+                    </div>-->
+
+                </div>
+                <div class="form-group col-md-8 col-sm-12">
+                    <label for="description">Descripción:</label>
+                    <textarea class="form-control" id="description" name="description" [(ngModel)]="event.description"></textarea>
+                </div>
+            </div>
+
+            <div class="btn-cont">
+                <button type="submit" (click)="save()" class="btn">
+                    <i class="bi bi-download"></i> Guardar
+                </button>
+                <a [routerLink]="['/calendar']" class="btn btn-red" role="button">
+                    <i class="bi bi-x-lg"></i> Cancelar
+                </a>
+            </div>
+            <input type ="hidden" name="_csrf" value="{{token}}"/>
+        </form>
+    </div>
+</div>

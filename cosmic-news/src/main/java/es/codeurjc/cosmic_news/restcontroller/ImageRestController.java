@@ -27,13 +27,35 @@ public class ImageRestController {
     @Operation(summary = "Get logo image.")
 	@ApiResponses(value = {
 		@ApiResponse(responseCode = "200", description = "Logo found", content = {
-		@Content(mediaType = "application/json", schema = @Schema(implementation = UserDTO.class)) }),
+		@Content(mediaType = "application/json") }),
 		@ApiResponse(responseCode = "404", description = "Logo not found", content = @Content)
 	})
 	@GetMapping("/logo")
 	public ResponseEntity<byte[]> getLogo() {
         try {
-            ClassPathResource imgFile = new ClassPathResource("static/images/h2oslogo.png");
+            ClassPathResource imgFile = new ClassPathResource("static/images/logo.png");
+            byte[] imageBytes = Files.readAllBytes(imgFile.getFile().toPath());
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_PNG);
+
+            return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
+        }
+		catch (IOException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @Operation(summary = "Get background image.")
+	@ApiResponses(value = {
+		@ApiResponse(responseCode = "200", description = "Image found", content = {
+		@Content(mediaType = "application/json") }),
+		@ApiResponse(responseCode = "404", description = "Image not found", content = @Content)
+	})
+	@GetMapping("/background")
+	public ResponseEntity<byte[]> getBackground() {
+        try {
+            ClassPathResource imgFile = new ClassPathResource("static/images/background.jpg");
             byte[] imageBytes = Files.readAllBytes(imgFile.getFile().toPath());
 
             HttpHeaders headers = new HttpHeaders();

@@ -1,0 +1,41 @@
+<div class="background-container">
+    <main class="container">
+        <div class="top-container">
+            <div class="left-cont">
+            </div>
+
+            <h2>Fotos</h2>
+
+            <div class="right-cont">
+                <a class="btn" [routerLink]="['/news']">
+                    <i class="bi bi-map-fill"></i><tool-tip>Noticias</tool-tip>
+                </a>
+            </div>
+        </div>
+
+        <section class="cards" id="pictures">
+            <a *ngFor="let picture of pictures" [routerLink]="[picture.id]">
+                <img src={{picture.image}}>
+                <p>{{picture.title}}</p>
+                <p>
+                    {{picture.location}}
+                    <i class="bi bi-square invisible-icon"></i>
+                    {{picture.likes}}<i class="bi bi-hand-thumbs-up"></i>
+                </p>
+            </a>
+            <p *ngIf="pictures.length === 0">No hay fotos</p>
+        </section>
+
+        <div *ngIf="hasMore" class="btn-cont" id="load">
+            <button class="btn" (click)="loadPictures()">
+                <i class="bi bi-chevron-double-down"></i> Cargar más
+            </button>
+        </div>
+    </main>
+
+    <div *ngIf="canAdd" class="btn-cont bottom-right-button">
+        <a [routerLink]="['new']" class="btn" role="btn">
+            <i class="bi bi-plus-circle"></i><tool-tip style="top: auto; bottom: 100%;">Añadir foto</tool-tip>
+        </a>
+    </div>
+</div>

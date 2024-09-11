@@ -1,0 +1,33 @@
+<div class="left-cont">
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownButton" data-toggle="dropdown">
+            <i class="bi bi-list"></i>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <li><a class="dropdown-item" [routerLink]="['/']"><i class="bi bi-newspaper"></i> Noticias</a></li>
+            <li><a class="dropdown-item" [routerLink]="['pictures']"><i class="bi bi-camera"></i> Fotos</a></li>
+            <li><a class="dropdown-item" [routerLink]="['space']"><i class="bi bi-globe"></i> Sistema Solar</a></li>
+            <li><a class="dropdown-item" [routerLink]="['calendar']"><i class="bi bi-calendar-event"></i> Calendario</a></li>
+            <li><a class="dropdown-item" [routerLink]="['videos']"><i class="bi bi-play-circle"></i> Videos</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="center-cont">
+    <a class="logo-cont" [routerLink]="['/']">
+        <img id="header-img" src="/api/images/logo" alt="Logo Cosmic news">
+    </a>
+</div>
+
+<div class="right-cont-wrapper">
+    <div class="right-cont">
+        <a [routerLink]="['login']">
+            <i class="bi bi-person-fill"></i><tool-tip>Perfil</tool-tip><span>Perfil</span>
+        </a>
+
+        <a [routerLink]="['quizzes']">
+            <i class="bi bi-card-checklist"></i><tool-tip>Quizzes</tool-tip><span>Quizzes</span>
+        </a>
+    </div>
+
+</div>

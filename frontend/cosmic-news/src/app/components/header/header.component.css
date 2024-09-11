@@ -4,6 +4,7 @@
     padding: 20px;
     background: var(--gradient);
     align-items: center;
+    justify-content: space-between;
     gap: 20px;
     color: var(--second-color);
     position: sticky;

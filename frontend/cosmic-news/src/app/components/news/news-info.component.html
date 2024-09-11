@@ -1,0 +1,42 @@
+<div class="background-container">
+    <main class="container">
+        <div class="top-container">
+            <div class="left-cont">
+                <a [routerLink]="['/news']" class="btn" role="button">
+                    <i class="bi bi-arrow-left"></i><tool-tip>Volver</tool-tip>
+                </a>
+            </div>
+
+            <h2>{{news.title}} {{news.subtitle}}</h2>
+
+            <div class="right-cont">
+            <a *ngIf="admin" [routerLink]="['edit']" class="btn" role="button">
+                <i class="bi bi-pencil-fill"></i><tool-tip>Editar noticia</tool-tip>
+            </a>
+
+            <!--Puede que haya que cambiarlo por button-->
+            <a *ngIf="admin" (click)="deleteNews(id)" class="btn" role="button">
+                    <i class="bi bi-trash-fill"></i><tool-tip>Borrar noticia</tool-tip>
+            </a>
+            </div>
+
+        </div>
+
+        <div class="row flex-container">
+            <div class="col-md-8">
+                <img id="img-user" [src]="photoURL">
+            </div>
+
+            <div class="col-md-4">
+                <p style="text-align: left;"><strong>Autor: </strong> {{news.author}}</p>
+                <p style="text-align: left;"><strong>Tema: </strong> {{news.topic}}</p>
+                <p style="text-align: left;"><strong>Tiempo de lectura: </strong> {{news.readingTime}} minutos</p>
+                <p style="text-align: left;"><strong>Fecha de publicación: </strong> {{news.date}}</p>
+                <p style="text-align: left;"><strong>Likes: </strong> {{news.likes}} <!--<a href="/news/{{id}}/like"><i class="bi bi-hand-thumbs-up"></i></a></p>-->
+            </div>
+            <div>
+                <p> {{news.bodyText}}</p>
+            </div>
+        </div>
+    </main>
+</div>

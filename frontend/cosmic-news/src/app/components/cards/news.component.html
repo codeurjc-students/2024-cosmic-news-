@@ -1,0 +1,42 @@
+<div class="background-container">
+    <main class="container">
+        <div class="top-container">
+            <div class="left-cont">
+            </div>
+
+            <h2>Noticias</h2>
+
+            <div class="right-cont">
+                <a class="btn" [routerLink]="['/pictures']">
+                    <i class="bi bi-map-fill"></i><tool-tip>Fotos</tool-tip>
+                </a>
+            </div>
+        </div>
+
+        <section class="cards" id="news">
+            <a *ngFor="let news of newsList" [routerLink]="[news.id]">
+                <img src={{news.image}}>
+                <p>{{news.title}}</p>
+                <p>
+                    {{news.likes}}<i class="bi bi-hand-thumbs-up"></i>
+                    <i class="bi bi-square invisible-icon"></i>
+                    <i class="bi bi-square invisible-icon"></i>
+                    {{news.readingTime}} <i class="bi bi-clock"></i>
+                </p>
+            </a>
+            <p *ngIf="newsList.length === 0">No hay noticias</p>
+        </section>
+
+        <div *ngIf="hasMore" class="btn-cont" id="load">
+            <button class="btn" (click)="loadNews()">
+                <i class="bi bi-chevron-double-down"></i> Cargar más
+            </button>
+        </div>
+    </main>
+
+    <div *ngIf="canAdd" class="btn-cont bottom-right-button">
+        <a [routerLink]="['new']" class="btn" role="btn">
+            <i class="bi bi-plus-circle"></i><tool-tip style="top: auto; bottom: 100%;">Añadir noticia</tool-tip>
+        </a>
+    </div>
+</div>

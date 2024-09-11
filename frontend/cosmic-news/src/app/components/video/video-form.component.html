@@ -1,0 +1,38 @@
+<div class="background-container">
+    <div class="container">
+        <h2 *ngIf="!edit">Nuevo vídeo</h2>
+        <h2 *ngIf="edit">Editar {{video.title}}</h2>
+
+        <form>
+            <div class="row">
+                <div class="form-group col-md-8 col-sm-12">
+                    <label for="title">Título</label>
+                    <input type="text" class="form-control" name="title" placeholder="Nombre del vídeo" [(ngModel)]="video.title">
+                </div>
+                <div class="form-group col-md-4 col-sm-12">
+                    <label for="duration">Duración</label>
+                    <input type="text" class="form-control" name="duration" placeholder="Duración del vídeo" [(ngModel)]="video.duration">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Descripción</label>
+                <textarea type="text" class="form-control" name="description" placeholder="Descripción del vídeo" [(ngModel)]="video.description"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="videoUrl">URL</label>
+                <input type="text" class="form-control" name="videoUrl" placeholder="Link del vídeo" [(ngModel)]="video.videoURL">
+            </div>
+
+            <div class="btn-cont">
+                <button (click)="save()" class="btn">
+                    <i class="bi bi-download"></i> Guardar
+                </button>
+                <a [routerLink]="['/videos']" class="btn btn-red" role="button">
+                    <i class="bi bi-x-lg"></i> Cancelar
+                </a>
+            </div>
+        </form>
+    </div>
+</div>

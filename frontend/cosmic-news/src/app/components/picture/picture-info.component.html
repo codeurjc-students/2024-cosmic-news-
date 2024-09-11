@@ -1,0 +1,34 @@
+<div class="background-container">
+    <main class="container">
+        <div class="top-container">
+            <div class="left-cont">
+                <a [routerLink]="['/pictures']" class="btn" role="button">
+                    <i class="bi bi-arrow-left"></i><tool-tip>Volver</tool-tip>
+                </a>
+            </div>
+
+            <h2>{{picture.title}}</h2>
+
+            <div class="right-cont">
+            <a *ngIf="admin" [routerLink]="['edit']" class="btn" role="button">
+                <i class="bi bi-pencil-fill"></i><tool-tip>Editar foto</tool-tip>
+            </a>
+
+            <a *ngIf="admin" (click)="deletePicture(id)" class="btn" role="button">
+                    <i class="bi bi-trash-fill"></i><tool-tip>Borrar foto</tool-tip>
+            </a>
+            </div>
+
+        </div>
+
+        <div>
+            <img id="img-user" [src]="photoURL">
+        </div>
+
+        <div >
+            <p>{{picture.author}}, {{picture.location}}, {{picture.dateTaken}}</p>
+            <p><strong>Likes: </strong>{{picture.likes}} <!--<a href="/picture/{{id}}/like"><i class="bi bi-hand-thumbs-up"></i></a></p>-->
+            <p>{{picture.description}}</p>
+        </div>
+    </main>
+</div>
