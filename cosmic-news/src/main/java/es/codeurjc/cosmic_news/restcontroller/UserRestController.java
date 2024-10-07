@@ -57,6 +57,56 @@ public class UserRestController {
 
 	@Autowired
     private PictureService pictureService;
+
+	@Operation(summary = "Get a list of email addresses")
+	@ApiResponses(value = {
+    @ApiResponse(
+        responseCode = "200",
+        description = "List of email addresses retrieved successfully",
+        content = @Content(mediaType = "application/json")
+    )
+	})
+	@GetMapping("/mails")
+	public ResponseEntity<List<String>> getMails() {
+		List<String> mails = new ArrayList<String>();
+		long i = 1;
+		boolean done = false;
+		while (!done){
+			User user = userService.findUserById(i);
+			if (user != null) {
+				mails.add(user.getMail());
+				i = i+1;
+			}else{
+				done = true;
+			}
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(mails);
+	}
+
+	@Operation(summary = "Get a list of nicks")
+	@ApiResponses(value = {
+    @ApiResponse(
+        responseCode = "200",
+        description = "List of nicks retrieved successfully",
+        content = @Content(mediaType = "application/json")
+    )
+	})
+	@GetMapping("/nicks")
+	public ResponseEntity<List<String>> getNicks() {
+		List<String> nicks = new ArrayList<String>();
+		long i = 1;
+		boolean done = false;
+		while (!done){
+			User user = userService.findUserById(i);
+			if (user != null) {
+				nicks.add(user.getNick());
+				i = i+1;
+			}else{
+				done = true;
+			}
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(nicks);
+	}
     
     @Operation(summary = "Get a user by its id")
 	@ApiResponses(value = {
@@ -128,12 +178,12 @@ public class UserRestController {
 	})
     @PostMapping()
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<User> createUser(@RequestBody UserDTO userDTO) {
+	public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
 		String messageForm = userService.checkForm(userDTO.getMail(), userDTO.getNick());
 		if (messageForm.equals("")) {
             User user = userDTO.toUser();
 			userService.saveUser(user);
-			return new ResponseEntity<>(user, HttpStatus.OK);
+			return new ResponseEntity<>(userDTO, HttpStatus.OK);
 		}else{
 			HttpHeaders headers = new HttpHeaders();
 			headers.add("Error-Message", messageForm);
@@ -172,37 +222,15 @@ public class UserRestController {
 		if(principal !=null){
             User user = userService.findUserById(id);
 			if (user != null) {
+				System.out.println("MAIL"+userDTO.getMail());
+				System.out.println("NAME"+userDTO.getName());
+				System.out.println("NICK"+userDTO.getNick());
+				System.out.println("DESC"+userDTO.getDescription());
 				String messageForm = userService.checkForm(userDTO.getMail(), userDTO.getNick());
-				if (messageForm.equals("")) {
-					if (userDTO.getNick() == null){
-						if (userDTO.getMail()==null){
-							updateUser(user, userDTO);
-							return new ResponseEntity<>(user, HttpStatus.OK);
-						}else if(!userDTO.getMail().equals(user.getMail())){
-							updateUser(user, userDTO);
-							return new ResponseEntity<>(user, HttpStatus.OK);
-						}else{
-							HttpHeaders headers = new HttpHeaders();
-							headers.add("Error-Message", messageForm);
-							return ResponseEntity.status(HttpStatus.BAD_REQUEST).headers(headers).build();
-						}					
-					}else if (!user.getNick().equals(userDTO.getNick())){
-						if (userDTO.getMail()==null){
-							updateUser(user, userDTO);
-							return new ResponseEntity<>(user, HttpStatus.OK);
-						}else if(!userDTO.getMail().equals(user.getMail())){
-							updateUser(user, userDTO);
-							return new ResponseEntity<>(user, HttpStatus.OK);
-						}else{
-							HttpHeaders headers = new HttpHeaders();
-							headers.add("Error-Message", messageForm);
-							return ResponseEntity.status(HttpStatus.BAD_REQUEST).headers(headers).build();
-						}
-					}else{
-						HttpHeaders headers = new HttpHeaders();
-						headers.add("Error-Message", messageForm);
-						return ResponseEntity.status(HttpStatus.BAD_REQUEST).headers(headers).build();
-					}
+				System.out.println("messgae"+messageForm);
+				if (messageForm.equals("") || (userDTO.getMail().equals(user.getMail()) && userDTO.getNick().equals(user.getNick()))) {
+					updateUser(user, userDTO);
+					return new ResponseEntity<>(user, HttpStatus.OK);
 				}else{
 					HttpHeaders headers = new HttpHeaders();
 					headers.add("Error-Message", messageForm);

@@ -3,6 +3,9 @@ import { Observable, throwError, catchError, tap, take } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { User } from "../models/user.model";
 import { LoginResponse } from "../models/login-response.model";
+import { News } from "../models/news.model";
+import { Picture } from "../models/picture.model";
+import { Badge } from "../models/badge.model";
 
 const urlUsers = '/api/users'
 
@@ -16,7 +19,13 @@ export class UserService{
     }
 
     getMails():Observable<String[]>{
-        return this.httpClient.get<String[]>("/api/mails").pipe(
+        return this.httpClient.get<String[]>(urlUsers+"/mails").pipe(
+            catchError(error=>this.handleError(error))
+        ) as Observable<String[]>;
+    }
+
+    getNicks():Observable<String[]>{
+        return this.httpClient.get<String[]>(urlUsers+"/nicks").pipe(
             catchError(error=>this.handleError(error))
         ) as Observable<String[]>;
     }
@@ -43,21 +52,44 @@ export class UserService{
 	}
 
     setUserImage(user: User, formData: FormData) {
-		return this.httpClient.post(urlUsers + "/"+ user.id + '/photo', formData)
+		return this.httpClient.post(urlUsers + "/"+ user.id + '/image', formData)
 			.pipe(
 				catchError(error => this.handleError(error))
 			);
 	}
 
 	deleteUserImage(user: User) {
-		return this.httpClient.delete(urlUsers + "/" + user.id + '/photo')
+		return this.httpClient.delete(urlUsers + "/" + user.id + '/image')
 			.pipe(
 				catchError(error => this.handleError(error))
 			);
 	}
 
     getUserImage(user:User) {
-        return this.httpClient.get(urlUsers + "/" + user.id + '/photo', { responseType: 'arraybuffer' })
+        return this.httpClient.get(urlUsers + "/" + user.id + '/image', { responseType: 'arraybuffer' })
+    }
+
+    getUserNews(id:number, page: number, size: number): Observable<News[]> {
+        const params = { page: page.toString(), size: size.toString() };
+        const url = urlUsers + "/" + id + "/news";
+        return this.httpClient.get<News[]>(url, { params })
+    }
+
+    getUserPictures(id:number, page: number, size: number): Observable<Picture[]> {
+        const params = { page: page.toString(), size: size.toString() };
+        const url = urlUsers + "/" + id + "/pictures";
+        return this.httpClient.get<Picture[]>(url, { params })
+    }
+
+    getUserBadges(id:number): Observable<Badge[]> {
+        const url = urlUsers + "/" + id + "/badges";
+        return this.httpClient.get<Badge[]>(url).pipe(
+            catchError(error=>this.handleError(error))
+        ) as Observable<Badge[]>;
+    }
+
+    getBadgeImage(id:number, badge:Badge) {
+        return this.httpClient.get(urlUsers + "/" + id + '/badges/' + badge.position, { responseType: 'arraybuffer' })
     }
 
     private addUser(user: User){

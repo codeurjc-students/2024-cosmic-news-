@@ -17,8 +17,6 @@ export class PaginationService {
   private picturesURL = '/api/pictures';
   private videosURL = '/api/videos';
   private quizzesURL = '/api/quizzes';
-  private lifeguardsURL = '/api/lifeguards';
-  private employersURL = '/api/employers';
 
   constructor(private http: HttpClient) { }
 

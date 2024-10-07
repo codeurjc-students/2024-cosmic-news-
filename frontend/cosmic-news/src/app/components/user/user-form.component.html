@@ -1,7 +1,7 @@
 <div class="background-container">
     <div class="container">
         <h2 *ngIf="edit">Editar {{user.name}}</h2>
-        <h2 *ngIf="!edit">Nueva usuario</h2>
+        <h2 *ngIf="!edit">Nuevo usuario</h2>
     
         <form>
             <div class="row">
@@ -22,26 +22,26 @@
 
             <div class="form-group">
                 <label for="nick">Nickname*</label>
-                <input type="text" class="form-control" name="nick" id="nick" placeholder="Introduzca su nickname" oninput="checkNick()" [(ngModel)]="user.nick" required>
+                <input type="text" class="form-control" name="nick" id="nick" placeholder="Introduzca su nickname" (input)="checkNick()" [(ngModel)]="user.nick" required>
                 <div id="nickContent"></div>
             </div>
 
             <div class="row" *ngIf="!edit">
                 <div class="form-group col-md-6">
                     <label for="mail">Correo electrónico*</label>
-                    <input type="text" class="form-control" name="mail" id="mail" oninput="checkMail()" placeholder="example@gmail.com" required>
+                    <input type="text" class="form-control" name="mail" id="mail" (input)="checkMail()" [(ngModel)]="user.mail" placeholder="example@gmail.com" required>
                     <div id="mailContent"></div>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="pass">Contraseña*</label>
-                    <input type="password" class="form-control" name="pass" id="pass" oninput="checkPassword()" placeholder="Introduzca su contraseña" required>
+                    <input type="password" class="form-control" name="pass" id="pass" (input)="checkPassword()" [(ngModel)]="user.pass" placeholder="Introduzca su contraseña" required>
                     <div id="passContent"></div>
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="photoField">Foto de perfil</label>
-                <input type="file" class="form-control" name="photoField" id="photoField" accept=".jpeg, .png">
+                <input #file type="file" class="form-control" name="imageField" id="imageField" accept=".jpeg, .png">
             </div>
 
             <div class="btn-cont">

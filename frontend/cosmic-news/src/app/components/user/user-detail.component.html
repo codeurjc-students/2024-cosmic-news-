@@ -1,0 +1,111 @@
+
+<div class="background-container">
+        <main class="container">
+            <div class="top-container">
+                <div class="left-cont">
+                    <a href="/" class="btn" role="button">
+                        <i class="bi bi-arrow-left"></i><tool-tip>Volver</tool-tip>
+                    </a>
+                </div>
+
+                <h2>{{user.name}} {{user.surname}}</h2>
+
+                <div class="right-cont">
+                    <a *ngIf="!otherUser || admin" [routerLink]="editUser" class="btn" role="button">
+                        <i class="bi bi-pencil-fill"></i><tool-tip>Editar perfil</tool-tip>
+                    </a>
+                    <button *ngIf="!otherUser" (click)="logout()" class="btn btn-red">
+                        <i class="bi bi-box-arrow-left"></i><tool-tip>Cerrar sesión</tool-tip>
+                    </button>
+                    
+                    <ng-container *ngIf="admin && otherUser">
+                        <button (click)="deleteUser()" class="btn btn-red">
+                            <i class="bi bi-trash-fill"></i><tool-tip>Borrar usuario</tool-tip>
+                        </button>
+                    </ng-container>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <img *ngIf="image" id="img-user" [src]="imageUser">
+                    <img *ngIf="!image" id="img-user" src="/api/images/users">
+                </div>
+
+                <div class="col-md-6">
+                    <p style="text-align: left;"><strong>Nick:</strong> {{user.nick}}</p>
+                    <p style="text-align: left;"><strong>E-Mail:</strong> {{user.mail}}</p>
+                    <p style="text-align: left;"><strong>Descripción:</strong> {{user.description}}</p>
+                </div>
+            </div>
+
+            <div class="subcontainer">
+                <h3>Insignias conseguidas</h3>
+                <ul>
+                    <ng-container *ngFor="let badge of badges">
+                        <li class="badge-item">
+                            <img id="img-badge" src="/api/users/{{user.id}}/badges/{{badge.position}}" alt="{{badge.name}}">
+                            <p><span>{{badge.name}}</span></p>
+                        </li>
+                    </ng-container>
+                    <li *ngIf="badges?.length == 0">Todavía no tienes insignias. ¡Completa quizzes para conseguirlas!</li>
+                </ul>
+            </div>
+        </main>
+
+        <div class="container">
+            <div class="top-container">
+
+                <h2>Noticias que te han gustado</h2>
+
+            </div>
+            
+            <section class="cards" id="newsUser">
+                <a *ngFor="let news of newsList" [routerLink]="[news.id]">
+                    <img src={{news.image}}>
+                    <p>{{news.title}}</p>
+                    <p>
+                        {{news.likes}}<i class="bi bi-hand-thumbs-up"></i>
+                        <i class="bi bi-square invisible-icon"></i>
+                        <i class="bi bi-square invisible-icon"></i>
+                        {{news.readingTime}} <i class="bi bi-clock"></i>
+                    </p>
+                </a>
+                <p *ngIf="newsList.length === 0">¡Dale like a tus noticias favoritas para poder verlas aquí!</p>
+            </section>
+
+            <div *ngIf="hasMore" class="btn-cont" id="load">
+                <button class="btn" (click)="loadNews()">
+                    <i class="bi bi-chevron-double-down"></i> Cargar más
+                </button>
+            </div>
+
+        </div>
+
+        <div class="container">
+            <div class="top-container">
+
+                <h2>Fotos que te han gustado</h2>
+            </div>
+
+            <section class="cards" id="picturesUser">
+                <a *ngFor="let picture of pictures" [routerLink]="[picture.id]">
+                    <img src={{picture.image}}>
+                    <p>{{picture.title}}</p>
+                    <p>
+                        {{picture.location}}
+                        <i class="bi bi-square invisible-icon"></i>
+                        {{picture.likes}}<i class="bi bi-hand-thumbs-up"></i>
+                    </p>
+                </a>
+                <p *ngIf="pictures.length === 0">¡Dale like a tus fotos favoritas para poder verlas aquí!</p>
+                </section>
+
+                <div *ngIf="hasMore" class="btn-cont" id="load">
+                    <button class="btn" onclick='loadPictures()'>
+                        <i class="bi bi-chevron-double-down"></i> Cargar más
+                    </button>
+                </div>
+
+        </div>
+</div>

@@ -14,11 +14,15 @@ import { PictureFormComponent } from './components/picture/picture-form.componen
 import { PictureInfoComponent } from './components/picture/picture-info.component';
 import { PicturesComponent } from './components/cards/pictures.component';
 import { HeaderComponent } from './components/header/header.component';
+import { UserLoginComponent } from './components/user/user-login.component';
+import { UserFormComponent } from './components/user/user-form.component';
+import { UserDetailComponent } from './components/user/user-detail.component';
+import { MessageComponent } from './components/message/message.component';
 
 @NgModule({
   declarations: [
     AppComponent, NewsFormComponent, NewsInfoComponent, NewsComponent,
-    PictureFormComponent, PictureInfoComponent, PicturesComponent, HeaderComponent
+    PictureFormComponent, PictureInfoComponent, PicturesComponent, HeaderComponent, UserLoginComponent, UserFormComponent, UserDetailComponent, MessageComponent
   ],
   imports: [
     CommonModule,
