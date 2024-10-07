@@ -11,7 +11,7 @@ import { Badge } from '../../models/badge.model';
 @Component({
     selector: "user-detail",
     templateUrl: './user-detail.component.html',
-    styleUrls: ['../../styles/data.css', '../../styles/profile.css']
+    styleUrls: ['../../styles/data.css', '../../styles/profile.css', '../../styles/cards.css']
 })
 export class UserDetailComponent {
     me:Me;
@@ -27,8 +27,11 @@ export class UserDetailComponent {
     pictures: Picture[] = [];
     badges: Badge[] = [];
 
-    last_page: number = 0;
-    hasMore: boolean = true;
+    last_page_news: number = 0;
+    hasMore_news: boolean = true;
+
+    last_page_pictures: number = 0;
+    hasMore_pictures: boolean = true;
     cardWidth: number = 250 + 2 * 20;
     rowElements: number;
     canAdd: boolean = false;
@@ -123,10 +126,10 @@ export class UserDetailComponent {
     }
 
     loadNews() {
-        this.userService.getUserNews(this.idUser, this.last_page, this.rowElements).subscribe(
+        this.userService.getUserNews(this.idUser, this.last_page_news, this.rowElements).subscribe(
           (newsList: News[]) => {
             if (!newsList) {
-              this.hasMore = false;
+              this.hasMore_news = false;
               return;
             }
     
@@ -145,29 +148,29 @@ export class UserDetailComponent {
           },
           (error) => {
             console.log(error);
-            this.hasMore = false;
+            this.hasMore_news = false;
           }
         );
     
-        this.last_page++;
+        this.last_page_news++;
     
-        this.userService.getUserNews(this.idUser,this.last_page, this.rowElements).subscribe(
+        this.userService.getUserNews(this.idUser,this.last_page_news, this.rowElements).subscribe(
           (newsList: News[]) => {
             if (!newsList)
-              this.hasMore = false;
+              this.hasMore_news = false;
           },
           (error) => {
             console.log(error);
-            this.hasMore = false;
+            this.hasMore_news = false;
           }
         );
       }
 
       loadPictures() {
-        this.userService.getUserPictures(this.idUser, this.last_page, this.rowElements).subscribe(
+        this.userService.getUserPictures(this.idUser, this.last_page_pictures, this.rowElements).subscribe(
           (pictures: Picture[]) => {
             if (!pictures) {
-              this.hasMore = false;
+              this.hasMore_pictures = false;
               return;
             }
     
@@ -186,20 +189,20 @@ export class UserDetailComponent {
           },
           (error) => {
             console.log(error);
-            this.hasMore = false;
+            this.hasMore_pictures = false;
           }
         );
     
-        this.last_page++;
+        this.last_page_pictures++;
     
-        this.userService.getUserPictures(this.idUser,this.last_page, this.rowElements).subscribe(
+        this.userService.getUserPictures(this.idUser,this.last_page_pictures, this.rowElements).subscribe(
           (pictures: Picture[]) => {
             if (!pictures)
-              this.hasMore = false;
+              this.hasMore_pictures = false;
           },
           (error) => {
             console.log(error);
-            this.hasMore = false;
+            this.hasMore_pictures = false;
           }
         );
       }

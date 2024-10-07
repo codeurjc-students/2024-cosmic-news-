@@ -4,18 +4,31 @@
             <div class="left-cont">
             </div>
 
+            <div class="left-cont">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownButton2" data-toggle="dropdown">
+                        <i class="bi bi-filter"></i> <tool-tip>Filtrar</tool-tip>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li><a class="dropdown-item" (click)="onFilterChange('date')" style="cursor: pointer;"><i class="bi bi-clock"></i> Más recientes</a></li>
+                        <li><a class="dropdown-item" (click)="onFilterChange('likes')" style="cursor: pointer;"><i class="bi bi-hand-thumbs-up"></i> Likes</a></li>
+                        <li><a class="dropdown-item" (click)="onFilterChange('time')" style="cursor: pointer;"><i class="bi bi-hourglass"></i> Tiempo de lectura </a></li>
+                    </ul>
+                </div>
+            </div>
+
             <h2>Noticias</h2>
 
             <div class="right-cont">
                 <a class="btn" [routerLink]="['/pictures']">
-                    <i class="bi bi-map-fill"></i><tool-tip>Fotos</tool-tip>
+                    <i class="bi bi-camera"></i><tool-tip>Fotos</tool-tip>
                 </a>
             </div>
         </div>
 
         <section class="cards" id="news">
             <a *ngFor="let news of newsList" [routerLink]="[news.id]">
-                <img src={{news.image}}>
+                <img [src]="news.image">
                 <p>{{news.title}}</p>
                 <p>
                     {{news.likes}}<i class="bi bi-hand-thumbs-up"></i>
@@ -33,10 +46,4 @@
             </button>
         </div>
     </main>
-
-    <div *ngIf="canAdd" class="btn-cont bottom-right-button">
-        <a [routerLink]="['new']" class="btn" role="btn">
-            <i class="bi bi-plus-circle"></i><tool-tip style="top: auto; bottom: 100%;">Añadir noticia</tool-tip>
-        </a>
-    </div>
 </div>

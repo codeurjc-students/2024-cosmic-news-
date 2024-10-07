@@ -20,13 +20,13 @@ export class PaginationService {
 
   constructor(private http: HttpClient) { }
 
-  getNews(page: number, size: number): Observable<News[]> {
-    const params = { page: page.toString(), size: size.toString() };
+  getNews(page: number, size: number, filter: string): Observable<News[]> {
+    const params = { page: page.toString(), size: size.toString(), filter: filter };
     return this.http.get<News[]>(this.newsURL, { params })
   }
 
-  getPictures(page: number, size: number): Observable<Picture[]> {
-    const params = { page: page.toString(), size: size.toString() };
+  getPictures(page: number, size: number, filter: string): Observable<Picture[]> {
+    const params = { page: page.toString(), size: size.toString(), filter: filter };
     return this.http.get<Picture[]>(this.picturesURL, { params });
   }
 

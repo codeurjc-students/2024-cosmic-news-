@@ -38,6 +38,10 @@ export class PictureService {
         return this.httpClient.post(urlPictures, picture);
     }
 
+    like(id:number | undefined){
+        return this.httpClient.post(urlPictures+"/"+id+"/like",null);
+    }
+
     setPicturePhoto(picture: Picture, formData: FormData) {
         return this.httpClient.post(urlPictures + "/"+ picture.id + '/image', formData)
                 .pipe(

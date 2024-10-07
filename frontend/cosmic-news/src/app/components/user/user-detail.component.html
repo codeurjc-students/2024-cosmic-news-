@@ -74,7 +74,7 @@
                 <p *ngIf="newsList.length === 0">¡Dale like a tus noticias favoritas para poder verlas aquí!</p>
             </section>
 
-            <div *ngIf="hasMore" class="btn-cont" id="load">
+            <div *ngIf="hasMore_news" class="btn-cont" id="load">
                 <button class="btn" (click)="loadNews()">
                     <i class="bi bi-chevron-double-down"></i> Cargar más
                 </button>
@@ -101,8 +101,8 @@
                 <p *ngIf="pictures.length === 0">¡Dale like a tus fotos favoritas para poder verlas aquí!</p>
                 </section>
 
-                <div *ngIf="hasMore" class="btn-cont" id="load">
-                    <button class="btn" onclick='loadPictures()'>
+                <div *ngIf="hasMore_pictures" class="btn-cont" id="load">
+                    <button class="btn" (click)='loadPictures()'>
                         <i class="bi bi-chevron-double-down"></i> Cargar más
                     </button>
                 </div>

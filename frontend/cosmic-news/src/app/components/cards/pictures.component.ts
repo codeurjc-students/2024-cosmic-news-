@@ -7,10 +7,11 @@ import { Me } from '../../models/me.model';
 @Component({
   selector: "pictures",
   templateUrl: './pictures.component.html',
-  styleUrl: './cards.css'
+  styleUrl: '../../styles/cards.css'
 })
 export class PicturesComponent implements OnInit {
   pictures: Picture[] = [];
+  filter: string = "date";
   last_page: number = 0;
   hasMore: boolean = true;
   cardWidth: number = 250 + 2 * 20;
@@ -40,44 +41,43 @@ export class PicturesComponent implements OnInit {
   }
 
   loadPictures() {
-    this.service.getPictures(this.last_page, this.rowElements).subscribe(
+    if (this.last_page === 0) {
+      this.pictures = [];
+    }
+
+    this.service.getPictures(this.last_page, this.rowElements, this.filter).subscribe(
       (pictures: Picture[]) => {
         if (!pictures) {
           this.hasMore = false;
           return;
         }
 
-        for (let picture of pictures) {
+        pictures.forEach(picture => {
           this.service.getPictureImage(picture).subscribe(
             (image) => {
-                picture.image = URL.createObjectURL(image);
+              picture.image = URL.createObjectURL(image);
             },
             (error) => {
               console.log(error);
             }
           );
-        }
+        });
 
         this.pictures.push(...pictures);
+        this.last_page++;
       },
       (error) => {
         console.log(error);
         this.hasMore = false;
       }
     );
+  }
 
-    this.last_page++;
-
-    this.service.getPictures(this.last_page, this.rowElements).subscribe(
-      (pictures: Picture[]) => {
-        if (!pictures)
-          this.hasMore = false;
-      },
-      (error) => {
-        console.log(error);
-        this.hasMore = false;
-      }
-    );
+  onFilterChange(filter: string) {
+    this.filter = filter;
+    this.last_page = 0; 
+    this.hasMore = true;
+    this.loadPictures();
   }
 
   private updateRowElements() {

@@ -7,10 +7,11 @@ import { Me } from '../../models/me.model';
 @Component({
   selector: "news",
   templateUrl: './news.component.html',
-  styleUrls: ['./cards.css' , '../../../styles.css']
+  styleUrls: ['../../../styles.css', '../../styles/cards.css']
 })
 export class NewsComponent implements OnInit {
   newsList: News[] = [];
+  filter: string = "date";
   last_page: number = 0;
   hasMore: boolean = true;
   cardWidth: number = 250 + 2 * 20;
@@ -40,14 +41,18 @@ export class NewsComponent implements OnInit {
   }
 
   loadNews() {
-    this.service.getNews(this.last_page, this.rowElements).subscribe(
+    if (this.last_page === 0) {
+      this.newsList = [];
+    }
+
+    this.service.getNews(this.last_page, this.rowElements, this.filter).subscribe(
       (newsList: News[]) => {
-        if (!newsList) {
+        if (!newsList || newsList.length === 0) {
           this.hasMore = false;
           return;
         }
 
-        for (let news of newsList) {
+        newsList.forEach(news => {
           this.service.getNewsImage(news).subscribe(
             (image) => {
               news.image = URL.createObjectURL(image);
@@ -56,28 +61,23 @@ export class NewsComponent implements OnInit {
               console.log(error);
             }
           );
-        }
+        });
 
         this.newsList.push(...newsList);
+        this.last_page++;
       },
       (error) => {
         console.log(error);
         this.hasMore = false;
       }
     );
+  }
 
-    this.last_page++;
-
-    this.service.getNews(this.last_page, this.rowElements).subscribe(
-      (newsList: News[]) => {
-        if (!newsList)
-          this.hasMore = false;
-      },
-      (error) => {
-        console.log(error);
-        this.hasMore = false;
-      }
-    );
+  onFilterChange(filter: string) {
+    this.filter = filter;
+    this.last_page = 0;  // Reiniciar la paginación
+    this.hasMore = true;
+    this.loadNews();
   }
 
   private updateRowElements() {

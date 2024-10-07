@@ -27,7 +27,7 @@
 
         <div >
             <p>{{picture.author}}, {{picture.location}}, {{picture.dateTaken}}</p>
-            <p><strong>Likes: </strong>{{picture.likes}} <!--<a href="/picture/{{id}}/like"><i class="bi bi-hand-thumbs-up"></i></a></p>-->
+            <p><strong>Likes: </strong>{{picture.likes}} <a (click)="like(id)"><i class="bi bi-hand-thumbs-up" style="cursor: pointer;"></i></a></p>
             <p>{{picture.description}}</p>
         </div>
     </main>

@@ -38,6 +38,10 @@ export class NewsService {
         return this.httpClient.post(urlNews, news);
     }
 
+    like(id:number | undefined){
+        return this.httpClient.post(urlNews+"/"+id+"/like",null);
+    }
+
     setNewsPhoto(news: News, formData: FormData) {
         return this.httpClient.post(urlNews + "/"+ news.id + '/image', formData)
                 .pipe(
