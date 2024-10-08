@@ -1,0 +1,33 @@
+<div class="background-container">
+        <main class="container">
+            <div class="top-container">
+                <div class="left-cont">
+                    <a [routerLink]="['/videos']" class="btn" role="button">
+                        <i class="bi bi-arrow-left"></i><tool-tip>Volver</tool-tip>
+                    </a>
+                </div>
+
+                <h2>{{video.title}}</h2>
+
+                <div class="right-cont">
+                <a *ngIf="admin" [routerLink]="['edit']" class="btn" role="button">
+                    <i class="bi bi-pencil-fill"></i><tool-tip>Editar vídeo</tool-tip>
+                </a>
+
+                <a *ngIf="admin" (click)="deleteVideo(id)" class="btn" role="button">
+                        <i class="bi bi-trash-fill"></i><tool-tip>Borrar vídeo</tool-tip>
+                </a>
+                </div>
+            </div>
+
+            <div class="video-container">
+                <div class="video">
+                    <iframe [src]="videoUrl" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <div >
+                <p>{{video.description}}</p>
+            </div>
+        </main>
+</div>

@@ -45,7 +45,7 @@ export class PictureInfoComponent {
         userService.me().subscribe(
             response => {
                 this.me = response as Me
-                this.admin = (this.me.mail == "admin");
+                this.admin = (this.me.mail == "xd");
                 this.logged = true;
             },
             error => {

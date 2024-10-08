@@ -3,5 +3,5 @@ export interface Video {
     title?: string;
     duration?: string;
     description?: string;
-    videoURL?: string;
+    videoUrl?: string;
 }

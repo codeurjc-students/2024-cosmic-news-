@@ -35,6 +35,7 @@ export class PicturesComponent implements OnInit {
     this.userService.me().subscribe(
       response => {
         this.me = response as Me;
+        this.canAdd = (this.me.mail == "xd"); //Check the admin
       },
       _error => console.log("Error al obtener el usuario")
     );

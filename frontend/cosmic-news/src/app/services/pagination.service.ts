@@ -5,6 +5,7 @@ import { News } from '../models/news.model';
 import { Picture } from '../models/picture.model';
 import { Video } from '../models/video.model';
 import { User } from '../models/user.model';
+import { Quizz } from '../models/quizz.model';
 
 
 
@@ -35,10 +36,10 @@ export class PaginationService {
     return this.http.get<Video[]>(this.videosURL, { params })
   }
 
-/*  getQuizzes(page: number, size: number): Observable<Quizz[]> {
+  getQuizzes(page: number, size: number): Observable<Quizz[]> {
     const params = { page: page.toString(), size: size.toString() };
     return this.http.get<Quizz[]>(this.quizzesURL, { params })
-  }*/
+  }
 
   getNewsImage(news: News): Observable<Blob> {
     const url = this.newsURL + "/" + news.id + "/image"
@@ -47,6 +48,11 @@ export class PaginationService {
 
   getPictureImage(picture: Picture): Observable<Blob> {
     const url = this.picturesURL + "/" + picture.id + "/image";
+    return this.http.get(url, { responseType: 'blob' });
+  }
+
+  getBadge(quizz: Quizz) {
+    const url = this.quizzesURL + "/" + quizz.id + "/badge";
     return this.http.get(url, { responseType: 'blob' });
   }
 }

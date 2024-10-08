@@ -1,0 +1,32 @@
+<div class="background-container">
+    <main class="container">
+        <div class="top-container">
+
+            <h2>Vídeos</h2>
+
+        </div>
+
+        <section class="cards" id="videos">
+            <a *ngFor="let video of videos" [routerLink]="[video.id]">
+                <img src="https://img.youtube.com/vi/{{video.videoUrl}}/maxresdefault.jpg" alt="{{video.title}}">
+                <p>{{video.title}}</p>
+                <p>
+                    {{video.duration}} <i class="bi bi-clock"></i>
+                </p>
+            </a>
+            <p *ngIf="videos.length === 0">Sin vídeos</p>
+        </section>
+
+        <div *ngIf="hasMore" class="btn-cont" id="load">
+            <button class="btn" (click)='loadVideos()'>
+                <i class="bi bi-chevron-double-down"></i> Cargar más
+            </button>
+        </div>
+    </main>
+
+    <div *ngIf="canAdd" class="btn-cont bottom-right-button">
+        <a [routerLink]="['new']" class="btn" role="btn">
+            <i class="bi bi-plus-circle"></i><tool-tip style="top: auto; bottom: 100%;">Añadir vídeo</tool-tip>
+        </a>
+    </div>
+</div>

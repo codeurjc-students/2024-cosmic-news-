@@ -31,13 +31,13 @@
                 </div>
                 <div class="form-group col-md-6 col-sm-12">
                     <label for="photoField">Foto de la noticia</label>
-                    <input type="file" class="form-control" name="photoField" id="photoField" accept=".jpeg, .png">
+                    <input #file type="file" class="form-control" name="photoField" id="photoField" accept=".jpeg, .png">
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="bodyText">Cuerpo de la noticia</label>
-                <textarea type="text" class="form-control" name="bodyText" placeholder="Cuerpo de la noticia" [(ngModel)]="news.title"></textarea>
+                <textarea type="text" class="form-control" name="bodyText" placeholder="Cuerpo de la noticia" [(ngModel)]="news.bodyText"></textarea>
             </div>
 
             <div class="btn-cont">

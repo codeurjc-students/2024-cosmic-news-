@@ -9,6 +9,10 @@ import { UserLoginComponent } from './components/user/user-login.component';
 import { UserFormComponent } from './components/user/user-form.component';
 import { UserDetailComponent } from './components/user/user-detail.component';
 import { MessageComponent } from './components/message/message.component';
+import { VideosComponent } from './components/cards/videos.component';
+import { QuizzesComponent } from './components/cards/quizzes.component';
+import { VideoFormComponent } from './components/video/video-form.component';
+import { VideoInfoComponent } from './components/video/video-info.component';
 
 const appRoutes: Routes = [
     { path: 'login', component: UserLoginComponent },
@@ -25,6 +29,13 @@ const appRoutes: Routes = [
     { path: 'pictures/new', component: PictureFormComponent },
     { path: 'pictures/:id/edit', component: PictureFormComponent},
     { path: 'pictures/:id', component: PictureInfoComponent},
+
+    { path: 'videos', component: VideosComponent},
+    { path: 'videos/new', component: VideoFormComponent },
+    { path: 'videos/:id/edit', component: VideoFormComponent},
+    { path: 'videos/:id', component: VideoInfoComponent},
+
+    { path: 'quizzes', component: QuizzesComponent},
 
     { path: 'message', component: MessageComponent },
 

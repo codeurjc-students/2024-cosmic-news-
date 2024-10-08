@@ -60,7 +60,7 @@ export class PictureFormComponent{
             },
             error => {
                 console.error('Error creating/updating the picture: ' + error)
-                this.router.navigate(['/news'])
+                this.router.navigate(['/pictures'])
             }
         );
     }

@@ -18,11 +18,15 @@ import { UserLoginComponent } from './components/user/user-login.component';
 import { UserFormComponent } from './components/user/user-form.component';
 import { UserDetailComponent } from './components/user/user-detail.component';
 import { MessageComponent } from './components/message/message.component';
+import { VideosComponent } from './components/cards/videos.component';
+import { QuizzesComponent } from './components/cards/quizzes.component';
+import { VideoFormComponent } from './components/video/video-form.component';
+import { VideoInfoComponent } from './components/video/video-info.component';
 
 @NgModule({
   declarations: [
     AppComponent, NewsFormComponent, NewsInfoComponent, NewsComponent,
-    PictureFormComponent, PictureInfoComponent, PicturesComponent, HeaderComponent, UserLoginComponent, UserFormComponent, UserDetailComponent, MessageComponent
+    PictureFormComponent, PictureInfoComponent, PicturesComponent, HeaderComponent, UserLoginComponent, UserFormComponent, UserDetailComponent, MessageComponent, VideosComponent, QuizzesComponent, VideoFormComponent, VideoInfoComponent
   ],
   imports: [
     CommonModule,
