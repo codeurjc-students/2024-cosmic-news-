@@ -10,4 +10,10 @@ export interface Question{
     correct2?:boolean,
     correct3?:boolean,
     correct4?:boolean,
+    selected?:string,
+    select1?:boolean,
+    select2?:boolean,
+    select3?:boolean,
+    select4?:boolean,
+    num?:number
 }

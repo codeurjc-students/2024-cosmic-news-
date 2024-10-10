@@ -13,6 +13,9 @@ import { VideosComponent } from './components/cards/videos.component';
 import { QuizzesComponent } from './components/cards/quizzes.component';
 import { VideoFormComponent } from './components/video/video-form.component';
 import { VideoInfoComponent } from './components/video/video-info.component';
+import { QuizzInfoComponent } from './components/quizz/quizz-info.component';
+import { ResultComponent } from './components/quizz/result.component';
+import { ReviewComponent } from './components/quizz/review.component';
 
 const appRoutes: Routes = [
     { path: 'login', component: UserLoginComponent },
@@ -36,10 +39,16 @@ const appRoutes: Routes = [
     { path: 'videos/:id', component: VideoInfoComponent},
 
     { path: 'quizzes', component: QuizzesComponent},
+    { path: 'quizzes/:id', component: QuizzInfoComponent},
+    { path: 'quizzes/:id/result', component:ResultComponent},
+    { path: 'quizzes/:id/result/review', component:ReviewComponent},
 
     { path: 'message', component: MessageComponent },
 
     { path: '', redirectTo: '/news', pathMatch: 'full'}
 ]
 
-export const routing = RouterModule.forRoot(appRoutes);
+export const routing = RouterModule.forRoot(appRoutes, {
+    anchorScrolling: 'enabled',
+    scrollPositionRestoration: 'enabled'
+  });

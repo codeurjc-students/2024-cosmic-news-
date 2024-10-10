@@ -10,6 +10,7 @@ public class QuizzDTO {
     private Long id;
     private String name;
     private String difficulty;
+    private int score;
 
     private List<QuestionDTO> questions;
 
@@ -57,6 +58,14 @@ public class QuizzDTO {
 
     public String getDifficulty() {
         return difficulty;
+    }
+
+    public int getScore(){
+        return score;
+    }
+
+    public void setScore(int score){
+        this.score = score;
     }
 
     public void setDifficulty(String difficulty) {

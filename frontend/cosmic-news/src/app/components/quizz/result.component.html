@@ -1,0 +1,29 @@
+<div class="background-container">
+    <main class="container">
+        <div class="top-container">
+            <div class="left-cont">
+                <a [routerLink]="['/quizzes']" class="btn" role="button">
+                    <i class="bi bi-arrow-left"></i><tool-tip>Volver</tool-tip>
+                </a>
+            </div>
+            <h2>Resultado del Quizz</h2>
+            <div class="rigth-cont">
+                <i class="bi bi-square invisible-icon"></i>
+                <i class="bi bi-square invisible-icon"></i>
+            </div>
+        </div>
+        <p>Has acertado {{quizz.score}} de {{quizz.questions?.length}} preguntas.</p>
+
+        <div *ngIf="completed">
+            <p>¡Enhorabuena! Has acertado todas las preguntas.</p>
+
+            <p>¡Has conseguido la siguiente insignia!</p>
+            <img id="img-user" [src]="badgeURL">
+            <p class="space">Podrás verla siempre que quieras en tu perfil.</p>
+        </div>
+
+        <div class="submit-button">
+            <a (click)="submit()" class="btn btn-submit">Revisar test</a>
+        </div>
+    </main>
+</div>

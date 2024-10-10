@@ -5,5 +5,6 @@ export interface Quizz{
     name?:string,
     difficulty?:string,
     questions?: Question[];
+    score?:number,
     badge?:string;
 }

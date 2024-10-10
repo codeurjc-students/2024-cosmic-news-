@@ -310,6 +310,44 @@ public class QuizzRestController {
 		}else return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
 
+	@Operation(summary = "Submit a quizz")
+	@ApiResponses(value = {
+	 @ApiResponse(
+	 responseCode = "200",
+	 description = "Quizz submited correctly",
+	 content = {@Content(
+		mediaType = "application/json",
+		schema = @Schema(implementation=QuizzDTO.class)
+		)}
+	 ),
+	 @ApiResponse(
+	 responseCode = "400",
+	 description = "Data entered incorrectly.",
+	 content = @Content
+	 ),
+	 @ApiResponse(
+	 responseCode = "404",
+	 description = "Data entered incorrectly, probably invalid id supplied",
+	 content = @Content
+	 ),	
+	 @ApiResponse(
+	 responseCode = "401",
+	 description = "You are not authorized",
+	 content = @Content
+	 )
+	})
+    @PostMapping("/{id}/submit")
+	@ResponseStatus(HttpStatus.CREATED)
+	public ResponseEntity<QuizzDTO> submitQuizz(@PathVariable long id,@RequestBody QuizzDTO quizzDTO, Principal principal) {
+        if(principal !=null){
+			Quizz quizz = quizzService.findQuizzById(id);
+			if (quizz != null) {
+				submitQuizz(quizz, quizzDTO);
+				return new ResponseEntity<>(quizzDTO, HttpStatus.OK);
+			}else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}else return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+	}
+
 	@GetMapping("/stats")
     public ResponseEntity<HashMap<String,Integer>> getPStats(){
         HashMap<String, Integer> map = fillQuizzes();
@@ -346,5 +384,18 @@ public class QuizzRestController {
             quizz.setQuestions(questions);
         }
 		quizzService.saveQuizzRest(quizz);
+	}
+
+	public void submitQuizz(Quizz quizz, QuizzDTO quizzDTO){
+		List<Question> questions = quizz.getQuestions();
+		int score = 0;
+		int cont = 0;
+		for (QuestionDTO questionDTO: quizzDTO.getQuestions()){
+			questionDTO.setAnswer(questions.get(cont).getAnswer());
+			if (questionDTO.getSelected().equals(questions.get(cont).getAnswer())) {
+				score++;
+			}
+		}
+		quizzDTO.setScore(score);
 	}
 }

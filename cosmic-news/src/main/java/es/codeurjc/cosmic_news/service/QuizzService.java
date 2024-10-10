@@ -146,7 +146,6 @@ public class QuizzService {
         }
 
         String numQuestionsStr = request.getParameter("numQuestions");
-        System.out.println("NUM QUESTIONS***"+ request.getParameter("numQuestions"));
         if (numQuestionsStr != null && !numQuestionsStr.isEmpty()) {
             int numQuestions = Integer.parseInt(numQuestionsStr);
             List<Question> questions = new ArrayList<>();
@@ -156,8 +155,6 @@ public class QuizzService {
                 String option2 = request.getParameter("questions[" + i + "][option2]");
                 String option3 = request.getParameter("questions[" + i + "][option3]");
                 String option4 = request.getParameter("questions[" + i + "][option4]");
-                System.out.println("OPTION4***"+ request.getParameter("questions[" + i + "][option4]"));
-                System.out.println("ANSWEEEER***"+ request.getParameter("questions[" + i + "][answer]"));
                 String answer = request.getParameter("questions[" + i + "][answer]");
 
                 Question q = new Question(question, option1, option2, option3, option4, answer, i, quizz);
@@ -213,30 +210,10 @@ public class QuizzService {
             for (Question question : questions) {
                 String selectedOption = request.getParameter("question-" + question.getId());
                 if (selectedOption != null){
-                    if (selectedOption.equals(question.getOption1())){
-                        question.setSelect1(true);
-                        question.setSelect2(false);
-                        question.setSelect3(false);
-                        question.setSelect4(false);
-                    }
-                    if (selectedOption.equals(question.getOption2())){
-                        question.setSelect2(true);
-                        question.setSelect1(false);
-                        question.setSelect3(false);
-                        question.setSelect4(false);
-                    }
-                    if (selectedOption.equals(question.getOption3())){
-                        question.setSelect3(true);
-                        question.setSelect1(false);
-                        question.setSelect2(false);
-                        question.setSelect4(false);
-                    }
-                    if (selectedOption.equals(question.getOption4())){
-                        question.setSelect4(true);
-                        question.setSelect1(false);
-                        question.setSelect2(false);
-                        question.setSelect3(false);
-                    }
+                    question.setSelect1(selectedOption.equals(question.getOption1()));
+                    question.setSelect2(selectedOption.equals(question.getOption2()));
+                    question.setSelect3(selectedOption.equals(question.getOption3()));
+                    question.setSelect4(selectedOption.equals(question.getOption4()));
                     if (selectedOption.equals(question.getAnswer())) {
                         correctAnswers++;
                     }

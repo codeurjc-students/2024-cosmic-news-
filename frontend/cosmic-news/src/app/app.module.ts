@@ -22,11 +22,18 @@ import { VideosComponent } from './components/cards/videos.component';
 import { QuizzesComponent } from './components/cards/quizzes.component';
 import { VideoFormComponent } from './components/video/video-form.component';
 import { VideoInfoComponent } from './components/video/video-info.component';
+import { QuizzInfoComponent } from './components/quizz/quizz-info.component';
+import { ResultComponent } from './components/quizz/result.component';
+import { ReviewComponent } from './components/quizz/review.component';
 
 @NgModule({
   declarations: [
     AppComponent, NewsFormComponent, NewsInfoComponent, NewsComponent,
-    PictureFormComponent, PictureInfoComponent, PicturesComponent, HeaderComponent, UserLoginComponent, UserFormComponent, UserDetailComponent, MessageComponent, VideosComponent, QuizzesComponent, VideoFormComponent, VideoInfoComponent
+    PictureFormComponent, PictureInfoComponent, PicturesComponent,
+    HeaderComponent, UserLoginComponent, UserFormComponent,
+    UserDetailComponent, MessageComponent, VideosComponent,
+    QuizzesComponent, VideoFormComponent, VideoInfoComponent,
+    QuizzInfoComponent, ResultComponent, ReviewComponent
   ],
   imports: [
     CommonModule,

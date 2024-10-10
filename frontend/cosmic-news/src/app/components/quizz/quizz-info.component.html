@@ -1,0 +1,70 @@
+<div class="background-container">
+    <main class="container">
+        <div class="top-container">
+            <div class="left-cont">
+                <a [routerLink]="['/quizzes']" class="btn" role="button">
+                    <i class="bi bi-arrow-left"></i><tool-tip>Volver</tool-tip>
+                </a>
+            </div>
+            <h2>Quizz {{ quizz.name }}</h2>
+
+            <div class="right-cont">
+                <a *ngIf="admin" [routerLink]="['edit']" class="btn" role="button">
+                    <i class="bi bi-pencil-fill"></i><tool-tip>Editar quizz</tool-tip>
+                </a>
+
+                <a *ngIf="admin" (click)="deleteQuizz(quizz.id)" class="btn" role="button">
+                    <i class="bi bi-trash-fill"></i><tool-tip>Borrar quizz</tool-tip>
+                </a>
+            </div>
+        </div>
+
+        <div class="questions-container">
+            <div *ngFor="let question of quizz.questions" class="question-item" [id]="'question-' + question.id">
+                <h3>Pregunta {{ question.num }}: {{ question.question }}</h3>
+                <div class="options-container">
+                    <div class="option" [ngClass]="{'selected': question.selected === question.option1}">
+                        <input type="radio"
+                               [id]="'option1-' + question.id"
+                               [name]="'question-' + question.id"
+                               [(ngModel)]="question.selected"
+                               [value]="question.option1" />
+                        <label [for]="'option1-' + question.id">{{ question.option1 }}</label>
+                    </div>
+                    <div class="option" [ngClass]="{'selected': question.selected === question.option2}">
+                        <input type="radio"
+                               [id]="'option2-' + question.id"
+                               [name]="'question-' + question.id"
+                               [(ngModel)]="question.selected"
+                               [value]="question.option2" />
+                        <label [for]="'option2-' + question.id">{{ question.option2 }}</label>
+                    </div>
+                    <div class="option" [ngClass]="{'selected': question.selected === question.option3}">
+                        <input type="radio"
+                               [id]="'option3-' + question.id"
+                               [name]="'question-' + question.id"
+                               [(ngModel)]="question.selected"
+                               [value]="question.option3" />
+                        <label [for]="'option3-' + question.id">{{ question.option3 }}</label>
+                    </div>
+                    <div class="option" [ngClass]="{'selected': question.selected === question.option4}">
+                        <input type="radio"
+                               [id]="'option4-' + question.id"
+                               [name]="'question-' + question.id"
+                               [(ngModel)]="question.selected"
+                               [value]="question.option4" />
+                        <label [for]="'option4-' + question.id">{{ question.option4 }}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="navigation-buttons">
+            <a *ngFor="let question of quizz.questions" [routerLink]="[]" [fragment]="'question-' + question.id" class="btn">{{ question.num }}</a>
+        </div>
+
+        <div class="submit-button">
+            <button type="button" class="btn btn-submit" (click)="submit()">Terminar quizz</button>
+        </div>
+    </main>
+</div>

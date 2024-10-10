@@ -42,7 +42,6 @@ public class Question {
     @JsonIgnore
     private boolean correct4;
 
-    @JsonIgnore
     private int num;
 
     @ManyToOne
