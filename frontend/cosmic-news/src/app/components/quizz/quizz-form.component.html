@@ -1,0 +1,80 @@
+<div class="background-container">
+    <div class="container">
+      <h2 *ngIf="edit">Editar {{ quizz.name }}</h2>
+      <h2 *ngIf="!edit">Crear quizz</h2>
+  
+      <!-- Campos del formulario -->
+      <div class="row">
+        <div class="form-group col-md-6 col-sm-12">
+          <label for="name">Nombre</label>
+          <input type="text" class="form-control" name="name" placeholder="Nombre del test" [(ngModel)]="quizz.name">
+        </div>
+        <div class="form-group col-md-6 col-sm-12">
+          <label for="difficulty">Dificultad</label>
+          <select class="form-control" name="difficulty" [(ngModel)]="quizz.difficulty">
+            <option value="Fácil">Fácil</option>
+            <option value="Normal">Normal</option>
+            <option value="Difícil">Difícil</option>
+          </select>
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="photoField">Insignia</label>
+        <input #file type="file" class="form-control" name="photoField" id="photoField" accept=".jpeg, .png">
+      </div>
+  
+      <!-- Contenedor de Preguntas -->
+      <div id="questions-container">
+        <div *ngFor="let question of quizz.questions; let i = index" class="question-container">
+          <h3>Pregunta {{ i + 1 }}</h3>
+          <div class="form-group">
+            <label for="question{{ i }}">Pregunta:</label>
+            <input type="text" class="form-control" [(ngModel)]="question.question" placeholder="Introduzca una pregunta">
+          </div>
+          <div class="row">
+            <div class="form-group col-md-6 col-sm-12">
+              <label for="option1_{{ i }}">Opción 1:</label>
+              <input type="text" class="form-control" [(ngModel)]="question.option1">
+            </div>
+            <div class="form-group col-md-6 col-sm-12">
+              <label for="option2_{{ i }}">Opción 2:</label>
+              <input type="text" class="form-control" [(ngModel)]="question.option2">
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-6 col-sm-12">
+              <label for="option3_{{ i }}">Opción 3:</label>
+              <input type="text" class="form-control" [(ngModel)]="question.option3">
+            </div>
+            <div class="form-group col-md-6 col-sm-12">
+              <label for="option4_{{ i }}">Opción 4:</label>
+              <input type="text" class="form-control" [(ngModel)]="question.option4">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="answer_{{ i }}">Opción correcta:</label>
+            <select class="form-control" [(ngModel)]="question.answer">
+              <option value="option1">Opción 1</option>
+              <option value="option2">Opción 2</option>
+              <option value="option3">Opción 3</option>
+              <option value="option4">Opción 4</option>
+            </select>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Botones -->
+      <div class="btn-cont">
+        <button type="button" class="btn" (click)="addQuestion()">
+          <i class="bi bi-plus-lg"></i> Añadir Pregunta
+        </button>
+        <button type="submit" class="btn" (click)="save()">
+          <i class="bi bi-download"></i> Guardar
+        </button>
+        <a [routerLink]="['/quizzes']" class="btn btn-red" role="button">
+          <i class="bi bi-x-lg"></i> Cancelar
+        </a>
+      </div>
+    </div>
+  </div>

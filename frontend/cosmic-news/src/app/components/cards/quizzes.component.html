@@ -18,7 +18,7 @@
         </section>
 
         <div *ngIf="hasMore" class="btn-cont" id="loadQuizzes">
-            <button class="btn" onclick='loadQuizzes()'>
+            <button class="btn" (click)='loadQuizzes()'>
                 <i class="bi bi-chevron-double-down"></i> Cargar más
             </button>
         </div>

@@ -16,6 +16,7 @@ import { VideoInfoComponent } from './components/video/video-info.component';
 import { QuizzInfoComponent } from './components/quizz/quizz-info.component';
 import { ResultComponent } from './components/quizz/result.component';
 import { ReviewComponent } from './components/quizz/review.component';
+import { QuizzFormComponent } from './components/quizz/quizz-form.component';
 
 const appRoutes: Routes = [
     { path: 'login', component: UserLoginComponent },
@@ -39,7 +40,9 @@ const appRoutes: Routes = [
     { path: 'videos/:id', component: VideoInfoComponent},
 
     { path: 'quizzes', component: QuizzesComponent},
+    { path: 'quizzes/new', component: QuizzFormComponent },
     { path: 'quizzes/:id', component: QuizzInfoComponent},
+    { path: 'quizzes/:id/edit', component: QuizzFormComponent},
     { path: 'quizzes/:id/result', component:ResultComponent},
     { path: 'quizzes/:id/result/review', component:ReviewComponent},
 
