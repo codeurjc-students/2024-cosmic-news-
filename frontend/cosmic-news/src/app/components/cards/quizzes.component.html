@@ -31,12 +31,17 @@
             <h2>Estadísticas de los quizzes</h2>
         </div>
 
-        <!--<div id="piechart"></div>
-        {{#quizzesChart}}
-            {{#entrySet}}
-            <input type="hidden" class="quizz" data-name="{{key}}" value="{{value}}" />
-            {{/entrySet}}
-        {{/quizzesChart}}-->
+        <section>
+            <div id="piechart">
+                <google-chart id="piechart"
+                *ngIf="data.length > 0"
+                [data]="data"
+                [title]="options.title"
+                [type]="chartType"
+                [options]="options">
+                </google-chart>
+            </div>
+        </section>
     </div>
 
 </div>

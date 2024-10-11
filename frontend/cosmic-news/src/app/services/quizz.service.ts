@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Observable, throwError, catchError } from "rxjs";
+import { Observable, throwError, catchError, map } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { Quizz } from "../models/quizz.model";
 

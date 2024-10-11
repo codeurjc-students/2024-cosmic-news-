@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { routing } from './app.routing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { GoogleChartsModule } from 'angular-google-charts';
 import { NewsFormComponent } from './components/news/news-form.component';
 import { NewsInfoComponent } from './components/news/news-info.component';
 import { NewsComponent } from './components/cards/news.component';
@@ -43,7 +44,8 @@ import { QuizzFormComponent } from './components/quizz/quizz-form.component';
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
-    routing
+    routing,
+    GoogleChartsModule
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

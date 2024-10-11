@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
 import { News } from '../models/news.model';
 import { Picture } from '../models/picture.model';
 import { Video } from '../models/video.model';
@@ -39,6 +39,20 @@ export class PaginationService {
   getQuizzes(page: number, size: number): Observable<Quizz[]> {
     const params = { page: page.toString(), size: size.toString() };
     return this.http.get<Quizz[]>(this.quizzesURL, { params })
+  }
+
+  getPieChart(): Observable<Map<string, number>> {
+    return this.http.get<Record<string, number>>(this.quizzesURL+"/stats").pipe(
+      map(response => {
+        const pieChartData = new Map<string, number>();
+        for (const key in response) {
+          if (response.hasOwnProperty(key)) {
+            pieChartData.set(key, response[key]);
+          }
+        }
+        return pieChartData;
+      })
+    );
   }
 
   getNewsImage(news: News): Observable<Blob> {

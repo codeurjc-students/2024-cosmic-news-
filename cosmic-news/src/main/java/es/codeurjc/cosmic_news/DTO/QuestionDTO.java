@@ -1,7 +1,5 @@
 package es.codeurjc.cosmic_news.DTO;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import es.codeurjc.cosmic_news.model.Question;
 import es.codeurjc.cosmic_news.model.Quizz;
 
