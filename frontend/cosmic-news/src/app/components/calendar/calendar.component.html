@@ -1,0 +1,48 @@
+<div class="background-container">
+    <div class="container">
+        <div class="top-container">
+            <h2 class="white-text">Calendario</h2>
+        </div>
+        <div id="calendar" class="calendar-container">
+            <div class="header">
+                <button (click)="prevMonth()">&lt;</button>
+                <h3>{{ today | date:'MMMM yyyy' }}</h3>
+                <button (click)="nextMonth()">&gt;</button>
+            </div>
+            <div class="days">
+              <div class="day day-header">Sun</div>
+              <div class="day day-header">Mon</div>
+              <div class="day day-header">Tue</div>
+              <div class="day day-header">Wed</div>
+              <div class="day day-header">Thu</div>
+              <div class="day day-header">Fri</div>
+              <div class="day day-header">Sat</div>
+            </div>
+            <div class="days">
+                <div *ngFor="let day of days" class="day" (click)="showDayInfo(day)" [class.event]="day?.event">
+                    {{ day?.day || '' }}
+                    <i *ngIf="day?.event?.icon" class="{{day?.event?.icon}}"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="modalVisible" class="modal">
+  <div class="modal-content">
+      <span class="close" (click)="closeModal()">&times;</span>
+      <h3>{{ getFormattedDate() }}</h3>
+      <p>{{ selectedEvent?.description || 'No hay información adicional para este día.' }}</p>
+      <div class="modal-buttons">
+          <button *ngIf="selectedEvent?.id" (click)="editEvent(selectedEvent?.id)" class="btn btn-secondary">Editar</button>
+          <button *ngIf="selectedEvent?.id" (click)="deleteEvent(selectedEvent?.id)" class="btn btn-danger">Borrar</button>
+          <button *ngIf="selectedEvent?.id" (click)="notifyEvent(selectedEvent?.id)" class="btn btn-info">Notificar</button>
+      </div>
+  </div>
+</div>
+
+<div *ngIf="canAdd" class="btn-cont bottom-right-button">
+  <a [routerLink]="['/events/new']" class="btn" role="btn">
+      <i class="bi bi-plus-circle"></i><tool-tip style="top: auto; bottom: 100%;">Añadir evento</tool-tip>
+  </a>
+</div>

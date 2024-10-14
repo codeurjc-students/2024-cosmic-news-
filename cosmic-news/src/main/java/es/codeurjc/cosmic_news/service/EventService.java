@@ -36,6 +36,11 @@ public class EventService {
         }
     }
 
+    public Event saveEventRest(Event event){
+        eventRepository.save(event);
+        return event;
+    }
+
     public void updateEvent(Event event, HttpServletRequest request) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate date;

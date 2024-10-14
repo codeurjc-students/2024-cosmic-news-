@@ -17,6 +17,12 @@ export class EventService {
         }
     }
 
+    getEvents():Observable<Event[]>{
+        return this.httpClient.get<Event[]>(urlEvents).pipe(
+            catchError(error=>this.handleError(error))
+        ) as Observable<Event[]>;
+    }
+
     getEvent(id: number): Observable<Object> {
         return this.httpClient.get(urlEvents + "/" + id);
     }
@@ -34,6 +40,10 @@ export class EventService {
         return this.httpClient.post(urlEvents, event);
     }
 
+    notifyEvent(id:number | undefined){
+        return this.httpClient.post(urlEvents+"/"+id+"/notify",null);
+    }
+
     private addEvent(event: Event){
         return this.httpClient.post(urlEvents,event).pipe(
             catchError(error => this.handleError(error))
@@ -41,6 +51,7 @@ export class EventService {
     }
 
     private updateEvent(event:Event){
+        console.log("UPDATE"+JSON.stringify(event));
         return this.httpClient.put(urlEvents+"/"+event.id,event).pipe(
             catchError(error => this.handleError(error))
         );

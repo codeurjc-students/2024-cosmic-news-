@@ -17,6 +17,8 @@ import { QuizzInfoComponent } from './components/quizz/quizz-info.component';
 import { ResultComponent } from './components/quizz/result.component';
 import { ReviewComponent } from './components/quizz/review.component';
 import { QuizzFormComponent } from './components/quizz/quizz-form.component';
+import { EventFormComponent } from './components/calendar/event-form.component';
+import { CalendarComponent } from './components/calendar/calendar.component';
 
 const appRoutes: Routes = [
     { path: 'login', component: UserLoginComponent },
@@ -45,6 +47,10 @@ const appRoutes: Routes = [
     { path: 'quizzes/:id/edit', component: QuizzFormComponent},
     { path: 'quizzes/:id/result', component:ResultComponent},
     { path: 'quizzes/:id/result/review', component:ReviewComponent},
+
+    { path: 'calendar', component: CalendarComponent},    
+    { path: 'events/new', component: EventFormComponent },
+    { path: 'events/:id/edit', component: EventFormComponent },
 
     { path: 'message', component: MessageComponent },
 

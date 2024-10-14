@@ -27,6 +27,8 @@ import { QuizzInfoComponent } from './components/quizz/quizz-info.component';
 import { ResultComponent } from './components/quizz/result.component';
 import { ReviewComponent } from './components/quizz/review.component';
 import { QuizzFormComponent } from './components/quizz/quizz-form.component';
+import { EventFormComponent } from './components/calendar/event-form.component';
+import { CalendarComponent } from './components/calendar/calendar.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,7 @@ import { QuizzFormComponent } from './components/quizz/quizz-form.component';
     UserDetailComponent, MessageComponent, VideosComponent,
     QuizzesComponent, VideoFormComponent, VideoInfoComponent,
     QuizzInfoComponent, ResultComponent, ReviewComponent, QuizzFormComponent,
+    EventFormComponent, CalendarComponent
   ],
   imports: [
     CommonModule,

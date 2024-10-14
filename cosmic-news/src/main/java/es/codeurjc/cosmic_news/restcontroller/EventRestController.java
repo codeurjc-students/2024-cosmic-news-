@@ -196,7 +196,7 @@ public class EventRestController {
 		if (newEvent.getDate()!=null) event.setDate(newEvent.getDate());
         if (newEvent.getIcon()!=null) event.setIcon(newEvent.getIcon());
         if (newEvent.getDescription()!=null) event.setDescription(newEvent.getDescription());
-		eventService.saveEvent(event);
+		eventService.saveEventRest(event);
 	}
     
 }
