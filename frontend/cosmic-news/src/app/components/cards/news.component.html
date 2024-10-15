@@ -1,4 +1,12 @@
 <div class="background-container">
+
+    <div *ngIf="showNotification" id="notification">
+        <button class="close-btn" (click)="closeNotification()">×</button>
+        <h2>Notificación</h2>
+        <p>Hoy es {{ event.date }}</p>
+        <p>{{ event.description }}</p>
+    </div>
+    
     <main class="container">
         <div class="top-container">
             <div class="left-cont">

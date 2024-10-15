@@ -12,9 +12,6 @@
             <div class="form-group col-md-4 col-sm-12">
                 <label for="icon">Icono:</label>
                 <select class="form-control" name="icon" id="icon" [(ngModel)]="event.icon">
-                    <!--{{#edit}}
-                    <option value="{{event.icon}}" selected hidden>{{event.icon}}</option>
-                    {{/edit}}-->
                     <option value="bi bi-sun">Sol</option>
                     <option value="bi bi-moon">Luna</option>
                     <option value="bi bi-circle-fill">Eclipse</option>
@@ -33,15 +30,6 @@
                 <div class="icon-preview">
                     <i [class]="event.icon"></i>
                 </div>
-
-                <!--<div id="iconPreview" class="icon-preview col-md-6 col-sm-12">
-                    {{^edit}}
-                    <i class="bi bi-sun"></i>
-                    {{/edit}}
-                    {{#edit}}
-                    <i class="{{event.icon}}"></i>
-                    {{/edit}}
-                </div>-->
 
             </div>
             <div class="form-group col-md-8 col-sm-12">

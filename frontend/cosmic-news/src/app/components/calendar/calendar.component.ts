@@ -4,6 +4,7 @@ import { Event } from '../../models/event.model';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { Me } from '../../models/me.model';
+import { MessageService } from '../../services/message.service';
 
 @Component({
   selector: 'app-calendar',
@@ -21,7 +22,7 @@ export class CalendarComponent implements OnInit{
   selectedEvent: Event | null = null;
   modalVisible = false;
 
-  constructor(private router: Router, private eventService: EventService, private userService: UserService,) {
+  constructor(private router: Router, private eventService: EventService, private userService: UserService, private messageService: MessageService) {
     this.month = this.today.getMonth();
     this.year = this.today.getFullYear();
   }
@@ -88,7 +89,9 @@ export class CalendarComponent implements OnInit{
 
   notifyEvent(eventId: number | undefined): void {
     this.eventService.notifyEvent(eventId).subscribe(
-      () => console.log('Event notified successfully'),
+      () => {
+        this.messageService.showMessage("¡Recibirás una notificación cuando se produzca el evento!","/calendar");
+      },
       error => console.error('Error notifying event:', error)
     );
   }

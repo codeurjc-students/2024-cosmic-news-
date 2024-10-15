@@ -6,6 +6,7 @@ import { LoginResponse } from "../models/login-response.model";
 import { News } from "../models/news.model";
 import { Picture } from "../models/picture.model";
 import { Badge } from "../models/badge.model";
+import { Event } from '../models/event.model';
 
 const urlUsers = '/api/users'
 
@@ -28,6 +29,12 @@ export class UserService{
         return this.httpClient.get<String[]>(urlUsers+"/nicks").pipe(
             catchError(error=>this.handleError(error))
         ) as Observable<String[]>;
+    }
+
+    getEvents(id:number):Observable<Event[]>{
+        return this.httpClient.get<String[]>(urlUsers+"/"+id+"/events").pipe(
+            catchError(error=>this.handleError(error))
+        ) as Observable<Event[]>;
     }
 
     getUser(id: number): Observable<User>{

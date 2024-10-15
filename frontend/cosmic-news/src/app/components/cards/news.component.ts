@@ -3,6 +3,7 @@ import { PaginationService } from '../../services/pagination.service';
 import { News } from '../../models/news.model';
 import { UserService } from '../../services/user.service';
 import { Me } from '../../models/me.model';
+import { Event } from '../../models/event.model';
 
 @Component({
   selector: "news",
@@ -18,6 +19,9 @@ export class NewsComponent implements OnInit {
   rowElements: number;
   canAdd: boolean = false;
   me: Me;
+  showNotification: boolean = false;
+  events: Event[];
+  event: Event;
 
   constructor(
     private service: PaginationService,
@@ -36,6 +40,13 @@ export class NewsComponent implements OnInit {
       response => {
         this.me = response as Me;
         this.canAdd = (this.me.mail == "xd"); //Check the admin
+        this.userService.getEvents(this.me.id).subscribe(
+        (response:any)=>{
+          this.events = response;
+          this.checkEvents();
+        },
+        error=>{console.error(error)}
+        )
       },
       _error => console.log("Error al obtener el usuario")
     );
@@ -72,6 +83,25 @@ export class NewsComponent implements OnInit {
         this.hasMore = false;
       }
     );
+  }
+
+  private checkEvents(){
+    const today = new Date().toISOString().split('T')[0];
+    for (let event of this.events){
+      if (event.date === today){
+        this.event = event;
+        this.showNotification = true;
+        setTimeout(() => {
+          this.showNotification = false;
+        }, 10000);
+        break;
+      }
+    }
+    
+  }
+
+  closeNotification() {
+    this.showNotification = false;
   }
 
   onFilterChange(filter: string) {
