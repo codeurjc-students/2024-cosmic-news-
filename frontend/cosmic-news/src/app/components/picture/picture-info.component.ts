@@ -63,9 +63,13 @@ export class PictureInfoComponent {
     }
 
     like(id:number|undefined){
-        this.service.like(id).subscribe(
-            _ => {window.location.reload();},
-            error => console.error("Error with like picture" + error)
-        );
+        if (this.logged){
+            this.service.like(id).subscribe(
+                _ => {window.location.reload();},
+                error => console.error("Error with like picture" + error)
+            );
+        }else{
+            this.router.navigate(['/login']);
+        }
     }
 }

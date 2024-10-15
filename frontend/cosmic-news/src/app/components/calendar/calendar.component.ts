@@ -12,6 +12,7 @@ import { MessageService } from '../../services/message.service';
   styleUrls: ['../../styles/calendar.css']
 })
 export class CalendarComponent implements OnInit{
+  logged: boolean = false;
   canAdd: boolean = false;
   me: Me;
   events: Event[] = [];
@@ -36,6 +37,7 @@ export class CalendarComponent implements OnInit{
     this.userService.me().subscribe(
       response => {
         this.me = response as Me;
+        this.logged=true;
         this.canAdd = (this.me.mail == "xd"); //Check the admin
       },
       _error => console.log("Error al obtener el usuario")
@@ -88,12 +90,16 @@ export class CalendarComponent implements OnInit{
   }
 
   notifyEvent(eventId: number | undefined): void {
-    this.eventService.notifyEvent(eventId).subscribe(
-      () => {
-        this.messageService.showMessage("¡Recibirás una notificación cuando se produzca el evento!","/calendar");
-      },
-      error => console.error('Error notifying event:', error)
-    );
+    if (this.logged){
+      this.eventService.notifyEvent(eventId).subscribe(
+        () => {
+          this.messageService.showMessage("¡Recibirás una notificación cuando se produzca el evento!","/calendar");
+        },
+        error => console.error('Error notifying event:', error)
+      );
+    }else{
+      this.router.navigate(['/login']);
+    }
   }
 
   editEvent(eventId: number | undefined): void {

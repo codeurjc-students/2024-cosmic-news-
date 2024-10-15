@@ -63,9 +63,13 @@ export class NewsInfoComponent {
     }
 
     like(id:number|undefined){
-        this.service.like(id).subscribe(
-            _ => {window.location.reload();},
-            error => console.error("Error with like news" + error)
-        );
+        if (this.logged){
+            this.service.like(id).subscribe(
+                _ => {window.location.reload();},
+                error => console.error("Error with like news" + error)
+            );
+        }else{
+            this.router.navigate(['/login']);
+        }
     }
 }

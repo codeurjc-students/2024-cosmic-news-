@@ -39,6 +39,7 @@ export class QuizzInfoComponent {
       error => {
         this.admin = false;
         this.logged = false;
+        this.router.navigate(['/login']);
       }
     );
   }

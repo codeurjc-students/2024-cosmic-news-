@@ -34,8 +34,8 @@
       <h3>{{ getFormattedDate() }}</h3>
       <p>{{ selectedEvent?.description || 'No hay información adicional para este día.' }}</p>
       <div class="modal-buttons">
-          <button *ngIf="selectedEvent?.id" (click)="editEvent(selectedEvent?.id)" class="btn btn-secondary">Editar</button>
-          <button *ngIf="selectedEvent?.id" (click)="deleteEvent(selectedEvent?.id)" class="btn btn-danger">Borrar</button>
+          <button *ngIf="selectedEvent?.id && logged" (click)="editEvent(selectedEvent?.id)" class="btn btn-secondary">Editar</button>
+          <button *ngIf="selectedEvent?.id && logged" (click)="deleteEvent(selectedEvent?.id)" class="btn btn-danger">Borrar</button>
           <button *ngIf="selectedEvent?.id" (click)="notifyEvent(selectedEvent?.id)" class="btn btn-info">Notificar</button>
       </div>
   </div>
