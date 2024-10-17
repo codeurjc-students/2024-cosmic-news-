@@ -19,6 +19,7 @@ import { ReviewComponent } from './components/quizz/review.component';
 import { QuizzFormComponent } from './components/quizz/quizz-form.component';
 import { EventFormComponent } from './components/calendar/event-form.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
+import { SpaceComponent } from './components/planet/space.component';
 
 const appRoutes: Routes = [
     { path: 'login', component: UserLoginComponent },
@@ -51,6 +52,8 @@ const appRoutes: Routes = [
     { path: 'calendar', component: CalendarComponent},    
     { path: 'events/new', component: EventFormComponent },
     { path: 'events/:id/edit', component: EventFormComponent },
+
+    { path: 'space', component: SpaceComponent },
 
     { path: 'message', component: MessageComponent },
 

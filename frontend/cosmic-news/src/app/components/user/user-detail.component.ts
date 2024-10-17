@@ -80,7 +80,6 @@ export class UserDetailComponent {
                             }else{
                                 this.imageUser = undefined;
                             }
-                            
                         },
                         error => {this.imageUser = undefined;}
                         );

@@ -778,6 +778,10 @@ public class DataBaseInitializer {
             "images/mercury.png"
         );
 
+        Blob photo = null;
+        photo = photoToBlob("static/images/mercury.png");
+        planet1.setPhoto(photo);
+
         Planet planet2 = new Planet(
             "Venus",
             7,
@@ -792,6 +796,9 @@ public class DataBaseInitializer {
             "images/venus.png"
         );
 
+        photo = photoToBlob("static/images/venus.png");
+        planet2.setPhoto(photo);
+
         Planet planet3 = new Planet(
             "La Tierra",
             8,
@@ -804,6 +811,9 @@ public class DataBaseInitializer {
                 + "Tanto los minerales del planeta como los productos de la biosfera aportan recursos que se utilizan para sostener a la población humana mundial. Sus habitantes están agrupados en unos 200 estados soberanos independientes, que interactúan a través de la diplomacia, los viajes, el comercio y la acción militar. Las culturas humanas han desarrollado muchas ideas sobre el planeta, incluida la personificación de una deidad, la creencia en una Tierra plana o en la Tierra como centro del universo, y una perspectiva moderna del mundo como un entorno integrado que requiere administración.",
             "images/earth.png"
         );
+
+        photo = photoToBlob("static/images/earth.png");
+        planet3.setPhoto(photo);
 
         Planet planet4 = new Planet(
             "Marte",
@@ -818,6 +828,9 @@ public class DataBaseInitializer {
             "images/mars.png"
         );
 
+        photo = photoToBlob("static/images/mars.png");
+        planet4.setPhoto(photo);
+
         Planet planet5 = new Planet(
             "Jupiter",
             14,
@@ -829,6 +842,9 @@ public class DataBaseInitializer {
             "images/jupiter.png"
         );
 
+        photo = photoToBlob("static/images/jupiter.png");
+        planet5.setPhoto(photo);
+
         Planet planet6 = new Planet(
             "Saturno",
             12,
@@ -838,6 +854,9 @@ public class DataBaseInitializer {
                 + "El primero en observar los anillos fue Galileo en 1610, pero la baja inclinación de los anillos y la baja resolución de su telescopio le hicieron pensar en un principio que se trataba de grandes satélites. Christiaan Huygens, con mejores medios de observación, pudo en 1659 observar con claridad los anillos. James Clerk Maxwell, en 1859, demostró matemáticamente que los anillos no podían ser un único objeto sólido sino que debían ser la agrupación de millones de partículas de menor tamaño. Las partículas que componen los anillos de Saturno giran a una velocidad de 48 000 km/h, 15 veces más rápido que una bala.",
             "images/saturn.png"
         );
+
+        photo = photoToBlob("static/images/saturn.png");
+        planet6.setPhoto(photo);
 
         Planet planet7 = new Planet(
             "Urano",
@@ -850,6 +869,9 @@ public class DataBaseInitializer {
             "images/uranus.png"
         );
 
+        photo = photoToBlob("static/images/uranus.png");
+        planet7.setPhoto(photo);
+
         Planet planet8 = new Planet(
             "Neptuno",
             10,
@@ -861,6 +883,9 @@ public class DataBaseInitializer {
                 + "Neptuno tiene una composición bastante similar a la del planeta Urano, y ambos tienen composiciones que difieren mucho de los demás gigantes gaseosos, Júpiter y Saturno. La atmósfera de Neptuno, como las de Júpiter y de Saturno, se compone principalmente de hidrógeno y helio, junto con vestigios de hidrocarburos y posiblemente nitrógeno. Contiene una mayor proporción de hielos, tales como agua (H2O), amoníaco (NH3) y metano (CH4). Los científicos muchas veces categorizan Urano y Neptuno como gigantes helados para enfatizar la distinción entre estos y los gigantes de gas Júpiter y Saturno. El interior de Neptuno, como el de Urano, está compuesto principalmente de hielos y roca. Los rastros de metano en las regiones periféricas exteriores contribuyen para el aspecto azul vívido de este planeta.",
             "images/neptune.png"
         );
+
+        photo = photoToBlob("static/images/neptune.png");
+        planet8.setPhoto(photo);
 
         Planet planet9 = new Planet(
             "Sol",
@@ -879,6 +904,9 @@ public class DataBaseInitializer {
             "images/sun.png"
         );
 
+        photo = photoToBlob("static/images/sun.png");
+        planet9.setPhoto(photo);
+
         Planet planet10 = new Planet(
             "Luna",
             3,
@@ -892,6 +920,9 @@ public class DataBaseInitializer {
     + "La Luna se mantiene, bajo el Tratado sobre el espacio ultraterrestre, libre para la exploración de cualquier nación con fines pacíficos.",
             "images/moon.png"
         );
+
+        photo = photoToBlob("static/images/moon.png");
+        planet10.setPhoto(photo);
 
         planetRepository.save(planet1);
         planetRepository.save(planet2);

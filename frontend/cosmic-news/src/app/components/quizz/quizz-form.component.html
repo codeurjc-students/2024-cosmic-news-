@@ -3,7 +3,6 @@
       <h2 *ngIf="edit">Editar {{ quizz.name }}</h2>
       <h2 *ngIf="!edit">Crear quizz</h2>
   
-      <!-- Campos del formulario -->
       <div class="row">
         <div class="form-group col-md-6 col-sm-12">
           <label for="name">Nombre</label>
@@ -24,7 +23,6 @@
         <input #file type="file" class="form-control" name="photoField" id="photoField" accept=".jpeg, .png">
       </div>
   
-      <!-- Contenedor de Preguntas -->
       <div id="questions-container">
         <div *ngFor="let question of quizz.questions; let i = index" class="question-container">
           <h3>Pregunta {{ i + 1 }}</h3>
@@ -64,7 +62,6 @@
         </div>
       </div>
   
-      <!-- Botones -->
       <div class="btn-cont">
         <button type="button" class="btn" (click)="addQuestion()">
           <i class="bi bi-plus-lg"></i> Añadir Pregunta

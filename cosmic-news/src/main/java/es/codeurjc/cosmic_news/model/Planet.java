@@ -1,5 +1,9 @@
 package es.codeurjc.cosmic_news.model;
 
+import java.sql.Blob;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,6 +27,9 @@ public class Planet {
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
     private String imageUrl;
+
+    @JsonIgnore
+    private Blob photo;
 
     public Planet() {}
 
@@ -84,5 +91,13 @@ public class Planet {
     }
     public void setImageUrl(String imageUrl){ 
         this.imageUrl = imageUrl; 
+    }
+
+    public Blob getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Blob photo) {
+        this.photo = photo;
     }
 }
