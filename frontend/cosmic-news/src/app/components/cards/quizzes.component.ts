@@ -21,11 +21,12 @@ export class QuizzesComponent implements OnInit {
   
   data: (string | number)[][] = [];
   options = {
-    title: 'Distribución de Estadísticas',
+    title: '',
+    backgroundColor:'#f0f8ff' ,
     is3D: true,
     legend: { position: 'bottom' },
     tooltip: { showColorCode: true, isHtml: true },
-    pieSliceTextStyle: { fontSize: 14 }
+    pieSliceTextStyle: { fontSize: 14 },
   };
   
   chartType: ChartType = ChartType.PieChart;
