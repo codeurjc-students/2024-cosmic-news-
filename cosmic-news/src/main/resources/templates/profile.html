@@ -28,7 +28,7 @@
 
                     <div class="right-cont">
                     {{#me}}
-                    <a href="/user/{{mail}}/edit" class="btn" role="button">
+                    <a href="/user/{{mail}}/edit" class="btn" role="button" id="edit">
                         <i class="bi bi-pencil-fill"></i><tool-tip>Editar perfil</tool-tip>
                     </a>
                     <form action="/logout" method="post">
@@ -39,7 +39,7 @@
                     </form>
                     {{/me}}
                     {{#iamAdmin}} {{^me}}
-                    <a href="/user/{{mail}}/edit" class="btn" role="button">
+                    <a href="/user/{{mail}}/edit" class="btn" role="button" id="edit">
                         <i class="bi bi-pencil-fill"></i><tool-tip>Editar usuario</tool-tip>
                     </a>
                     <form role="form" action='/profile/delete?id={{id}}' method="post">
@@ -65,7 +65,7 @@
                     </div>
 
                     <div class="col-md-6">
-                        <p style="text-align: left;"><strong>Nick:</strong> {{nick}}</p>
+                        <p style="text-align: left;" id="nick"><strong>Nick:</strong> {{nick}}</p>
                         <p style="text-align: left;"><strong>E-Mail:</strong> {{mail}}</p>
                         <p style="text-align: left;"><strong>Descripción:</strong> {{description}}</p>
 

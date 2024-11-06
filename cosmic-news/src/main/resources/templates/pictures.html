@@ -19,7 +19,7 @@
             <div class="top-container">
                 <div class="left-cont">
                     <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownButton" data-toggle="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownButton" name="dropdown" data-toggle="dropdown">
                             <i class="bi bi-filter"></i> <tool-tip>Filtrar</tool-tip>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -43,7 +43,7 @@
             <div class="no-content" id="noPictures">Sin fotos</div>
 
             <div class="btn-cont" id="loadPictures">
-                <button class="btn" onclick='load("pictures",0)'>
+                <button class="btn" onclick='load("pictures",0)' id="loadMore">
                     <i class="bi bi-chevron-double-down"></i> Cargar más
                 </button>
             </div>

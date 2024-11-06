@@ -18,7 +18,7 @@
             <button class="close-btn" onclick="closeNotification()">×</button>
             <h2>Notificación</h2>
             <p>Hoy es {{event.date}}</p>
-            <p>{{event.description}}</p>
+            <p id="notificationDesc">{{event.description}}</p>
         </div>
         {{/notification}}
 
@@ -40,7 +40,7 @@
                 <h2>Noticias</h2>
 
                 <div class="right-cont">
-                    <a class="btn" href="/pictures">
+                    <a class="btn" href="/pictures" id="pictures">
                         <i class="bi bi-camera"></i><tool-tip>Fotos</tool-tip>
                     </a>
                 </div>

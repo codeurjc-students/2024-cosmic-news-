@@ -30,7 +30,7 @@
                         <i class="bi bi-pencil-fill"></i><tool-tip>Editar noticia</tool-tip>
                     </a>
 
-                    <a href="/news/{{id}}/delete" class="btn" role="button">
+                    <a href="/news/{{id}}/delete" class="btn" role="button" id="delete">
                             <i class="bi bi-trash-fill"></i><tool-tip>Borrar noticia</tool-tip>
                     </a>
                     </div>
@@ -53,7 +53,7 @@
                         <p style="text-align: left;"><strong>Tema: </strong> {{topic}}</p>
                         <p style="text-align: left;"><strong>Tiempo de lectura: </strong> {{readingTime}} minutos</p>
                         <p style="text-align: left;"><strong>Fecha de publicación: </strong> {{date}}</p>
-                        <p style="text-align: left;"><strong>Likes: </strong> {{likes}} <a href="/news/{{id}}/like"><i class="bi bi-hand-thumbs-up"></i></a></p>
+                        <p style="text-align: left;" id="numLikes"><strong>Likes: </strong> {{likes}} <a href="/news/{{id}}/like" id="like"><i class="bi bi-hand-thumbs-up"></i></a></p>
                     </div>
                     <div>
                         <p> {{bodyText}}</p>
