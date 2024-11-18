@@ -164,7 +164,6 @@ public class QuizzesController {
             return "message";
         } else {
             model.addAttribute("quizz", quizz);
-            //quizzService.unselect(quizz);
             return "review";
         }
     }

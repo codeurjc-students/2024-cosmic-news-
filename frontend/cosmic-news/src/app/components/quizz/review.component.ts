@@ -13,7 +13,7 @@ export class ReviewComponent{
     id: number;
     quizz: Quizz;
 
-    constructor(private activatedRoute: ActivatedRoute, private router: Router, private service: QuizzService) {
+    constructor(private activatedRoute: ActivatedRoute, private router: Router) {
         activatedRoute.params.subscribe(params => {
             this.id = params['id'];
         });

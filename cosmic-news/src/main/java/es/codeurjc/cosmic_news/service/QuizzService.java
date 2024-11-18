@@ -250,16 +250,4 @@ public class QuizzService {
             return null;
         }
     }
-
-    //Not working now
-    public void unselect(Quizz quizz){
-        List<Question> questions = quizz.getQuestions();
-            for (Question question : questions) {
-                question.setSelect1(false);
-                question.setSelect2(false);
-                question.setSelect3(false);
-                question.setSelect4(false);
-            }
-        quizzRepository.save(quizz);
-    }
 }

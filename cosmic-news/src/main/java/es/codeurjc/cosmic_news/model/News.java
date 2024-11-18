@@ -33,7 +33,6 @@ public class News {
 
     private LocalDate date;
 
-    //@Lob
     @JsonIgnore
     private Blob photo;
     private boolean image;

@@ -2,7 +2,7 @@ google.charts.load('current', { 'packages': ['corechart'] });
 google.charts.setOnLoadCallback(drawChart);
 
 function drawChart() {
-    var data = [['Aptitudes', 'Cantidad']];
+    var data = [['Quizzes', 'Cantidad']];
     var quizzes = document.querySelectorAll('.quizz');
     quizzes.forEach(function(element) {
         var name = element.getAttribute('data-name');
@@ -13,24 +13,18 @@ function drawChart() {
     var dataTable = google.visualization.arrayToDataTable(data);
 
     var options = {
-        title: 'Quizzes completados',
-        tooltip: { 
-            isHtml: true, 
-            textStyle: { fontSize: 16 }, 
-            showColorCode: true, 
-            ignoreBounds: true, 
-            isHtml: true, 
-            forceIFrame: true 
-        },
-        pieSliceText: 'value',
+        title: '', 
+        backgroundColor: '#f0f8ff',
+        is3D: true, 
+        legend: { position: 'bottom' }, 
+        tooltip: { showColorCode: true, isHtml: true }, 
+        pieSliceTextStyle: { fontSize: 14 }, 
         chartArea: {
             left: '10%',
             top: '10%',
             width: '80%',
-            height: '80%'
-        },
-        width: '100%',
-        height: '100%',
+            height: '80%',
+        }, 
         responsive: true,
     };
 
