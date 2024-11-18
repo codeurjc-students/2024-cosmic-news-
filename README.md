@@ -25,9 +25,10 @@ Los admins serán los encargados de publicar gestionar la creación, modificaci�
 - Videos
 - Eventos
 - Quizzes
+- Planetas
+  
+![Entidad-Relacion - Fase 0](https://github.com/user-attachments/assets/36cb0d51-30bf-44ff-b82a-ffc0b6635dd7)
 
-(Planetas)
-(Foto relaciones)
 
 ### Permisos de usuarios:
 - Usuario anónimo: Puede ver los vídeos y el sistema solar. En cuanto a las noticias y las fotos podrá verlas pero no podrá darle like. En cuanto al calendario podrá ver los eventos pero no podrá solicitar notificaciones. En cuanto a los quizzes podrá ver los nombres pero no hacerlos ni ver sus preguntas.
@@ -48,3 +49,40 @@ Se mostrará un grafo que muestre cuantas veces se ha completado al 100% cada qu
 ![wireframe](https://github.com/user-attachments/assets/6287d09a-c8fd-4ec1-af44-1334a0390cf4)
 
 # Fase 1
+
+## Diagramas de Navegación
+
+En el primer diagrama veremos como podemos navegar desde la página inicial (de noticias) a todo lo relacionado con usuarios, quizzes, calendario y sistema solar.
+
+![DiagramaNavegacion1](https://github.com/user-attachments/assets/e4c05d1e-1786-42eb-bf77-d0f760fbbb42)
+
+En el segundo veremos como podemos navegar desde la página inicial a todo lo relacionado con las noticias, fotos y videos.
+
+![DiagramaNavegacion2](https://github.com/user-attachments/assets/2acd1928-8207-4634-b9d6-75fbb5410ba6)
+
+## Diagrama con las entidades de la base de datos
+
+![Entidad-Relacion - Fase 1](https://github.com/user-attachments/assets/8db96792-95d3-4920-acf6-3912b1740132)
+
+## Diagrama de clases del backend
+
+![Diagrama Clases Backend](https://github.com/user-attachments/assets/b4958680-05da-43f4-bdb4-c79d9e60ff3e)
+
+## Diagrama de clases y templates de la SPA
+
+![Diagrama Clases SPA](https://github.com/user-attachments/assets/c899e056-cb82-4cb3-a52f-93ac732f6255)
+
+## Construcción de la imagen docker
+
+1. Instalar docker.
+2. Ejecutarlo (mantener la aplicacion de escritorio abierta en windows, en linux se inicia automáticamente)
+3. Clonamos el repositorio: git clone https://github.com/codeurjc-students/2024-cosmic-news
+4. Vamos al directorio del docker: cd docker
+5. Desplegamos nuestra aplicación: docker-compose up
+6. Accedemos a ella en https://localhost:8443/
+
+## Publicación de la imagen
+
+Repetir los pasos del apartado anterior hasta el 3 (incluido).
+Ejecutar el create_image.sh que hay en la carpeta docker, en nuestro caso ejecutamos ./docker/create-image.sh (es posible que previamente se necesite darle al script los permisos necesarios).
+Posteriormente a su publicación se podrá acceder a la imagen desde: https://hub.docker.com/r/pedrocristino2020/cosmic_news
