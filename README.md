@@ -83,6 +83,7 @@ En el segundo veremos como podemos navegar desde la página inicial a todo lo re
 
 ## Publicación de la imagen
 
-Repetir los pasos del apartado anterior hasta el 3 (incluido).
-Ejecutar el create_image.sh que hay en la carpeta docker, en nuestro caso ejecutamos ./docker/create-image.sh (es posible que previamente se necesite darle al script los permisos necesarios).
+1. Repetir los pasos del apartado anterior hasta el 3 (incluido).
+2. Ejecutar el create_image.sh que hay en la carpeta docker, en nuestro caso ejecutamos ./docker/create-image.sh (es posible que previamente se necesite darle al script los permisos necesarios).
+   
 Posteriormente a su publicación se podrá acceder a la imagen desde: https://hub.docker.com/r/pedrocristino2020/cosmic_news
