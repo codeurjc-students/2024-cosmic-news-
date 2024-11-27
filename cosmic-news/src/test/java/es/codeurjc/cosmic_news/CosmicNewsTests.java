@@ -32,6 +32,7 @@ public class CosmicNewsTests {
 		ChromeOptions options = new ChromeOptions();
         options.setAcceptInsecureCerts(true);
 		options.addArguments("--headless");
+		options.addArguments("--window-size=1920,1080");
         driver = new ChromeDriver(options);
 	}
 	
@@ -122,15 +123,7 @@ public class CosmicNewsTests {
 
 	@Test
 	public void likeAndDeleteNews() throws InterruptedException{
-		driver.get("https://localhost:"+ port +"/");
-
-        driver.findElement(By.id("profile")).click();
-		
-		driver.findElement(By.name("username")).sendKeys("xd");
-		driver.findElement(By.name("password")).sendKeys("xd");
-		
-		driver.findElement(By.id("accept")).click();
-		driver.findElement(By.id("header-img")).click();
+		this.loginAdmin();
 		Thread.sleep(1000);
 
 		driver.findElement(By.partialLinkText("Adolf Schaller")).click();
