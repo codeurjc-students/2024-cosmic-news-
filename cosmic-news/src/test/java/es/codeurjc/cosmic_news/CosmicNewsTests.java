@@ -13,8 +13,10 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 
@@ -30,7 +32,7 @@ public class CosmicNewsTests {
 	public void setup() {
 		ChromeOptions options = new ChromeOptions();
         options.setAcceptInsecureCerts(true);
-		options.addArguments("--headless");
+		//options.addArguments("--headless");
         driver = new ChromeDriver(options);
 	}
 	
@@ -45,7 +47,7 @@ public class CosmicNewsTests {
 	
 	@Test
 	public void loginAndEdit() throws InterruptedException {
-		driver.get("https://localhost:8443/");
+		driver.get("https://localhost:"+ port +"/");
         
         Thread.sleep(1000);	
 
@@ -80,7 +82,7 @@ public class CosmicNewsTests {
 
     @Test
 	public void register() throws InterruptedException {
-		driver.get("https://localhost:8443/");
+		driver.get("https://localhost:"+ port +"/");
         
         Thread.sleep(1000);	
 
@@ -121,7 +123,15 @@ public class CosmicNewsTests {
 
 	@Test
 	public void likeAndDeleteNews() throws InterruptedException{
-		this.loginAdmin();
+		driver.get("https://localhost:"+ port +"/");
+
+        driver.findElement(By.id("profile")).click();
+		
+		driver.findElement(By.name("username")).sendKeys("xd");
+		driver.findElement(By.name("password")).sendKeys("xd");
+		
+		driver.findElement(By.id("accept")).click();
+		driver.findElement(By.id("header-img")).click();
 		Thread.sleep(1000);
 
 		driver.findElement(By.partialLinkText("Adolf Schaller")).click();
@@ -251,7 +261,13 @@ public class CosmicNewsTests {
 
 		Thread.sleep(1000);
 
-		driver.findElement(By.cssSelector(".day[data-day='" + String.valueOf(today.getDayOfMonth()) + "']")).click();
+		WebElement dayElement = driver.findElement(By.cssSelector(".day[data-day='" + String.valueOf(today.getDayOfMonth()) + "']"));
+
+		js.executeScript("arguments[0].scrollIntoView(true);", dayElement);
+
+		Thread.sleep(1000);
+
+		dayElement.click();
 
 		Thread.sleep(1000);
 
@@ -268,7 +284,7 @@ public class CosmicNewsTests {
 	}
 
 	private void loginAdmin(){
-		driver.get("https://localhost:8443/");
+		driver.get("https://localhost:"+ port +"/");
 
         driver.findElement(By.id("profile")).click();
 		
