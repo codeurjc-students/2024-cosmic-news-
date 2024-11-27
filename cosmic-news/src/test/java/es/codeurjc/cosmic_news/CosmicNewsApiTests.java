@@ -137,7 +137,7 @@ public class CosmicNewsApiTests {
     given()
         .cookie("AuthToken", accessToken)
     .when()
-        .delete("/api/news/1")
+        .delete("/api/news/2")
     .then()
         .statusCode(200);
     }
@@ -151,7 +151,7 @@ public class CosmicNewsApiTests {
                 .body("{ \"title\" : \"TestEdit\", \"author\": \"TESTEDIT\"}")
                 .contentType(ContentType.JSON).
         when().
-            put("/api/news/2").
+            put("/api/news/3").
         then().
             statusCode(200).
             body("title", equalTo("TestEdit"));
@@ -189,7 +189,7 @@ public class CosmicNewsApiTests {
     given()
         .cookie("AuthToken", accessToken)
     .when()
-        .delete("/api/pictures/1")
+        .delete("/api/pictures/3")
     .then()
         .statusCode(200);
     }
@@ -203,7 +203,7 @@ public class CosmicNewsApiTests {
                 .body("{ \"title\" : \"TestEdit\", \"author\": \"TESTEDIT\"}")
                 .contentType(ContentType.JSON).
         when().
-            put("/api/pictures/2").
+            put("/api/pictures/4").
         then().
             statusCode(200).
             body("title", equalTo("TestEdit"));
@@ -367,7 +367,7 @@ public class CosmicNewsApiTests {
             get("/api/quizzes/2").
         then().
             statusCode(200).
-            body("id", equalTo(1));
+            body("id", equalTo(2));
     }
 
     @Test
