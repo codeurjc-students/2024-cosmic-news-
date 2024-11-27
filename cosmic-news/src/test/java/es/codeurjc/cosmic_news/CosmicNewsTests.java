@@ -30,6 +30,7 @@ public class CosmicNewsTests {
 	public void setup() {
 		ChromeOptions options = new ChromeOptions();
         options.setAcceptInsecureCerts(true);
+		options.addArguments("--headless");
         driver = new ChromeDriver(options);
 	}
 	
