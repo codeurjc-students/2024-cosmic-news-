@@ -114,7 +114,7 @@ public class NewsController {
         if (news != null){
             model.addAttribute("admin", request.isUserInRole("ADMIN"));
             model.addAttribute("news", news);
-            return "/news_info";
+            return "news_info";
         }else{
             model.addAttribute("title", "Error");
             model.addAttribute("message", "Noticia no encontrada");

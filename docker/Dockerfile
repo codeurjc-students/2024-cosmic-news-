@@ -7,7 +7,7 @@ WORKDIR /frontend
 COPY frontend/cosmic-news/package*.json /frontend/cosmic-news/angular.json /frontend/cosmic-news/tsconfig*.json  /frontend/
 RUN npm install --force
 COPY /frontend/cosmic-news/src /frontend/src
-RUN npm run build -- --configuration production --base-href="/new/"
+RUN npm run build -- --configuration production --base-href="/front/"
 
 # BACKEND
 
@@ -15,7 +15,7 @@ FROM maven:eclipse-temurin AS build
 WORKDIR /project
 COPY cosmic-news/pom.xml /project/
 COPY cosmic-news/src/ /project/src
-COPY --from=buildFront /frontend/dist/cosmic-news/browser/ ./src/main/resources/static/new
+COPY --from=buildFront /frontend/dist/cosmic-news/browser/ ./src/main/resources/static/front
 RUN mvn -f /project/pom.xml clean package -DskipTests
 
 # PACKAGE STAGE

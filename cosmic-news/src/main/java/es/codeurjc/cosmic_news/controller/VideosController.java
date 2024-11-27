@@ -67,7 +67,7 @@ public class VideosController {
         if (video != null){
             model.addAttribute("admin", request.isUserInRole("ADMIN"));
             model.addAttribute("video", video);
-            return "/video_info";
+            return "video_info";
         }else{
             model.addAttribute("title", "Error");
             model.addAttribute("message", "Vídeo no encontrado");

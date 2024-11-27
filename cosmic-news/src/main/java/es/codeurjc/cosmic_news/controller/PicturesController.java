@@ -118,7 +118,7 @@ public class PicturesController {
         if (picture != null){
             model.addAttribute("admin", request.isUserInRole("ADMIN"));
             model.addAttribute("picture", picture);
-            return "/picture_info";
+            return "picture_info";
         }else{
             model.addAttribute("title", "Error");
             model.addAttribute("message", "Foto no encontrada");

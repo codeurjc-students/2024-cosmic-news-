@@ -96,6 +96,7 @@ public class SecurityConfiguration {
 					// PUBLIC PAGES
 					.requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
 					.requestMatchers("/").permitAll()
+					.requestMatchers("/index").permitAll()
 					.requestMatchers("/error").permitAll()
 					.requestMatchers("/message").permitAll()
 
@@ -158,7 +159,7 @@ public class SecurityConfiguration {
                     .requestMatchers("/swagger-ui/**").permitAll()
 					
 					// Frontend petitions
-					.requestMatchers("/new/**").permitAll()
+					.requestMatchers("/front/**").permitAll()
 
 					// PRIVATE PAGES
 					.anyRequest().authenticated()
