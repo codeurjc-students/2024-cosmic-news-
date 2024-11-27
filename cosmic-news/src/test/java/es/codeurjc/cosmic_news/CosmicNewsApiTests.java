@@ -41,32 +41,6 @@ public class CosmicNewsApiTests {
 
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
-
-        given()
-        .cookie("AuthToken", accessToken)
-        .body("{ " +
-            "\"name\": \"API TEST Quizz\"," +
-            "\"difficulty\": \"Difícil\"," +
-            "\"questions\": [" +
-            "    {" +
-            "        \"question\": \"¿Cómo se llama la página web?\"," +
-            "        \"option1\": \"Astro News\"," +
-            "        \"option2\": \"Cosmic News\"," +
-            "        \"option3\": \"Astronomy For All\"," +
-            "        \"option4\": \"Hidden World\"," +
-            "        \"answer\": \"Cosmic News\"," +
-            "        \"correct1\": false," +
-            "        \"correct2\": true," +
-            "        \"correct3\": false," +
-            "        \"correct4\": false" +
-            "    }" +
-            "]" +
-        "}")
-        .contentType(ContentType.JSON)
-    .when()
-        .post("/api/quizzes")
-    .then()
-        .statusCode(200);
     }
 
     // USER TESTS
@@ -178,9 +152,10 @@ public class CosmicNewsApiTests {
                 .contentType(ContentType.JSON).
         when().
             put("/api/news/1").
-        then().
-            statusCode(200).
-            body("title", equalTo("TestEdit"));
+        then()
+            .log().ifValidationFails()
+            .statusCode(200)
+            .body("title", equalTo("TestEdit"));
     }
 
     // PICTURE TESTS
@@ -230,9 +205,10 @@ public class CosmicNewsApiTests {
                 .contentType(ContentType.JSON).
         when().
             put("/api/pictures/1").
-        then().
-            statusCode(200).
-            body("title", equalTo("TestEdit"));
+        then()
+            .log().ifValidationFails()
+            .statusCode(200)
+            .body("title", equalTo("TestEdit"));
     }
 
     // VIDEO TESTS
@@ -334,9 +310,10 @@ public class CosmicNewsApiTests {
                 .contentType(ContentType.JSON).
         when().
             put("/api/events/1").
-        then().
-            statusCode(200).
-            body("description", equalTo("api test edit description"));
+        then()
+            .log().ifValidationFails()
+            .statusCode(200)
+            .body("description", equalTo("api test edit description"));
     }
 
     // QUIZZ TESTS
@@ -391,9 +368,10 @@ public class CosmicNewsApiTests {
             contentType(ContentType.JSON).
         when().
             get("/api/quizzes/1").
-        then().
-            statusCode(200).
-            body("id", equalTo(1));
+        then()
+            .log().ifValidationFails()
+            .statusCode(200)
+            .body("id", equalTo(1));
     }
 
     @Test
@@ -445,6 +423,7 @@ public class CosmicNewsApiTests {
         .when()
             .put("/api/quizzes/1")
         .then()
+            .log().ifValidationFails()
             .statusCode(200)
             .body("name", equalTo("API TEST EDIT Quizz"))
             .body("questions.size()", equalTo(2));
