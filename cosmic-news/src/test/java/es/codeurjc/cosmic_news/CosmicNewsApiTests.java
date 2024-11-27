@@ -41,6 +41,32 @@ public class CosmicNewsApiTests {
 
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
+
+        given()
+        .cookie("AuthToken", accessToken)
+        .body("{ " +
+            "\"name\": \"API TEST Quizz\"," +
+            "\"difficulty\": \"Difícil\"," +
+            "\"questions\": [" +
+            "    {" +
+            "        \"question\": \"¿Cómo se llama la página web?\"," +
+            "        \"option1\": \"Astro News\"," +
+            "        \"option2\": \"Cosmic News\"," +
+            "        \"option3\": \"Astronomy For All\"," +
+            "        \"option4\": \"Hidden World\"," +
+            "        \"answer\": \"Cosmic News\"," +
+            "        \"correct1\": false," +
+            "        \"correct2\": true," +
+            "        \"correct3\": false," +
+            "        \"correct4\": false" +
+            "    }" +
+            "]" +
+        "}")
+        .contentType(ContentType.JSON)
+    .when()
+        .post("/api/quizzes")
+    .then()
+        .statusCode(200);
     }
 
     // USER TESTS
