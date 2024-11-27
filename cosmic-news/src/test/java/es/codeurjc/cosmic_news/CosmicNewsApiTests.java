@@ -23,7 +23,7 @@ public class CosmicNewsApiTests {
     @BeforeEach
     public void setUp() {
         RestAssured.baseURI = "https://localhost"; 
-        RestAssured.port = 8443; 
+        RestAssured.port = port; 
         RestAssured.useRelaxedHTTPSValidation(); 
 
         io.restassured.response.Response response = given()
