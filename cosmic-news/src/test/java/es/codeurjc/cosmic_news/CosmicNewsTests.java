@@ -16,7 +16,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 
@@ -32,7 +31,7 @@ public class CosmicNewsTests {
 	public void setup() {
 		ChromeOptions options = new ChromeOptions();
         options.setAcceptInsecureCerts(true);
-		//options.addArguments("--headless");
+		options.addArguments("--headless");
         driver = new ChromeDriver(options);
 	}
 	
