@@ -2,8 +2,8 @@ name: Continuous Integration
 
 on: 
   pull_request:
-    branches:
-      - main
+    paths-ignore:
+     - README.md
 
 jobs:
 
