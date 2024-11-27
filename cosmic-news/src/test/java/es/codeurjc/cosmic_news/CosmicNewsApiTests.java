@@ -151,11 +151,10 @@ public class CosmicNewsApiTests {
                 .body("{ \"title\" : \"TestEdit\", \"author\": \"TESTEDIT\"}")
                 .contentType(ContentType.JSON).
         when().
-            put("/api/news/1").
-        then()
-            .log().ifValidationFails()
-            .statusCode(200)
-            .body("title", equalTo("TestEdit"));
+            put("/api/news/2").
+        then().
+            statusCode(200).
+            body("title", equalTo("TestEdit"));
     }
 
     // PICTURE TESTS
@@ -204,11 +203,10 @@ public class CosmicNewsApiTests {
                 .body("{ \"title\" : \"TestEdit\", \"author\": \"TESTEDIT\"}")
                 .contentType(ContentType.JSON).
         when().
-            put("/api/pictures/1").
-        then()
-            .log().ifValidationFails()
-            .statusCode(200)
-            .body("title", equalTo("TestEdit"));
+            put("/api/pictures/2").
+        then().
+            statusCode(200).
+            body("title", equalTo("TestEdit"));
     }
 
     // VIDEO TESTS
@@ -257,7 +255,7 @@ public class CosmicNewsApiTests {
                 .body("{ \"title\" : \"TestEdit\", \"description\" : \"api test edit description\"}")
                 .contentType(ContentType.JSON).
         when().
-            put("/api/videos/1").
+            put("/api/videos/2").
         then().
             statusCode(200).
             body("description", equalTo("api test edit description"));
@@ -309,11 +307,10 @@ public class CosmicNewsApiTests {
                 .body("{ \"date\" : \"2024-12-12\", \"description\" : \"api test edit description\"}")
                 .contentType(ContentType.JSON).
         when().
-            put("/api/events/1").
-        then()
-            .log().ifValidationFails()
-            .statusCode(200)
-            .body("description", equalTo("api test edit description"));
+            put("/api/events/2").
+        then().
+            statusCode(200).
+            body("description", equalTo("api test edit description"));
     }
 
     // QUIZZ TESTS
@@ -367,11 +364,10 @@ public class CosmicNewsApiTests {
         given().
             contentType(ContentType.JSON).
         when().
-            get("/api/quizzes/1").
-        then()
-            .log().ifValidationFails()
-            .statusCode(200)
-            .body("id", equalTo(1));
+            get("/api/quizzes/2").
+        then().
+            statusCode(200).
+            body("id", equalTo(1));
     }
 
     @Test
@@ -421,9 +417,8 @@ public class CosmicNewsApiTests {
             "}")
             .contentType(ContentType.JSON)
         .when()
-            .put("/api/quizzes/1")
+            .put("/api/quizzes/2")
         .then()
-            .log().ifValidationFails()
             .statusCode(200)
             .body("name", equalTo("API TEST EDIT Quizz"))
             .body("questions.size()", equalTo(2));
