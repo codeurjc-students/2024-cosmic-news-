@@ -17,7 +17,7 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: rootpass 
           MYSQL_DATABASE: cosmic_news_bd  
-        options: --health-cmd="mysqladmin ping --silent" --health-start-period=30s  # Esperar que MySQL esté listo
+        options: --health-cmd="mysqladmin ping --silent" --health-start-period=30s
 
     steps:
       - name: Checkout code
@@ -31,3 +31,14 @@ jobs:
 
       - name: Run tests in cosmic-news directory
         run: mvn -f cosmic-news/pom.xml test
+
+      - name: Generate Docker image
+        run: mvn spring-boot:build-image -DskipTests
+        -Dspring-boot.build-image.imageName=${{ secrets.DOCKERHUB_USERNAME }}/cosmic-news:v1
+
+      - name: Login to DockerHub
+        run: docker login
+        -u "${{ secrets.DOCKERHUB_USERNAME }}" -p "${{ secrets.DOCKERHUB_TOKEN }}"
+
+      - name: Push image to DockerHub
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/cosmic-news:v1
