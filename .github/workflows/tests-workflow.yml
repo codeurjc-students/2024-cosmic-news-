@@ -33,8 +33,9 @@ jobs:
         run: mvn -f cosmic-news/pom.xml test
 
       - name: Generate Docker image
-        run: mvn spring-boot:build-image -DskipTests
-        -Dspring-boot.build-image.imageName=${{ secrets.DOCKERHUB_USERNAME }}/cosmic-news:v1
+        run: |
+          mvn spring-boot:build-image -DskipTests \
+          -Dspring-boot.build-image.imageName=${{ secrets.DOCKERHUB_USERNAME }}/cosmic-news:v1
 
       - name: Login to DockerHub
         run: docker login
