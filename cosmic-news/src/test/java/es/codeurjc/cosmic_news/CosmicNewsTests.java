@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -16,6 +17,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 
@@ -284,6 +287,9 @@ public class CosmicNewsTests {
 		driver.findElement(By.name("password")).sendKeys("xd");
 		
 		driver.findElement(By.id("accept")).click();
-		driver.findElement(By.id("header-img")).click();
+
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+		WebElement headerImg = wait.until(ExpectedConditions.elementToBeClickable(By.id("header-img")));
+		headerImg.click();
 	}
 }
