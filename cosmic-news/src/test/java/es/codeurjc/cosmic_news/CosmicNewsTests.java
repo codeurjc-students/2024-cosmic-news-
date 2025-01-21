@@ -34,7 +34,7 @@ public class CosmicNewsTests {
 	public void setup() {
 		ChromeOptions options = new ChromeOptions();
         options.setAcceptInsecureCerts(true);
-		options.addArguments("--headless");
+		//options.addArguments("--headless");
 		options.addArguments("--window-size=1920,1080");
         driver = new ChromeDriver(options);
 	}
@@ -183,35 +183,28 @@ public class CosmicNewsTests {
 
 	//QUIZZ TESTS
 	@Test
-	public void quizz() throws InterruptedException{
+	public void quizz() throws InterruptedException {
 		this.loginAdmin();
-		Thread.sleep(1000);
-
+	
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+	
+		wait.until(webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
+	
 		driver.findElement(By.id("quizzesButton")).click();
-
-		Thread.sleep(1000);
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.partialLinkText("Bienvenida"))).click();
-
-		Thread.sleep(1000);
-
+	
+		WebElement bienvenida = wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("Bienvenida")));
+		bienvenida.click();
+	
 		JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].click();", driver.findElement(By.id("option2-1")));
+		js.executeScript("arguments[0].click();", driver.findElement(By.id("option2-1")));
 		js.executeScript("arguments[0].click();", driver.findElement(By.id("option1-2")));
 		js.executeScript("arguments[0].click();", driver.findElement(By.id("option4-3")));
 		js.executeScript("arguments[0].click();", driver.findElement(By.id("option3-4")));
 		js.executeScript("arguments[0].click();", driver.findElement(By.id("option1-5")));
-
-		Thread.sleep(1000);
-
+	
 		js.executeScript("arguments[0].click();", driver.findElement(By.id("done")));
-
-		Thread.sleep(1000);
-
-		assertNotNull(driver.findElement(By.id("perfect")));
-
+	
+		assertNotNull(wait.until(ExpectedConditions.presenceOfElementLocated(By.id("perfect"))));
 	}
 
 	// CALENDAR TESTS
