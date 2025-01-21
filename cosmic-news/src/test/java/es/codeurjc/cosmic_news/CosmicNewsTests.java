@@ -156,43 +156,29 @@ public class CosmicNewsTests {
 	//PICTURE TESTS
 
 	@Test
-	public void likeAndFilterPicture() throws InterruptedException{
+	public void likeAndFilterPicture() throws InterruptedException {
 		this.loginAdmin();
-		Thread.sleep(1000);
-
+	
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+	
 		driver.findElement(By.id("pictures")).click();
-
-		Thread.sleep(1000);
-
-		driver.findElement(By.id("loadMore")).click();
-
-		Thread.sleep(1000);
-
-		driver.findElement(By.partialLinkText("lobo")).click();
-
-		Thread.sleep(1000);
-
+	
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("loadMore"))).click();
+	
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.partialLinkText("lobo"))).click();
+	
 		JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].click();", driver.findElement(By.id("like")));
-
-		Thread.sleep(1000);
-
+		js.executeScript("arguments[0].click();", wait.until(ExpectedConditions.elementToBeClickable(By.id("like"))));
+	
 		assertThat("Likes: 1").isEqualTo(driver.findElement(By.id("numLikes")).getText());
-
+	
 		driver.findElement(By.id("back")).click();
-
-		Thread.sleep(1000);
-
-		driver.findElement(By.name("dropdown")).click();
-
-		Thread.sleep(1000);
-
+	
+		wait.until(ExpectedConditions.elementToBeClickable(By.name("dropdown"))).click();
+	
 		driver.findElement(By.linkText("Likes")).click();
-
-		Thread.sleep(1000);
-
-		assertNotNull(driver.findElement(By.partialLinkText("lobo")));
-
+	
+		assertNotNull(wait.until(ExpectedConditions.presenceOfElementLocated(By.partialLinkText("lobo"))));
 	}
 
 	//QUIZZ TESTS
@@ -205,7 +191,9 @@ public class CosmicNewsTests {
 
 		Thread.sleep(1000);
 
-		driver.findElement(By.partialLinkText("Bienvenida")).click();
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.partialLinkText("Bienvenida"))).click();
 
 		Thread.sleep(1000);
 
