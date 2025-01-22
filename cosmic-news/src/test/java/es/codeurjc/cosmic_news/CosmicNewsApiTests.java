@@ -375,7 +375,7 @@ public class CosmicNewsApiTests {
     given()
         .cookie("AuthToken", accessToken)
     .when()
-        .delete("/api/quizzes/1")
+        .delete("/api/quizzes/3")
     .then()
         .statusCode(200);
     }
