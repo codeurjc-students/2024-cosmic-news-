@@ -87,3 +87,25 @@ En el segundo veremos como podemos navegar desde la página inicial a todo lo re
 2. Ejecutar el create_image.sh que hay en la carpeta docker, en nuestro caso ejecutamos ./docker/create-image.sh (es posible que previamente se necesite darle al script los permisos necesarios).
    
 Posteriormente a su publicación se podrá acceder a la imagen desde: https://hub.docker.com/r/pedrocristino2020/cosmic_news
+
+# Fase 2
+
+## Tareas automáticas
+
+### Integración Continua (CI) - Tests
+
+Se ejecuta automáticamente en cada pull request (salvo si se actualiza el readme). Las tareas que realiza son:
+1. Descargar el código (checkout), configurar el entorno de ejecución con JDK 17 y levantar un servicio de MySQL.
+2. Ejecuta todos los tests de la aplicación, tanto las pruebas de interfaz de usuario como las de API Rest.
+
+### Entrega Continua (CD) - Docker
+
+Se ejecuta al realizar un commit en la rama main después de un merge. Las tareas que realiza son:
+1. Descargar el código (checkout) y configurar JDK 17.
+2. Generar una imagen Docker de la aplicación.
+3. Inicia sesión y publica la imagen Docker en Docker Hub.
+
+## Almacenamiento de Artefactos Generados
+Los artefactos generados en el proceso de CI/CD se almacenan en los siguientes lugares:
+1. Los resultados de los tests (CI), los logs y reportes, se encuentran en la sección "Actions" en Github.
+2. Las imágenes docker (CD) se almacenan en Docker Hub.
