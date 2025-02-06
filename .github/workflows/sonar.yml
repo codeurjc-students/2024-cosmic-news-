@@ -1,36 +1,75 @@
 name: Build
+
 on:
   push:
     branches:
       - main
       - fase3
-  pull_request:
-    types: [opened, synchronize, reopened]
+
 jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ROOT_PASSWORD: rootpass
+          MYSQL_DATABASE: cosmic_news_bd
+        options: --health-cmd="mysqladmin ping --silent" --health-start-period=30s
+
+      sonarqube:
+        image: sonarqube:latest
+        ports:
+          - 9000:9000
+        env:
+          SONARQUBE_JDBC_URL: jdbc:mysql://mysql:3306/cosmic_news_bd
+          SONARQUBE_JDBC_USERNAME: root
+          SONARQUBE_JDBC_PASSWORD: rootpass
+        options: >-
+          --health-cmd "curl -f ${{ secrets.SONAR_HOST_URL }}/api/system/status || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0 
+
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
+
       - name: Cache SonarQube packages
         uses: actions/cache@v1
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
+
       - name: Cache Maven packages
         uses: actions/cache@v1
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
+
+      - name: Wait for SonarQube to be ready
+        run: |
+          echo "Waiting for SonarQube to start..."
+          until curl -s ${{ secrets.SONAR_HOST_URL }}/api/system/status | grep -q '"status":"UP"'; do
+            echo "Waiting for SonarQube..."
+            sleep 5
+          done
+          echo "SonarQube is up!"
+
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
