@@ -66,6 +66,17 @@ jobs:
           mkdir -p ~/.m2
           echo '<settings><servers><server><id>sonar</id><username>${{ secrets.SONAR_TOKEN }}</username></server></servers></settings>' > ~/.m2/settings.xml
 
+      - name: Debug SonarQube Service
+        run: |
+          echo "Checking SonarQube status..."
+          curl -s http://localhost:9000/api/system/status || echo "SonarQube not responding"
+
+      - name: Debug Sonar Token
+        run: |
+          echo "SONAR_TOKEN length: ${#SONAR_TOKEN}"
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
       - name: Wait for SonarQube to be ready
         run: |
           echo "Waiting for SonarQube to start..."
@@ -84,4 +95,5 @@ jobs:
           mvn -B -f cosmic-news/pom.xml verify -DskipTests \
             org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
             -Dsonar.host.url=http://localhost:9000 \
-            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
+            -Dsonar.qualitygate.wait=true
